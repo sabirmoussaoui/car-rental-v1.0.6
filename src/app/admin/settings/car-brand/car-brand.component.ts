@@ -14,6 +14,11 @@ export class CarBrandComponent implements OnInit {
 //carBrands
 carBrands: Array<any> ;
 carBrandForm : FormGroup; 
+//upload image 
+imageIsUploading = false ; 
+imageUploaded = false; 
+imageUrl : string ; 
+
   constructor(
     private carBrandService : CarBrandService,
     private formBuilder : FormBuilder,
@@ -61,8 +66,30 @@ getCarBrands(){
   }
 
 
+  //Upload Imagde 
+  detectImage(event){
+    this.onUploadImage(event.target.files[0]); 
+  }
+  onUploadImage(file:File){
+    console.log(file)
+    this.imageIsUploading = true; 
+    this.carBrandService.uploadImage(file).then(
+      (url:string)=>{
+        this.imageUrl = url ;
+        console.log('Url =>'+url);
+         
+        this.imageIsUploading = false; 
+        this.imageUploaded=true; 
+      }
+    )
+  }
+
+
 onSaveCarBrand(){
     const carBrand =new CarBrand(this.carBrandForm.get("name").value) ; 
+    if(this.imageUrl && this.imageUrl !== ''){
+      carBrand.photo = this.imageUrl ; 
+    }
     this.carBrandService.createCarBrand(carBrand)
 }
 

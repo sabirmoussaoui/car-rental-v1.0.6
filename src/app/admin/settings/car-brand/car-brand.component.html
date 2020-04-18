@@ -25,8 +25,9 @@
                         role="tab" aria-controls="tabs-text-3" aria-selected="false">Car Brands</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link mb-sm-3 mb-md-0" id="tabs-text-3-tab" data-toggle="tab" href="#tabs-text-3"
-                        role="tab" aria-controls="tabs-text-3" aria-selected="false">Agencies</a>
+                    <a class="nav-link mb-sm-3 mb-md-0 " id="tabs-text-3-tab" data-toggle="tab" 
+                        [routerLink]="['/admin/settings/car-models']"
+                        role="tab" aria-controls="tabs-text-3" aria-selected="false">Car Models</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link mb-sm-3 mb-md-0" id="tabs-text-3-tab" data-toggle="tab" href="#tabs-text-3"
@@ -70,10 +71,21 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
-                                    <button class="btn  btn-info" [disabled]="carBrandForm.invalid" type="submit">
-                                        Add <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                                    </button>
-                                </div>
+                                    <div class="form-group">
+                                        <input type="file" class="custom-file-input" id="image-input" (change)="detectImage($event)" accept="image/*">
+                                        <label class="btn btn-default btn-round" for="image-input">Choisir une image  <i class="ni ni-image"></i> </label>
+                                    </div>
+                                  </div>  
+                            </div>
+                            <div class="row">
+                            <div class="col-lg-4">
+                                <button class="btn  btn-info" [disabled]="carBrandForm.invalid" type="submit">
+                                    Add <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="col-lg-4">
+                                <p class="text-success" *ngIf="imageUploaded">Fichier chargé !</p>
+                                </div>  
                             </div>
                         </form>
                     </div>

@@ -58,6 +58,16 @@
                         <form [formGroup]="carModelForm" (ngSubmit)="onSaveCarModel()">
                             <div class="row">
                                 <div class="col-lg-4">
+                                    <mat-form-field>
+                                      <mat-label>Car Brands</mat-label>
+                                      <mat-select formControlName="carBrand">
+                                        <mat-option *ngFor="let carBrand of carBrands" [value]="carBrand.value">
+                                          {{carBrand.viewValue}}
+                                        </mat-option>
+                                      </mat-select>
+                                    </mat-form-field>    
+                                  </div>
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                         <div class="input-group input-group-alternative mb-3">
                                             <div class="input-group-prepend">
@@ -95,8 +105,9 @@
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">Model</th>
-                                    <th scope="col">Year</th>
+                                    <th scope="col">Models</th>
+                                    <th scope="col">Years</th>
+                                    <th scope="col">Brands</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -109,12 +120,22 @@
                                         <span>{{carModel.payload.doc.data().year}}</span>
                                     </td>
                                     <td>
+                                        <span>{{carModel.payload.doc.data().carBrand}}</span>
+                                    </td>
+                                    <td>
                                         <button class="btn btn-danger rounded-circle"
                                             (click)="onDeleteCarModel(carModel.payload.doc.id)" type="button">
                                             <i class="fa fa-times-circle" aria-hidden="true"></i>
                                         </button>
                                         <button class="btn btn-primary rounded-circle"
-                                            (click)="openDialog(carModel.payload.doc.id,carModel.payload.doc.data().name)"
+                                            (click)="openDialog(
+                                                carModel.payload.doc.id,
+                                                carModel.payload.doc.data().name,
+                                                carModel.payload.doc.data().year,
+                                                carModel.payload.doc.data().carBrand,
+                                                carModel.payload.doc.data().carBrandKey
+
+                                                )"
                                             type="button">
                                             <i class="fa fa-edit" aria-hidden="true"></i>
                                         </button>

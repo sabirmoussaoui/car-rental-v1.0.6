@@ -6,8 +6,6 @@ import { Sector } from 'src/app/models/Sector.model';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { SectorUpdateDialogComponent } from './sector-update-dialog/sector-update-dialog.component';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
-
-
 interface City {
   value: string;
   viewValue: string;

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import * as firebase from 'firebase';
 
 @Injectable({
   providedIn: 'root'
@@ -35,4 +36,27 @@ getCarBrands(){
       name:carBrand.name
     });
   }
+
+/// Upload Image
+uploadImage(file:File){
+  return new Promise((resolve,reject)=>{
+    const almostUniqueFileName = Date.now().toString(); 
+    const upload = firebase.storage().ref()
+     .child('images/brands/' + almostUniqueFileName + file.name).put(file); 
+    upload.on(firebase.storage.TaskEvent.STATE_CHANGED,
+      ()=>{
+        console.log('Chargement Image...') ; 
+      }, 
+      (error)=>{
+        console.log('Erreur de Chargement Image !'+error);
+        reject(); 
+        
+      },
+      ()=> {
+        resolve(upload.snapshot.ref.getDownloadURL()); 
+      }
+      );
+
+  });
+}
 }

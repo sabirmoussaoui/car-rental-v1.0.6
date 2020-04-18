@@ -32,6 +32,9 @@ import { CarBrandComponent } from 'src/app/admin/settings/car-brand/car-brand.co
 import { CarBrandUpdateDialogComponent } from 'src/app/admin/settings/car-brand/car-brand-update-dialog/car-brand-update-dialog.component';
 import { CarModelComponent } from 'src/app/admin/settings/car-model/car-model.component';
 import { CarModelUpdateDialogComponent } from 'src/app/admin/settings/car-model/car-model-update-dialog/car-model-update-dialog.component';
+import { ColorService } from 'src/app/services/color.service';
+import { CarModelService } from 'src/app/services/car-model.service';
+import { CarBrandService } from 'src/app/services/car-brand.service';
 
 
 @NgModule({
@@ -82,8 +85,21 @@ import { CarModelUpdateDialogComponent } from 'src/app/admin/settings/car-model/
 
 
   ],
-  providers: [CityService,SectorService],
-  entryComponents: [CityUpdateDialogComponent]
+  providers: [
+    CityService,
+    SectorService,
+    ColorService,
+    CarBrandService,
+    CarModelService
+  ],
+  entryComponents: [
+    CityUpdateDialogComponent,
+    ColorUpdateDialogComponent,
+    CarBrandUpdateDialogComponent,
+    CarModelUpdateDialogComponent,
+    SectorUpdateDialogComponent
+
+  ]
 })
 
 export class AdminLayoutModule {}

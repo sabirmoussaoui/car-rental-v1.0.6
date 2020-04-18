@@ -14,6 +14,9 @@ getCarModel(carModelKey){
 updateCarModel(carModelKey, carModel){
     return this.db.collection('carModels').doc(carModelKey).set({
       name:carModel.name,
+      year:carModel.year,
+      carBrand:carModel.carBrand,
+      carBrandKey:carModel.carBrandKey
     });
   }
 
@@ -33,7 +36,9 @@ getCarModels(){
   createCarModel(carModel){
     return this.db.collection('carModels').add({
       name:carModel.name,
-      year:carModel.year
+      year:carModel.year,
+      carBrand:carModel.carBrand,
+      carBrandKey:carModel.carBrandKey
     });
   }
 }

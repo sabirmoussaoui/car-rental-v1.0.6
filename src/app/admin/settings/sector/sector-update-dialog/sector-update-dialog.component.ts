@@ -12,11 +12,11 @@ interface City {
   templateUrl: './sector-update-dialog.component.html',
   styleUrls: ['./sector-update-dialog.component.scss']
 })
-export class SectorUpdateDialogComponent implements OnInit {
+export class SectorUpdateDialogComponent implements OnInit{
   form: FormGroup;
   name:string;
   city:string ; 
-  cities: City[] = [];
+  cities: City[] = []
 
   constructor(
       private fb: FormBuilder,
