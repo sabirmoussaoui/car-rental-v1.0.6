@@ -1,0 +1,29 @@
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+    style="min-height: 600px; background-image: url(assets/img/theme/car-cover-design.jpg); background-size: cover; background-position: center top;">
+    <!-- Header container -->
+    <div class="container-fluid d-flex align-items-center">
+        <div class="row">
+            <ul class="nav nav-pills nav-fill flex-column flex-sm-row" id="tabs-text" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-text-1-tab" data-toggle="tab" [routerLink]="['/admin/settings/cities']"       role="tab" aria-controls="tabs-text-1" aria-selected="true">Cities</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link mb-sm-3 mb-md-0" id="tabs-text-2-tab" data-toggle="tab"        [routerLink]="['/admin/settings/sectors']"      role="tab" aria-controls="tabs-text-2" aria-selected="false">Sectors</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link mb-sm-3 mb-md-0" id="tabs-text-3-tab" data-toggle="tab"        [routerLink]="['/admin/settings/colors']"       role="tab" aria-controls="tabs-text-3" aria-selected="false">Colors</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mb-sm-3 mb-md-0" id="tabs-text-3-tab" data-toggle="tab"      [routerLink]="['/admin/settings/car-brand']"    role="tab" aria-controls="tabs-text-3" aria-selected="false">Car Brands</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link mb-sm-3 mb-md-0" id="tabs-text-3-tab" data-toggle="tab"      [routerLink]="['/admin/settings/car-models']"   role="tab" aria-controls="tabs-text-3" aria-selected="false">Cars Models</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link mb-sm-3 mb-md-0" id="tabs-text-3-tab" data-toggle="tab" href="#tabs-text-3" role="tab" aria-controls="tabs-text-3" aria-selected="false">Clients</a>
+                  </li>
+              </ul>
+        </div>
+    </div>
+</div>
+<router-outlet></router-outlet>

@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>{{name}}</h2>
+<mat-dialog-content [formGroup]="form">
+    <mat-form-field>
+        <input matInput
+               placeholder="Update City"
+               formControlName="name">
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button class="btn btn-warning"(click)="close()">Close</button>
+    <button class="btn btn-success"(click)="save()">Save</button>
+</mat-dialog-actions>

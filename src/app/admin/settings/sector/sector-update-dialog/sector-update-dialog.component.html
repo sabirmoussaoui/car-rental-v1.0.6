@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>{{name}}</h2>
+<mat-dialog-content [formGroup]="form">
+    <div class="col-lg-4">
+        <mat-form-field>
+          <mat-label>City</mat-label>
+          <mat-select formControlName="city">
+            <mat-option *ngFor="let city of cities" [value]="city.value">
+              {{city.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>    
+      </div>
+    <div class="col-lg-4">
+    <mat-form-field>
+        <input matInput
+               placeholder="Update City"
+               formControlName="name">
+    </mat-form-field>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button class="btn btn-warning"(click)="close()">Close</button>
+    <button class="btn btn-success"(click)="save()">Save</button>
+</mat-dialog-actions>
