@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -35,7 +36,11 @@ import { CarModelUpdateDialogComponent } from 'src/app/admin/settings/car-model/
 import { ColorService } from 'src/app/services/color.service';
 import { CarModelService } from 'src/app/services/car-model.service';
 import { CarBrandService } from 'src/app/services/car-brand.service';
-
+import { PositionService } from 'src/app/services/position.service';
+import { BrandModelService } from 'src/app/services/brand-model.service';
+import { CarBrandLogoDialogComponent } from 'src/app/admin/settings/car-brand/car-brand-logo-dialog/car-brand-logo-dialog.component';
+import { AuthGuardService } from 'src/app/services/auth-guard.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @NgModule({
   imports: [
@@ -46,24 +51,13 @@ import { CarBrandService } from 'src/app/services/car-brand.service';
     NgbModule,
     ClipboardModule,
 
-
     MatSliderModule,
     ReactiveFormsModule,
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
     MatAutocompleteModule,
-    MatFormFieldModule,
     MatSelectModule,
-
-
-
-
-
-  
-
-
-    
   ],
   declarations: [
     DashboardComponent,
@@ -80,26 +74,28 @@ import { CarBrandService } from 'src/app/services/car-brand.service';
     ColorUpdateDialogComponent,
     CarBrandComponent,
     CarBrandUpdateDialogComponent,
+    CarBrandLogoDialogComponent,
     CarModelComponent,
-    CarModelUpdateDialogComponent
-
-
+    CarModelUpdateDialogComponent,
   ],
   providers: [
     CityService,
     SectorService,
     ColorService,
     CarBrandService,
-    CarModelService
+    CarModelService,
+    PositionService,
+    BrandModelService,
+    AuthGuardService,
+    AuthService,
   ],
   entryComponents: [
     CityUpdateDialogComponent,
     ColorUpdateDialogComponent,
     CarBrandUpdateDialogComponent,
     CarModelUpdateDialogComponent,
-    SectorUpdateDialogComponent
-
-  ]
+    SectorUpdateDialogComponent,
+    CarBrandLogoDialogComponent,
+  ],
 })
-
 export class AdminLayoutModule {}

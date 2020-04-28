@@ -10,7 +10,7 @@ export class CarBrandService {
   constructor(public db: AngularFirestore) {}
 
 getCarBrand(carBrandKey){
-    return this.db.collection('users').doc(carBrandKey).get();
+    return this.db.collection('carBrands').doc(carBrandKey).get();
   }
 updateCarBrand(carBrandKey, carBrand){
     return this.db.collection('carBrands').doc(carBrandKey).set({
@@ -18,10 +18,33 @@ updateCarBrand(carBrandKey, carBrand){
     });
   }
 
-deleteCarBrand(carBrandKey){
-    return this.db.collection('carBrands').doc(carBrandKey).delete();
-  }
+updateCarBrandAvatar(carBrandKey,avatar){
+  return this.db.collection("carBrands").doc(carBrandKey).update({
+    "photoUrl": avatar
+})
+.then(function() {
+    console.log("Document successfully updated!");
+});}
 
+
+deleteCarBrand(carBrand){
+  if(carBrand.data().photoUrl) {
+    
+    const storageRef = firebase.storage().refFromURL(carBrand.data().photoUrl);
+    storageRef.delete().then(
+      () => {
+        console.log('Photo removed!');
+      },
+      (error) => {
+        console.log('Could not remove photo! : ' + error);
+      }
+    );
+  }
+    return this.db.collection('carBrands').doc(carBrand.id).delete();
+  }
+getAvatars(){
+    return this.db.collection('carBrands').valueChanges();
+  }
 getCarBrandsSnapshot(){
     return this.db.collection('carBrands').snapshotChanges();
   }
@@ -33,29 +56,37 @@ getCarBrands(){
 
   createCarBrand(carBrand){
     return this.db.collection('carBrands').add({
-      name:carBrand.name
+      name:carBrand.name,
+      photoUrl:carBrand.photoUrl?carBrand.photoUrl:""
     });
   }
 
 /// Upload Image
-uploadImage(file:File){
+uploadImage(file:File,progress: { percentage: number }){
   return new Promise((resolve,reject)=>{
     const almostUniqueFileName = Date.now().toString(); 
     const upload = firebase.storage().ref()
      .child('images/brands/' + almostUniqueFileName + file.name).put(file); 
-    upload.on(firebase.storage.TaskEvent.STATE_CHANGED,
-      ()=>{
-        console.log('Chargement Image...') ; 
-      }, 
-      (error)=>{
-        console.log('Erreur de Chargement Image !'+error);
-        reject(); 
-        
-      },
-      ()=> {
-        resolve(upload.snapshot.ref.getDownloadURL()); 
+    
+     upload.on('state_changed', function(snapshot){
+      // Observe state change events such as progress, pause, and resume
+      // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+      progress.percentage = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+      console.log('Upload is ' + progress + '% done');
+      switch (snapshot.state) {
+        case firebase.storage.TaskState.PAUSED: // or 'paused'
+          console.log('Upload is paused');
+          break;
+        case firebase.storage.TaskState.RUNNING: // or 'running'
+          console.log('Upload is running');
+          break;
       }
-      );
+    }, function(error) {
+console.log(error)   
+ }, function() {
+      resolve(upload.snapshot.ref.getDownloadURL()); 
+    });
+
 
   });
 }

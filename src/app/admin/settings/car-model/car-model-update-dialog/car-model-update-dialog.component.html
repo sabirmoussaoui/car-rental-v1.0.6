@@ -2,7 +2,7 @@
 <mat-dialog-content [formGroup]="form">
     <mat-form-field>
         <mat-label>Car Brands</mat-label>
-        <mat-select formControlName="carBrand">
+        <mat-select formControlName="carBrandKey">
           <mat-option *ngFor="let carBrand of carBrands" [value]="carBrand.value">
             {{carBrand.viewValue}}
           </mat-option>
@@ -11,7 +11,7 @@
 
     <mat-form-field>
         <input matInput
-               placeholder="Update City"
+               placeholder="Update car model"
                formControlName="name">
     </mat-form-field>
     <mat-form-field>

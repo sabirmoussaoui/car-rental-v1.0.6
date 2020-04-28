@@ -1,0 +1,48 @@
+<h2 mat-dialog-title>Select main photo</h2>
+<mat-dialog-content [formGroup]="photoForm">
+  <div class="row">
+    <mat-form-field>
+      <mat-label>Car Brands</mat-label>
+      <mat-select formControlName="carBrand" (ngModelChange)="brandSelected()">
+        <mat-option *ngFor="let carBrand of carBrands" [value]="carBrand.value">
+          <img
+            class="rounded-circle"
+            width="30px"
+            height="30px"
+            *ngIf="carBrand.value.photoUrl"
+            [src]="carBrand.value.photoUrl"
+          />
+          {{ carBrand.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Car Models</mat-label>
+      <mat-select formControlName="carModel" (ngModelChange)="modelSelected()">
+        <mat-option *ngFor="let carModel of carModels" [value]="carModel.value">
+          {{ carModel.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-slider
+      thumbLabel
+      [displayWith]="formatLabel"
+      tickInterval="1000"
+      min="1"
+      max="1100"
+      (change)="rangeChange($event)"
+    >
+    </mat-slider>
+  </div>
+  <div>
+    <div class="row"></div>
+    <div class="d-flex align-content-center flex-wrap">
+      <div *ngFor="let avatar of avatars">
+        <img (click)="save(avatar)" class="img-thumbnail" [src]="avatar.link" />
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button class="btn btn-warning" (click)="close()">Close</button>
+</mat-dialog-actions>

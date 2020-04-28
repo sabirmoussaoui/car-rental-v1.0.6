@@ -1,10 +1,4 @@
-
 export class City {
-    constructor(
-    public name : string 
-    ) {
-    
-    }
-    
-    }
-    
+  cityKey: string;
+  constructor(public name: string) {}
+}

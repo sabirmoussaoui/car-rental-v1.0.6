@@ -12,8 +12,8 @@ import { UserProfileComponent } from 'src/app/client/user-profile/user-profile.c
 import { IconsComponent } from 'src/app/client/icons/icons.component';
 import { MapsComponent } from 'src/app/client/maps/maps.component';
 import { TablesComponent } from 'src/app/client/tables/tables.component';
-
-
+import { AuthGuardService } from 'src/app/services/auth-guard.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,7 @@ import { TablesComponent } from 'src/app/client/tables/tables.component';
     UserProfileComponent,
     TablesComponent,
     IconsComponent,
-    MapsComponent
+    MapsComponent,
   ],
   imports: [
     CommonModule,
@@ -30,7 +30,7 @@ import { TablesComponent } from 'src/app/client/tables/tables.component';
     HttpClientModule,
     NgbModule,
     ClipboardModule,
-
-  ]
+  ],
+  providers: [AuthGuardService, AuthService],
 })
-export class ClientLayoutModule { }
+export class ClientLayoutModule {}

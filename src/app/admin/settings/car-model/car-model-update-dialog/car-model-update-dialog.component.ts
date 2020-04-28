@@ -18,24 +18,24 @@ export class CarModelUpdateDialogComponent implements OnInit {
   form: FormGroup;
   name:string;
   year : number; 
-  carBrand:string; 
+  carBrandKey:string;
   carBrands : CarBrand[] = []
 
   constructor(
     private carBrandService: CarBrandService,
       private fb: FormBuilder,
       private dialogRef: MatDialogRef<CarModelUpdateDialogComponent>,
-      @Inject(MAT_DIALOG_DATA) {name,year,carBrand,carBrandKey}:CarModel ) {
+      @Inject(MAT_DIALOG_DATA) {name,year,carBrandKey}:CarModel ) {
         
       this.getCarBrands()
       this.name = name;
       this.year = year;
-      this.carBrand = carBrand+"@"+carBrandKey;
+      this.carBrandKey = carBrandKey;
 
       this.form = fb.group({
           name: [name, Validators.required],
           year: [year, Validators.required],
-          carBrand: [carBrand, Validators.required],
+          carBrandKey: [carBrandKey, Validators.required],
       });
 
   }
@@ -49,7 +49,7 @@ export class CarModelUpdateDialogComponent implements OnInit {
   result.forEach(doc=>{
     const name = doc.data().name; 
     const carBrandKey = doc.id; 
-    this.carBrands.push({value:name+'@'+carBrandKey,viewValue:name})
+    this.carBrands.push({value:carBrandKey,viewValue:name})
     })})
   }
   save() {

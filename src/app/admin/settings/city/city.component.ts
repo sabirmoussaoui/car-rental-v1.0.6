@@ -26,7 +26,6 @@ cityForm : FormGroup;
 
   }
 //Dialod
-
 openDialog(cityKey,name) {
   const dialogConfig = new MatDialogConfig();
 
@@ -46,7 +45,7 @@ openDialog(cityKey,name) {
         this.onUpdateCity(cityKey,data)}
       }
   );   }
-//  Setting Cities
+// Cities
 initCityForm(){
   this.cityForm = this.formBuilder.group(
     {'name' : ['',Validators.required]},
@@ -80,7 +79,7 @@ onDeleteCity(cityKey){
   this.cityService.deleteCity(cityKey)
   .then(
     res => {
-     console.log("safi tmsseh")
+     console.log("successfully deleted")
     },
     err => {
       console.log(err);

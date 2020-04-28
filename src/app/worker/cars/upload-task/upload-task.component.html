@@ -1,0 +1,52 @@
+<div *ngIf="percentage | async as pct" class="progress-wrapper progress-s">
+  <div class="progress-info">
+    <div class="progress-percentage">
+      <span> {{ pct | number }}%</span>
+    </div>
+  </div>
+  <div class="progress">
+    <div
+      class="progress-bar bg-warning"
+      role="progressbar"
+      attr.aria-valuenow=" {{ pct | number }}"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      [ngStyle]="{ width: pct + '%' }"
+    ></div>
+  </div>
+</div>
+<div *ngIf="snapshot | async as snap">
+  <div class="row">
+    <div
+      *ngIf="downloadURL as url"
+      class="d-flex align-content-center flex-wrap"
+    >
+      <img class="img-thumbnail" [src]="url" />
+    </div>
+  </div>
+  <hr />
+  <button
+    type="button"
+    (click)="task.pause()"
+    class="btn btn-warning btn-fab btn-icon btn-round"
+    [disabled]="!isActive(snap)"
+  >
+    <i class="ni ni-button-pause"></i>
+  </button>
+  <button
+    type="button"
+    (click)="task.resume()"
+    class="btn btn-info btn-fab btn-icon btn-round"
+    [disabled]="!(snap?.state === 'paused')"
+  >
+    <i class="ni ni-button-play"></i>
+  </button>
+  <button
+    type="button"
+    (click)="task.cancel()"
+    class="btn btn-danger btn-fab btn-icon btn-round"
+    [disabled]="!isActive(snap)"
+  >
+    <i class="ni ni-button-power"></i>
+  </button>
+</div>

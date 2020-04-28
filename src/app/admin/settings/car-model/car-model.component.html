@@ -56,36 +56,40 @@
                     <div class="card-header border-0">
                         <h3 class="mb-0">Add new car Model</h3>
                         <form [formGroup]="carModelForm" (ngSubmit)="onSaveCarModel()">
-                            <div class="row">
-                                <div class="col-lg-4">
+                          
+                              
                                     <mat-form-field>
                                       <mat-label>Car Brands</mat-label>
-                                      <mat-select formControlName="carBrand">
-                                        <mat-option *ngFor="let carBrand of carBrands" [value]="carBrand.value">
+                                      <mat-select formControlName="carBrandKey">
+                                        <mat-option *ngFor="let carBrand of carBrands" 
+                                        [value]="carBrand.value">
                                           {{carBrand.viewValue}}
                                         </mat-option>
                                       </mat-select>
                                     </mat-form-field>    
-                                  </div>
-                                <div class="col-lg-4">
+                             
+                            <div class="row">
+                                <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group input-group-alternative mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">
-                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                    <i class="fa fa-taxi" aria-hidden="true"></i>
                                                 </span>
                                             </div>
-                                            <input class="form-control" placeholder="carModel" id="name"
+                                            <input class="form-control" placeholder="Car model" id="name"
                                                 formControlName="name" type="text">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group input-group-alternative mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">
-                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                    <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
                                                 </span>
                                             </div>
                                             <input class="form-control" placeholder="Year" id="year"
@@ -93,6 +97,8 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-lg-4">
                                     <button class="btn  btn-info" [disabled]="carModelForm.invalid" type="submit">
                                         Add <i class="fa fa-plus-circle" aria-hidden="true"></i>
@@ -112,29 +118,38 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let carModel of carModels">
+                                <tr *ngFor="let carBrandModel of carBrandModels">
                                     <td>
-                                        <span>{{carModel.payload.doc.data().name}}</span>
+                                        <span>{{carBrandModel.carModel}}</span>
                                     </td>
                                     <td>
-                                        <span>{{carModel.payload.doc.data().year}}</span>
+                                        <span>{{carBrandModel.year}}</span>
                                     </td>
                                     <td>
-                                        <span>{{carModel.payload.doc.data().carBrand}}</span>
+                                        <div class="media align-items-center">
+                                            <a class="avatar rounded-circle mr-3">
+                                                <img alt="Image placeholder"
+                                                    *ngIf="carBrandModel.photoUrl"
+                                                    [src]="carBrandModel.photoUrl">
+                                            </a>
+                                             <div class="media-body">
+                                                <span class="mb-0 text-sm">
+                                                    {{carBrandModel.carBrand}}
+                                                </span>
+                                            </div>
+                                        </div>
                                     </td>
                                     <td>
                                         <button class="btn btn-danger rounded-circle"
-                                            (click)="onDeleteCarModel(carModel.payload.doc.id)" type="button">
+                                            (click)="onDeleteCarModel(carBrandModel.carModelKey)" type="button">
                                             <i class="fa fa-times-circle" aria-hidden="true"></i>
                                         </button>
                                         <button class="btn btn-primary rounded-circle"
                                             (click)="openDialog(
-                                                carModel.payload.doc.id,
-                                                carModel.payload.doc.data().name,
-                                                carModel.payload.doc.data().year,
-                                                carModel.payload.doc.data().carBrand,
-                                                carModel.payload.doc.data().carBrandKey
-
+                                                carBrandModel.carModelKey,
+                                                carBrandModel.carModel,
+                                                carBrandModel.year,    
+                                                carBrandModel.carBrandKey
                                                 )"
                                             type="button">
                                             <i class="fa fa-edit" aria-hidden="true"></i>

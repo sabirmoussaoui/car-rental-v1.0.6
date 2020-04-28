@@ -4,6 +4,7 @@ import { CarBrandService } from 'src/app/services/car-brand.service';
 import { CarBrand } from 'src/app/models/CarBrand.model';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { CarBrandUpdateDialogComponent } from './car-brand-update-dialog/car-brand-update-dialog.component';
+import { CarBrandLogoDialogComponent } from './car-brand-logo-dialog/car-brand-logo-dialog.component';
 
 @Component({
   selector: 'app-car-brand',
@@ -19,6 +20,8 @@ imageIsUploading = false ;
 imageUploaded = false; 
 imageUrl : string ; 
 
+progress: { percentage: number } = { percentage: 0 };
+
   constructor(
     private carBrandService : CarBrandService,
     private formBuilder : FormBuilder,
@@ -30,28 +33,40 @@ imageUrl : string ;
     this.getCarBrands()
 
   }
+
 //Dialod
-
-openDialog(carBrandKey,name) {
+openDialog(carBrandKey,name,photoUrl) {
   const dialogConfig = new MatDialogConfig();
-
   dialogConfig.disableClose = true;
   dialogConfig.autoFocus = true;
- 
+  dialogConfig.width = '600px'; 
   dialogConfig.data = {
-      name: name
+      name: name,
+      photoUrl:photoUrl
   };
-  
   const dialogRef = this.dialog.open(CarBrandUpdateDialogComponent, dialogConfig);
 
   dialogRef.afterClosed().subscribe(
       data =>{ 
         if(data!=undefined){
-        console.log("Dialog output:", data.name + carBrandKey)    
-        this.onUpdateCarBrand(carBrandKey,data)}
+        console.log("Dialog output:", data.name + carBrandKey+data.photoUrl)    
+        // this.onUpdateCarBrand(carBrandKey,data)
       }
-  );   }
-//  Setting carBrands
+      }
+  );  
+ }
+openDialogAvatar(carBrandkey) {
+    const dialogRef = this.dialog.open(CarBrandLogoDialogComponent, {
+      width: '600px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.onUpdateCarBrandAvatar(carBrandkey,result.link)
+      }
+    });
+  }
+//   carBrands
 initCarBrandForm(){
   this.carBrandForm = this.formBuilder.group(
     {'name' : ['',Validators.required]},
@@ -73,11 +88,10 @@ getCarBrands(){
   onUploadImage(file:File){
     console.log(file)
     this.imageIsUploading = true; 
-    this.carBrandService.uploadImage(file).then(
+    this.carBrandService.uploadImage(file,this.progress).then(
       (url:string)=>{
         this.imageUrl = url ;
         console.log('Url =>'+url);
-         
         this.imageIsUploading = false; 
         this.imageUploaded=true; 
       }
@@ -88,11 +102,14 @@ getCarBrands(){
 onSaveCarBrand(){
     const carBrand =new CarBrand(this.carBrandForm.get("name").value) ; 
     if(this.imageUrl && this.imageUrl !== ''){
-      carBrand.photo = this.imageUrl ; 
+      carBrand.photoUrl = this.imageUrl ; 
     }
     this.carBrandService.createCarBrand(carBrand)
 }
 
+onUpdateCarBrandAvatar(carBrandKey,avatar){
+  this.carBrandService.updateCarBrandAvatar(carBrandKey,avatar)
+}
 
 onUpdateCarBrand(carBrandKey,data){
    const carBrandUpdate =new CarBrand(data.name) ; 
@@ -101,10 +118,9 @@ onUpdateCarBrand(carBrandKey,data){
 }
 
 
-
-onDeleteCarBrand(carBrandKey){
-  console.log(carBrandKey)
-  this.carBrandService.deleteCarBrand(carBrandKey)
+ 
+onDeleteCarBrand(carBrand){
+  this.carBrandService.deleteCarBrand(carBrand)
   .then(
     res => {
      console.log("safi tmsseh")

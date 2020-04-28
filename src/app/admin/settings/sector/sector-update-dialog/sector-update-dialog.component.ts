@@ -13,22 +13,24 @@ interface City {
   styleUrls: ['./sector-update-dialog.component.scss']
 })
 export class SectorUpdateDialogComponent implements OnInit{
-  form: FormGroup;
+  formSector: FormGroup;
   name:string;
-  city:string ; 
+  cityKey:string; 
   cities: City[] = []
 
   constructor(
       private fb: FormBuilder,
       private cityService :   CityService,
       private dialogRef: MatDialogRef<SectorUpdateDialogComponent>,
-      @Inject(MAT_DIALOG_DATA) {name,city,cityKey}:Sector ) {
+      @Inject(MAT_DIALOG_DATA) {name,cityKey}:Sector ) {
       this.getCities();
+      
       this.name = name;
-      this.city = city+"@"+cityKey; 
-        this.form = fb.group({
+      this.cityKey = cityKey; 
+
+      this.formSector = fb.group({
           name: [name, Validators.required],
-          city:[city, Validators.required],
+          cityKey:[cityKey, Validators.required],
       });
       
 
@@ -43,13 +45,12 @@ export class SectorUpdateDialogComponent implements OnInit{
   result.forEach(doc=>{
     const name = doc.data().name; 
     const cityKey = doc.id; 
-    console.log("city : "+name + "Key :"+ cityKey)
-    this.cities.push({value:name+'@'+cityKey,viewValue:name})
+    this.cities.push({value:cityKey,viewValue:name})
     })})
   }
 
   save() {
-      this.dialogRef.close(this.form.value);
+      this.dialogRef.close(this.formSector.value);
   }
 
   close() {

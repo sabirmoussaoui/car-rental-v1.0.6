@@ -1,0 +1,66 @@
+<h2 mat-dialog-title>Edit car</h2>
+<mat-dialog-content [formGroup]="carForm">
+  <div class="row">
+    <mat-form-field>
+      <mat-label>Car Brands</mat-label>
+      <mat-select formControlName="carBrand" (ngModelChange)="brandSelected()">
+        <mat-option *ngFor="let carBrand of carBrands" [value]="carBrand.value">
+          <img
+            class="rounded-circle"
+            width="30px"
+            height="30px"
+            *ngIf="carBrand.value.photoUrl"
+            [src]="carBrand.value.photoUrl"
+          />
+          {{ carBrand.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Car Models</mat-label>
+      <mat-select formControlName="carModel">
+        <mat-option *ngFor="let carModel of carModels" [value]="carModel.value">
+          {{ carModel.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="price"
+      matInput
+      type="number"
+      formControlName="price"
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="quantity" formControlName="quantity" />
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="place" formControlName="place" />
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="door" formControlName="door" />
+  </mat-form-field>
+  <div
+    class="btn-group btn-group-toggle"
+    ngbRadioGroup
+    name="radioBasic"
+    formControlName="fuel"
+  >
+    <label ngbButtonLabel class="btn-primary">
+      Choose the fuel
+    </label>
+    <label ngbButtonLabel class="btn-primary">
+      <input ngbButton type="radio" value="diesel" /> Diesel
+    </label>
+    <label ngbButtonLabel class="btn-primary">
+      <input ngbButton type="radio" value="pitrol" /> Pitrol
+    </label>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button class="btn btn-warning" (click)="close()">Close</button>
+  <button class="btn btn-success" (click)="save()">Save</button>
+</mat-dialog-actions>

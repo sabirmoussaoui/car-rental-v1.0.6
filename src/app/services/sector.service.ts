@@ -1,9 +1,17 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch'; 
 @Injectable({
   providedIn: 'root'
 })
+
 export class SectorService {
+
+  positionCollection : AngularFirestoreCollection<Position>;
+  positionItem : Observable<Position[]>;
+
 
   constructor(
     public db: AngularFirestore
@@ -17,7 +25,6 @@ export class SectorService {
     return this.db.collection('sectors').doc(sectorKey).set(
       {
         name:sector.name,
-        city:sector.city,
         cityKey:sector.cityKey
       }
       
@@ -33,13 +40,12 @@ export class SectorService {
   }
 
   getSectorsSnapshot(){
-    return this.db.collection('sectors').snapshotChanges();
-
-  }
+    
+  return this.db.collection('sectors').snapshotChanges();
+}
   createSector(sector){
     return this.db.collection('sectors').add({
       name:sector.name,
-      city:sector.city,
       cityKey:sector.cityKey
     });
   }

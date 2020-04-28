@@ -5,7 +5,13 @@ import { CarModel } from 'src/app/models/CarModel.model';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { CarModelUpdateDialogComponent } from './car-model-update-dialog/car-model-update-dialog.component';
 import { CarBrandService } from 'src/app/services/car-brand.service';
-interface CarBrand {
+import { CarBrand } from 'src/app/models/CarBrand.model';
+import { MatSelectChange } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { BrandModel } from 'src/app/interfaces/brandModel';
+import { BrandModelService } from 'src/app/services/brand-model.service';
+interface CarBrandSelect {
   value: string;
   viewValue: string;
 }
@@ -18,15 +24,20 @@ interface CarBrand {
   ],
 })
 export class CarModelComponent implements OnInit {
-carBrands : CarBrand[] = []
+carBrands : CarBrandSelect[] = []
+
+ compt=0
 //carModels
-carModels: Array<any> ;
 carModelForm : FormGroup; 
+
+carBrandModels   : BrandModel[]; 
+
   constructor(
     private carModelService : CarModelService,
     private formBuilder : FormBuilder,
     private dialog: MatDialog,
-    private carBrandService: CarBrandService
+    private carBrandService: CarBrandService,
+    private brandModelService : BrandModelService
   ) { }
 
   ngOnInit(): void {
@@ -35,7 +46,7 @@ carModelForm : FormGroup;
     this.getCarBrands(); 
   }
 
-openDialog(carModelKey,name,year,carBrand,carBrandKey) {
+openDialog(carModelKey,name,year,carBrandKey) {
   const dialogConfig = new MatDialogConfig();
 
   dialogConfig.disableClose = true;
@@ -44,7 +55,6 @@ openDialog(carModelKey,name,year,carBrand,carBrandKey) {
   dialogConfig.data = {
       name: name,
       year: year , 
-      carBrand: carBrand , 
       carBrandKey :carBrandKey
   };
   
@@ -64,39 +74,33 @@ initCarModelForm(){
     {
       'name'  :  ['',Validators.required],
       'year'  :  ['',Validators.required],
-      'carBrand' : ['',Validators.required],
+      'carBrandKey' : ['',Validators.required],
 
   },
 )}
 
 
 getCarModels(){
-     this.carModelService.getCarModelsSnapshot()
-    .subscribe(result => {
-      this.carModels = result;
-    })
+  this.brandModelService.sellectAllCarModelssWithCarBrands() 
+  .subscribe(carBrandModels => {
+    this.carBrandModels = carBrandModels;
+  })
   }
 
-onSplit(data){const result  =data.split("@"); return result}
 onSaveCarModel(){
     const name = this.carModelForm.get("name").value
     const year = this.carModelForm.get("year").value
-    const carBrandwithKey = this.carModelForm.get("carBrand").value
-    const result  =this.onSplit(carBrandwithKey)
-    const carModel =new CarModel(name,year,result[0],result[1]) ; 
+    const carBrandKey = this.carModelForm.get("carBrandKey").value
+    const carModel =new CarModel(name,year,carBrandKey) ; 
+    console.log(carModel)
     this.carModelService.createCarModel(carModel)
 }
 
 
 onUpdateCarModel(carModelKey,data){
-   const result= this.onSplit(data.carBrand) ; 
-   data.carBrandKey  = result[1]
-   data.carBrand= result[0]
-   console.log(data.carBrand + "key"+data.carBrandKey)
    const carModelUpdate =new CarModel(
      data.name,
      data.year,
-     data.carBrand,
      data.carBrandKey
      ) ;
 
@@ -124,7 +128,7 @@ getCarBrands(){
   result.forEach(doc=>{
     const name = doc.data().name; 
     const carBrandKey = doc.id; 
-    this.carBrands.push({value:name+'@'+carBrandKey,viewValue:name})
+    this.carBrands.push({value:carBrandKey,viewValue:name})
     })})
   }
 }

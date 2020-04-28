@@ -9,13 +9,16 @@ export class CarModelService {
   constructor(public db: AngularFirestore) {}
 
 getCarModel(carModelKey){
-    return this.db.collection('users').doc(carModelKey).get();
+    return this.db.collection('carModels').doc(carModelKey).get();
+  }
+findCarModelsByBrand(carBrandKey){
+    return this.db.collection('carModels',ref=>ref.where("carBrandKey","==",carBrandKey)).get();
   }
 updateCarModel(carModelKey, carModel){
-    return this.db.collection('carModels').doc(carModelKey).set({
+    return this.db.collection('carModels').doc(carModelKey).
+    set({
       name:carModel.name,
       year:carModel.year,
-      carBrand:carModel.carBrand,
       carBrandKey:carModel.carBrandKey
     });
   }
@@ -33,12 +36,12 @@ getCarModels(){
   }
 
 
-  createCarModel(carModel){
-    return this.db.collection('carModels').add({
+createCarModel(carModel){
+  this.db.collection('carModels').add({
       name:carModel.name,
       year:carModel.year,
-      carBrand:carModel.carBrand,
-      carBrandKey:carModel.carBrandKey
-    });
+      carBrandKey:carModel.carBrandKey       
+    }
+      )
   }
 }

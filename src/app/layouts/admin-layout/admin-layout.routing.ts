@@ -11,22 +11,52 @@ import { SectorComponent } from 'src/app/admin/settings/sector/sector.component'
 import { ColorComponent } from 'src/app/admin/settings/color/color.component';
 import { CarBrandComponent } from 'src/app/admin/settings/car-brand/car-brand.component';
 import { CarModelComponent } from 'src/app/admin/settings/car-model/car-model.component';
+import { AuthGuardService } from 'src/app/services/auth-guard.service';
 
 export const AdminLayoutRoutes: Routes = [
-    { path: 'admin/dashboard',      component: DashboardComponent },
-    { path: 'admin/user-profile',   component: UserProfileComponent },
-    { path: 'admin/tables',         component: TablesComponent },
-    { path: 'admin/icons',          component: IconsComponent },
-    { path: 'admin/maps',           component: MapsComponent },
-    
-    
-    { path: 'admin/settings',                 component: SettingsComponent },
-    { path: 'admin/settings/cities',          component: CityComponent },
-    { path: 'admin/settings/sectors',         component: SectorComponent },
-    { path: 'admin/settings/colors',          component: ColorComponent },
-    { path: 'admin/settings/car-brands',      component: CarBrandComponent },
-    { path: 'admin/settings/car-models',      component: CarModelComponent },
+  {
+    path: 'admin/dashboard',
+    component: DashboardComponent,
+  },
+  {
+    path: 'admin/user-profile',
+    component: UserProfileComponent,
+  },
+  {
+    path: 'admin/tables',
+    component: TablesComponent,
+  },
+  {
+    path: 'admin/icons',
+    component: IconsComponent,
+  },
+  {
+    path: 'admin/maps',
+    component: MapsComponent,
+  },
 
-
-
+  {
+    path: 'admin/settings',
+    component: SettingsComponent,
+  },
+  {
+    path: 'admin/settings/cities',
+    component: CityComponent,
+  },
+  {
+    path: 'admin/settings/sectors',
+    component: SectorComponent,
+  },
+  {
+    path: 'admin/settings/colors',
+    component: ColorComponent,
+  },
+  {
+    path: 'admin/settings/car-brands',
+    component: CarBrandComponent,
+  },
+  {
+    path: 'admin/settings/car-models',
+    component: CarModelComponent,
+  },
 ];

@@ -14,11 +14,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { ComponentsModule } from './components/components.module';
 import { WorkerLayoutComponent } from './layouts/worker-layout/worker-layout.component';
 import { ClientLayoutComponent } from './layouts/client-layout/client-layout.component';
-import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-
-
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AuthGuardService } from './services/auth-guard.service';
+import { AuthService } from './services/auth.service';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -27,9 +29,11 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     ComponentsModule,
     NgbModule,
     RouterModule,
-    AppRoutingModule,    
+    AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    AngularFireStorageModule,
+    AngularFireAuthModule,
   ],
   declarations: [
     AppComponent,
@@ -37,13 +41,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     AuthLayoutComponent,
     WorkerLayoutComponent,
     ClientLayoutComponent,
-
-   
-  
- 
-   
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

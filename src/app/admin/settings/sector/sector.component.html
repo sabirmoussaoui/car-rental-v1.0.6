@@ -58,7 +58,7 @@
                             <div class="col-lg-6">
                                 <mat-form-field>
                                   <mat-label>City</mat-label>
-                                  <mat-select formControlName="city">
+                                  <mat-select formControlName="cityKey">
                                     <mat-option *ngFor="let city of cities" [value]="city.value">
                                       {{city.viewValue}}
                                     </mat-option>
@@ -96,20 +96,20 @@
                               </tr>
                           </thead>
                           <tbody>
-                              <tr *ngFor="let sector of sectors">
+                              <tr *ngFor="let position of positions">
                                   <td>
-                                      <span>{{sector.payload.doc.data().name}}</span>
+                                      <span>{{position.sector}}</span>
                                   </td>
                                   <td>
-                                    <span>{{sector.payload.doc.data().city}}</span>
+                                       <span>{{position.city}}</span>
                                 </td>
                                   <td>
                                       <button class="btn btn-danger rounded-circle"
-                                          (click)="onDeleteSector(sector.payload.doc.id)" type="button">
+                                          (click)="onDeleteSector(position.sectorKey)" type="button">
                                           <i class="fa fa-times-circle" aria-hidden="true"></i>
                                       </button>
                                       <button class="btn btn-primary rounded-circle"
-                                          (click)="openDialog(sector.payload.doc.id,sector.payload.doc.data().name,sector.payload.doc.data().city,sector.payload.doc.data().cityKey)"
+                                          (click)="openDialog(position.sectorKey,position.sector,position.cityKey)"
                                           type="button">
                                           <i class="fa fa-edit" aria-hidden="true"></i>
                                       </button>

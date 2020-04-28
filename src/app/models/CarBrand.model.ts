@@ -1,11 +1,10 @@
 
 export class CarBrand {
-    photo:string 
+   photoUrl:string
+   carBrandKey:string 
     constructor(
     public name : string 
-    ) {
-    
-    }
+    ) {}
     
     }
     

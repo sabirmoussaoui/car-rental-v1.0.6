@@ -1,1 +1,41 @@
 /* You can add global styles to this file, and also import other style files */
+.dropzone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 953px;
+  font-weight: 200;
+  height: 300px;
+  border: 3px dashed #5e72e4;
+  border-radius: 5px;
+  background: #e9ecef;
+  margin: 10px 0;
+  font-family: monospace;
+
+  &.hovering {
+    border: 2px solid #e4366a;
+    color: #dadada !important;
+  }
+
+  .file-label {
+    font-size: 1.2em;
+  }
+}
+.drop-p {
+  font-size: 20px;
+}
+progress::-webkit-progress-value {
+  transition: width 0.1s ease;
+}
+
+.avatar-btn {
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  border-radius: 50%;
+  height: 48px;
+  width: 48px;
+}

@@ -1,9 +1,9 @@
 <h2 mat-dialog-title>{{name}}</h2>
-<mat-dialog-content [formGroup]="form">
+<mat-dialog-content [formGroup]="formSector">
     <div class="col-lg-4">
         <mat-form-field>
           <mat-label>City</mat-label>
-          <mat-select formControlName="city">
+          <mat-select formControlName="cityKey">
             <mat-option *ngFor="let city of cities" [value]="city.value">
               {{city.viewValue}}
             </mat-option>
@@ -13,7 +13,7 @@
     <div class="col-lg-4">
     <mat-form-field>
         <input matInput
-               placeholder="Update City"
+               placeholder="Update sector"
                formControlName="name">
     </mat-form-field>
     </div>

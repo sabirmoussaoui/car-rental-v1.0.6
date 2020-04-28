@@ -16,18 +16,18 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link mb-sm-3 mb-md-0" id="tabs-text-3-tab" data-toggle="tab"
-                        [routerLink]="['/admin/settings/colors']"
-                        role="tab" aria-controls="tabs-text-3" aria-selected="false">Colors</a>
+                        [routerLink]="['/admin/settings/colors']" role="tab" aria-controls="tabs-text-3"
+                        aria-selected="false">Colors</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link mb-sm-3 mb-md-0 active " id="tabs-text-3-tab" data-toggle="tab" 
-                        [routerLink]="['/admin/settings/car-brands']"
-                        role="tab" aria-controls="tabs-text-3" aria-selected="false">Car Brands</a>
+                    <a class="nav-link mb-sm-3 mb-md-0 active " id="tabs-text-3-tab" data-toggle="tab"
+                        [routerLink]="['/admin/settings/car-brands']" role="tab" aria-controls="tabs-text-3"
+                        aria-selected="false">Car Brands</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link mb-sm-3 mb-md-0 " id="tabs-text-3-tab" data-toggle="tab" 
-                        [routerLink]="['/admin/settings/car-models']"
-                        role="tab" aria-controls="tabs-text-3" aria-selected="false">Car Models</a>
+                    <a class="nav-link mb-sm-3 mb-md-0 " id="tabs-text-3-tab" data-toggle="tab"
+                        [routerLink]="['/admin/settings/car-models']" role="tab" aria-controls="tabs-text-3"
+                        aria-selected="false">Car Models</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link mb-sm-3 mb-md-0" id="tabs-text-3-tab" data-toggle="tab" href="#tabs-text-3"
@@ -52,40 +52,51 @@
                     </div>
                 </div>
                 <div class="card-body">
-
                     <div class="card-header border-0">
                         <h3 class="mb-0">Add new car brand</h3>
                         <form [formGroup]="carBrandForm" (ngSubmit)="onSaveCarBrand()">
                             <div class="row">
-                                <div class="col-lg-4">
+                                <div class="col-lg-12">
                                     <div class="form-group">
-                                        <div class="input-group input-group-alternative mb-3">
+                                        <div class="input-group input-group-alternative mb-3 btn-block ">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">
-                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                    <i class="fa fa-car" aria-hidden="true"></i>
                                                 </span>
                                             </div>
-                                            <input class="form-control" placeholder="carBrand" id="name"
+                                            <input class="form-control" placeholder="Car brand" id="name"
                                                 formControlName="name" type="text">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <input type="file" class="custom-file-input" id="image-input" (change)="detectImage($event)" accept="image/*">
-                                        <label class="btn btn-default btn-round" for="image-input">Choisir une image  <i class="ni ni-image"></i> </label>
-                                    </div>
-                                  </div>  
                             </div>
                             <div class="row">
-                            <div class="col-lg-4">
-                                <button class="btn  btn-info" [disabled]="carBrandForm.invalid" type="submit">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <input type="file" class="custom-file-input" id="image-input"
+                                            (change)="detectImage($event)" accept="image/*">
+                                        <label class="btn btn-default btn-block btn-round" for="image-input">Choose Logo
+                                            <i class="ni ni-image"></i> </label>
+                                    </div>
+                               
+                                          <div class="progress-wrapper">
+                                            <div class="progress-info"> 
+                                              <div class="progress-percentage">
+                                                <span> {{progress.percentage}}%</span>
+                                              </div>
+                                            </div>
+                                            <div class="progress">
+                                              <div class="progress-bar bg-warning" role="progressbar" attr.aria-valuenow="{{progress.percentage}}" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}"></div>
+                                            </div>
+                                          </div>
+                                </div>                                                     
+                            </div>
+                            <div class="row">
+                            <div class="col-lg-12">
+                                <button class="btn btn-block btn-info btn-round" [disabled]="carBrandForm.invalid" type="submit">
                                     Add <i class="fa fa-plus-circle" aria-hidden="true"></i>
                                 </button>
                             </div>
-                            <div class="col-lg-4">
-                                <p class="text-success" *ngIf="imageUploaded">Fichier chargé !</p>
-                                </div>  
                             </div>
                         </form>
                     </div>
@@ -93,22 +104,40 @@
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">carBrand</th>
+                                    <th scope="col">car brands</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let carBrand of carBrands">
-                                    <td>
-                                        <span>{{carBrand.payload.doc.data().name}}</span>
-                                    </td>
+
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <button class="btn btn-round rounded-circle" 
+                                            (click)="openDialogAvatar(carBrand.payload.doc.id)"
+                                            >
+                                                <img alt="Image placeholder"style="width:30px;min-height:30px"
+                                                    *ngIf="carBrand.payload.doc.data().photoUrl"
+                                                    [src]="carBrand.payload.doc.data().photoUrl">
+                                            </button>
+                                            <div class="media-body">
+                                                <span class="mb-0 text-sm">
+                                                    {{carBrand.payload.doc.data().name}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </th>
                                     <td>
                                         <button class="btn btn-danger rounded-circle"
-                                            (click)="onDeleteCarBrand(carBrand.payload.doc.id)" type="button">
+                                            (click)="onDeleteCarBrand(carBrand.payload.doc)" type="button">
                                             <i class="fa fa-times-circle" aria-hidden="true"></i>
                                         </button>
                                         <button class="btn btn-primary rounded-circle"
-                                            (click)="openDialog(carBrand.payload.doc.id,carBrand.payload.doc.data().name)"
+                                            (click)="openDialog(
+                                            carBrand.payload.doc.id,
+                                            carBrand.payload.doc.data().name,
+                                            carBrand.payload.doc.data().photoUrl
+                                            )"
                                             type="button">
                                             <i class="fa fa-edit" aria-hidden="true"></i>
                                         </button>

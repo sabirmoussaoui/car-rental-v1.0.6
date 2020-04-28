@@ -1,13 +1,10 @@
-import { City } from './City.model';
 
 export class Sector {
     constructor(
-    public name: string ,
-    public city : string ,
+    public name    : string ,
     public cityKey : string
     ) {
     
     }
-    
-    }
+}
     
