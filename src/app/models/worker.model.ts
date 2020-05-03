@@ -3,6 +3,7 @@ import { City } from './City.model';
 
 export class Worker {
   public logo: string;
+  public workerKey: string;
   constructor(
     public name: string,
     public phone: string,

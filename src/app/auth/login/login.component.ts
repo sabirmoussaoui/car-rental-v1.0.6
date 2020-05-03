@@ -1,12 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { RoleService } from 'src/app/services/role.service';
 import { Router } from '@angular/router';
-import {
-  FormControl,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import firebase from 'firebase';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +16,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private roleService: RoleService,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit() {
@@ -36,16 +36,28 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
   onLogin() {
+    this.spinner.show();
     const email = this.loginForm.get('email').value;
     const password = this.loginForm.get('password').value;
     console.log(email + 'pssw' + password);
     this.authService.signInUser(email, password).then(
       () => {
-        this.router.navigate(['/worker/dashboard']);
+        firebase.auth().onAuthStateChanged((user) => {
+          if (user) {
+            this.getCurrentuser(user.uid);
+          }
+        });
       },
       (error) => {
+        this.spinner.hide();
         console.log(error);
       }
     );
+  }
+  getCurrentuser(userKey) {
+    this.roleService.getRole(userKey).subscribe((user) => {
+      this.spinner.hide();
+      this.router.navigate(['/' + user.data().role + '/dashboard']);
+    });
   }
 }

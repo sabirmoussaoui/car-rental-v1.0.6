@@ -16,3 +16,15 @@
   height: 35px;
   border-radius: 50% !important;
 }
+.icon-solid {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  padding-left: 8px;
+  background-repeat: no-repeat;
+}
+.icon-solid--car-gears-automatic {
+  background: url(https://cdn2.rcstatic.com/images/site_graphics/newsite/solid--car-gears-automatic.png);
+  background: url(https://cdn2.rcstatic.com/images/site_graphics/newsite/solid--car-gears-automatic.svg),
+    none;
+}

@@ -8,10 +8,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../admin/dashboard/dashboard.component';
-import { IconsComponent } from '../../admin/icons/icons.component';
-import { MapsComponent } from '../../admin/maps/maps.component';
 import { UserProfileComponent } from '../../admin/user-profile/user-profile.component';
-import { TablesComponent } from '../../admin/tables/tables.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // import { ToastrModule } from 'ngx-toastr';
 import { MatSliderModule } from '@angular/material/slider';
@@ -50,7 +47,6 @@ import { AuthService } from 'src/app/services/auth.service';
     HttpClientModule,
     NgbModule,
     ClipboardModule,
-
     MatSliderModule,
     ReactiveFormsModule,
     MatDialogModule,
@@ -62,9 +58,6 @@ import { AuthService } from 'src/app/services/auth.service';
   declarations: [
     DashboardComponent,
     UserProfileComponent,
-    TablesComponent,
-    IconsComponent,
-    MapsComponent,
     SettingsComponent,
     CityComponent,
     CityUpdateDialogComponent,

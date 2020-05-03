@@ -1,5 +1,8 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { ROUTES } from '../sidebar/sidebar.component';
+import { WORKER_ROUTES } from '../sidebar/sidebar.component';
+import { CLIENT_ROUTES } from '../sidebar/sidebar.component';
+import { ADMIN_ROUTES } from '../sidebar/sidebar.component';
+
 import {
   Location,
   LocationStrategy,
@@ -10,6 +13,8 @@ import { WorkerService } from 'src/app/services/worker.service';
 import { Worker } from '../../models/Worker.model';
 import { AuthService } from 'src/app/services/auth.service';
 import * as firebase from 'firebase';
+import { RoleService } from 'src/app/services/role.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -26,26 +31,45 @@ export class NavbarComponent implements OnInit {
     private element: ElementRef,
     private router: Router,
     private workerService: WorkerService,
-    private authService: AuthService
+    private authService: AuthService,
+    private roleService: RoleService,
+    private spinner: NgxSpinnerService
   ) {
     this.location = location;
   }
-
   ngOnInit() {
-    firebase.auth().onAuthStateChanged((worker) => {
-      if (worker) {
-        this.getCurrentWorker(worker.uid);
-        this.isAuth = true;
-      } else {
-        this.isAuth = false;
+    /// Get Current User
+    this.spinner.show();
+    firebase.auth().onAuthStateChanged(
+      (user) => {
+        if (user) {
+          this.isAuth = true;
+          this.roleService.getRole(user.uid).subscribe((user) => {
+            if (user.data().role === 'worker') {
+              this.listTitles = WORKER_ROUTES.filter((listTitle) => listTitle);
+              this.getCurrentWorker(user.id);
+            } else if (user.data().role === 'client') {
+              this.listTitles = CLIENT_ROUTES.filter((listTitle) => listTitle);
+            } else {
+              this.listTitles = ADMIN_ROUTES.filter((listTitle) => listTitle);
+            }
+          });
+        } else {
+          this.isAuth = false;
+        }
+      },
+      (err) => {
+        console.log(err);
       }
-    });
-    this.listTitles = ROUTES.filter((listTitle) => listTitle);
+    );
+
+    this.listTitles = WORKER_ROUTES.filter((listTitle) => listTitle);
   }
+
   getCurrentWorker(workerKey) {
     this.workerService.getWorkerSnapShot(workerKey).subscribe((data: any) => {
       this.worker = data.payload.data();
-      console.log(this.worker);
+      this.spinner.hide();
     });
   }
   getTitle() {

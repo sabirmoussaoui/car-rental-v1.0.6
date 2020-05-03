@@ -3,6 +3,9 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
 import { Observable, Subject } from 'rxjs';
 import { Car } from '../models/Car.model';
+import { Worker } from '../models/Worker.model';
+import { CarModel } from '../models/CarModel.model';
+import { CarBrand } from '../models/CarBrand.model';
 
 @Injectable({
   providedIn: 'root',
@@ -36,12 +39,10 @@ export class CarService {
           photoUrl: car.carModel.year,
           carModelKey: car.carModel.carModelKey,
         },
-        place: car.place,
+        seat: car.seat,
         door: car.door,
         fuel: car.fuel,
-        main_photo: car.main_photo ? car.main_photo : '',
-        photos: car.photos ? car.photos : [],
-        created_at: car.created_at,
+        updated_at: car.updated_at,
       });
   }
   myMethod(data) {
@@ -99,12 +100,16 @@ export class CarService {
     return this.db.collection('cars').doc(car.id).delete();
   }
 
-  getCarsSnapshot() {
-    return this.db.collection('cars').snapshotChanges();
+  getCarsSnapshot(workerKey) {
+    return this.db
+      .collection('cars', (ref) =>
+        ref.where('worker.workerKey', '==', workerKey)
+      )
+      .snapshotChanges();
   }
 
-  getCarBrands() {
-    return this.db.collection('carBrands').get();
+  getCars() {
+    return this.db.collection('cars').valueChanges();
   }
 
   createCar(car: Car) {
@@ -122,12 +127,20 @@ export class CarService {
         photoUrl: car.carModel.year,
         carModelKey: car.carModel.carModelKey,
       },
-      place: car.place,
+      seat: car.seat,
       door: car.door,
       fuel: car.fuel,
       main_photo: car.main_photo ? car.main_photo : '',
       photos: car.photos ? car.photos : [],
       created_at: car.created_at,
+      worker: car.worker as Worker,
+      large_bag: car.large_bag,
+      small_bag: car.small_bag,
+      gearbox: car.gearbox,
+      air_conditioning: car.air_conditioning,
+      description: car.description,
+      car_class: car.car_class,
+      body_style: car.body_style,
     });
   }
 

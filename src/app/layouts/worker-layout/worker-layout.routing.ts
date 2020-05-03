@@ -2,11 +2,10 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from 'src/app/worker/dashboard/dashboard.component';
 import { UserProfileComponent } from 'src/app/worker/user-profile/user-profile.component';
-import { TablesComponent } from 'src/app/worker/tables/tables.component';
-import { IconsComponent } from 'src/app/worker/icons/icons.component';
-import { MapsComponent } from 'src/app/worker/maps/maps.component';
 import { CarsComponent } from 'src/app/worker/cars/cars.component';
 import { AuthGuardService } from 'src/app/services/auth-guard.service';
+import { FourOhFourComponent } from 'src/app/worker/four-oh-four/four-oh-four.component';
+import { NewCarComponent } from 'src/app/worker/cars/new-car/new-car.component';
 
 export const WorkerLayoutRoutes: Routes = [
   {
@@ -18,19 +17,13 @@ export const WorkerLayoutRoutes: Routes = [
     component: UserProfileComponent,
   },
   {
-    path: 'worker/tables',
-    component: TablesComponent,
-  },
-  {
-    path: 'worker/icons',
-    component: IconsComponent,
-  },
-  {
-    path: 'worker/maps',
-    component: MapsComponent,
-  },
-  {
     path: 'worker/cars',
     component: CarsComponent,
   },
+  {
+    path: 'worker/new-car',
+    component: NewCarComponent,
+  },
+  // { path: 'not-found', component: FourOhFourComponent },
+  // { path: '**', redirectTo: 'not-found' },
 ];

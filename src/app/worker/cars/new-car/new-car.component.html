@@ -1,0 +1,499 @@
+<div
+  class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+  style="
+    min-height: 600px;
+    background-image: url(assets/img/theme/car-cover-design.jpg);
+    background-size: cover;
+    background-position: center top;
+  "
+>
+  <!-- Header container -->
+  <div class="container-fluid d-flex align-items-center">
+    <div class="row">
+      <ul
+        class="nav nav-pills nav-fill flex-column flex-sm-row"
+        id="tabs-text"
+        role="tablist"
+      >
+        <li class="nav-item">
+          <a
+            class="nav-link mb-sm-3 mb-md-0 active"
+            id="tabs-text-1-tab"
+            data-toggle="tab"
+            [routerLink]="['/worker/cars']"
+            role="tab"
+            aria-controls="tabs-text-1"
+            aria-selected="true"
+            >My Cars</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link mb-sm-3 mb-md-0"
+            id="tabs-text-2-tab"
+            data-toggle="tab"
+            [routerLink]="['/admin/settings/sectors']"
+            role="tab"
+            aria-controls="tabs-text-2"
+            aria-selected="false"
+            >Sectors</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link mb-sm-3 mb-md-0"
+            id="tabs-text-3-tab"
+            data-toggle="tab"
+            [routerLink]="['/admin/settings/colors']"
+            role="tab"
+            aria-controls="tabs-text-3"
+            aria-selected="false"
+            >Colors</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link mb-sm-3 mb-md-0"
+            id="tabs-text-3-tab"
+            data-toggle="tab"
+            [routerLink]="['/admin/settings/car-brands']"
+            role="tab"
+            aria-controls="tabs-text-3"
+            aria-selected="false"
+            >Car Brands</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link mb-sm-3 mb-md-0"
+            id="tabs-text-3-tab"
+            data-toggle="tab"
+            [routerLink]="['/admin/settings/car-models']"
+            role="tab"
+            aria-controls="tabs-text-3"
+            aria-selected="false"
+            >Cars Models</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link mb-sm-3 mb-md-0"
+            id="tabs-text-3-tab"
+            data-toggle="tab"
+            href="#tabs-text-3"
+            role="tab"
+            aria-controls="tabs-text-3"
+            aria-selected="false"
+            >Clients</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-xl-12 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-secondary border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Add new cars</h3>
+            </div>
+            <div class="col-4 text-right">
+              <a href="#!" class="btn btn-sm btn-primary">Settings</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-header bg-secondary border-0">
+            <form [formGroup]="carForm" (ngSubmit)="onSaveCarModel()">
+              <div class="row">
+                <div class="col-lg-6">
+                  <mat-form-field>
+                    <mat-label>Car Brands</mat-label>
+                    <mat-select
+                      formControlName="carBrand"
+                      (ngModelChange)="brandSelected()"
+                    >
+                      <mat-option
+                        *ngFor="let carBrand of carBrands"
+                        [value]="carBrand.value"
+                      >
+                        <img
+                          class="rounded-circle"
+                          width="30px"
+                          height="30px"
+                          *ngIf="carBrand.value.photoUrl"
+                          [src]="carBrand.value.photoUrl"
+                        />
+                        {{ carBrand.viewValue }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-lg-6">
+                  <mat-form-field>
+                    <mat-label>Car Models</mat-label>
+                    <mat-select formControlName="carModel">
+                      <mat-option
+                        *ngFor="let carModel of carModels"
+                        [value]="carModel.value"
+                      >
+                        {{ carModel.viewValue }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <mat-form-field>
+                    <mat-label>Body Style</mat-label>
+                    <mat-select formControlName="body_style">
+                      <mat-option
+                        *ngFor="let body_style of body_styles"
+                        [value]="body_style.value"
+                      >
+                        <img
+                          class="rounded-circle"
+                          width="60px"
+                          height="60px"
+                          *ngIf="body_style.avatar"
+                          [src]="body_style.avatar"
+                        />
+                        {{ body_style.viewValue }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-lg-6">
+                  <mat-form-field>
+                    <mat-label>Car Class</mat-label>
+                    <mat-select formControlName="car_class">
+                      <mat-option
+                        *ngFor="let car_cls of car_class"
+                        [value]="car_cls.value"
+                      >
+                        {{ car_cls.viewValue }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <div class="input-group input-group-alternative mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="fa fa-money" aria-hidden="true"></i>
+                        </span>
+                      </div>
+                      <input
+                        class="form-control"
+                        placeholder="Price"
+                        id="price"
+                        formControlName="price"
+                        type="text"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <div class="input-group input-group-alternative mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i
+                            class="fa fa-calendar-check-o"
+                            aria-hidden="true"
+                          ></i>
+                        </span>
+                      </div>
+                      <input
+                        class="form-control"
+                        placeholder="Quantity"
+                        id="quantity"
+                        formControlName="quantity"
+                        type="number"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <div class="input-group input-group-alternative mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i
+                            class="fa fa-calendar-check-o"
+                            aria-hidden="true"
+                          ></i>
+                        </span>
+                      </div>
+                      <input
+                        class="form-control"
+                        placeholder="the number of seats"
+                        id="seat"
+                        formControlName="seat"
+                        type="number"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <div class="input-group input-group-alternative mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i
+                            class="fa fa-calendar-check-o"
+                            aria-hidden="true"
+                          ></i>
+                        </span>
+                      </div>
+                      <input
+                        class="form-control"
+                        placeholder="the number of door"
+                        id="door"
+                        formControlName="door"
+                        type="number"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <div class="input-group input-group-alternative mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i
+                            class="fa fa-calendar-check-o"
+                            aria-hidden="true"
+                          ></i>
+                        </span>
+                      </div>
+                      <input
+                        class="form-control"
+                        placeholder="the number of large bags"
+                        id="large_bag"
+                        formControlName="large_bag"
+                        type="number"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <div class="input-group input-group-alternative mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i
+                            class="fa fa-calendar-check-o"
+                            aria-hidden="true"
+                          ></i>
+                        </span>
+                      </div>
+                      <input
+                        class="form-control"
+                        placeholder="the number of small bags"
+                        id="small_bag"
+                        formControlName="small_bag"
+                        type="number"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div
+                    class="btn-group btn-group-toggle"
+                    ngbRadioGroup
+                    name="radioBasic"
+                    style="width: -webkit-fill-available;"
+                    formControlName="fuel"
+                  >
+                    <label ngbButtonLabel class="btn-primary">
+                      <i class="fas fa-gas-pump"></i> Choose the fuel
+                    </label>
+                    <label ngbButtonLabel class="btn-primary">
+                      <input ngbButton type="radio" value="diesel" /> Diesel
+                    </label>
+                    <label ngbButtonLabel class="btn-primary">
+                      <input ngbButton type="radio" value="pitrol" /> Pitrol
+                    </label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div
+                    class="btn-group btn-group-toggle"
+                    ngbRadioGroup
+                    name="radioBasic"
+                    style="width: -webkit-fill-available;"
+                    formControlName="gearbox"
+                  >
+                    <label ngbButtonLabel class="btn-secondary">
+                      <span
+                        class="icon-solid icon-solid--car-gears-automatic"
+                      ></span>
+                      Choose the gearbox
+                    </label>
+                    <label ngbButtonLabel class="btn-secondary">
+                      <input ngbButton type="radio" value="automatic" />
+                      Automatic
+                    </label>
+                    <label ngbButtonLabel class="btn-secondary">
+                      <input ngbButton type="radio" value="manual" /> Manual
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6 mt-5">
+                  <div class="form-group">
+                    <div class="row">
+                      <span> Air Conditioning</span>
+                      <label class="custom-toggle ml-3">
+                        <input
+                          class="form-control"
+                          type="checkbox"
+                          formControlName="air_conditioning"
+                        />
+                        <span
+                          class="custom-toggle-slider rounded-circle"
+                        ></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr class="my-4" />
+              <!-- Description -->
+              <h6 class="heading-small text-muted mb-4">Description</h6>
+              <div class="pl-lg-4">
+                <div class="form-group">
+                  <label>Description</label>
+                  <textarea
+                    formControlName="description"
+                    rows="4"
+                    class="form-control form-control-alternative"
+                    placeholder="A few words description..."
+                  ></textarea>
+                </div>
+              </div>
+              <hr class="my-4" />
+              <!-- Photos -->
+              <h6 class="heading-small text-muted mb-4">Photos</h6>
+              <div class="row">
+                <div class="col-lg-6">
+                  <input
+                    type="file"
+                    class="custom-file-input"
+                    id="main-image"
+                    (change)="detectMainImage($event)"
+                    accept="image/*"
+                  />
+                  <label
+                    class="btn btn-warning btn-block btn-round"
+                    for="main-image"
+                    >Choose main photo <i class="ni ni-image"></i>
+                  </label>
+                  <div *ngIf="mainImageIsUploading" class="progress-wrapper">
+                    <div class="progress-info">
+                      <div class="progress-percentage">
+                        <span> {{ progress.percentage }}%</span>
+                      </div>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-warning"
+                        role="progressbar"
+                        attr.aria-valuenow="{{ progress.percentage }}"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                        [ngStyle]="{ width: progress.percentage + '%' }"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div
+                      *ngIf="imageUrl as url"
+                      class="d-flex align-content-center flex-wrap"
+                    >
+                      <img class="img-thumbnail" [src]="url" />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6" style="margin-top: 45px;">
+                  <button
+                    type="button"
+                    class="btn btn-success btn-block btn-outline btn-round"
+                    (click)="searchMainPhoto()"
+                  >
+                    search main photo
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="row">
+                <div
+                  class="dropzone"
+                  dropzone
+                  (hovered)="toggleHover($event)"
+                  (dropped)="onDrop($event)"
+                  [class.hovering]="isHovering"
+                >
+                  <p class="drop-p">Drag and Drop images</p>
+                  <div>
+                    <input
+                      type="file"
+                      class="custom-file-input"
+                      id="dropzone-image"
+                      (change)="onDrop($event.target.files)"
+                      accept="image/*"
+                    />
+                    <label
+                      class="btn btn-default btn-block btn-round"
+                      for="dropzone-image"
+                    >
+                      Or choose an images …
+                      <i class="fa fa-upload"></i>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div *ngFor="let file of files">
+                  <upload-task [file]="file"></upload-task>
+                </div>
+              </div>
+
+              <div class="row mt-5">
+                <button
+                  class="btn btn-primary mx-auto w-50"
+                  [disabled]="carForm.invalid"
+                  type="submit"
+                >
+                  Add car <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                </button>
+                <h1>"angular-notifier" demo</h1>
+
+                <h2>Show notifications</h2>
+                <button class="button button--primary">
+                  Default me!
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

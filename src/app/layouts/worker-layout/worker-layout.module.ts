@@ -6,14 +6,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { ClipboardModule } from 'ngx-clipboard';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
-import { MapsComponent } from 'src/app/worker/maps/maps.component';
-import { IconsComponent } from 'src/app/worker/icons/icons.component';
-import { TablesComponent } from 'src/app/worker/tables/tables.component';
 import { UserProfileComponent } from 'src/app/worker/user-profile/user-profile.component';
 import { DashboardComponent } from 'src/app/worker/dashboard/dashboard.component';
 import { WorkerLayoutRoutes } from './worker-layout.routing';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MapsDialogComponent } from 'src/app/dialogs/maps-dialog/maps-dialog.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
@@ -29,27 +25,30 @@ import { CarUpdateDialogComponent } from 'src/app/worker/cars/car-update-dialog/
 import { ReactiveFormsModule } from '@angular/forms';
 import { DropzoneDirective } from 'src/app/worker/dropzone.directive';
 import { UploadTaskComponent } from 'src/app/worker/cars/upload-task/upload-task.component';
-import { AngularFireStorageModule } from '@angular/fire/storage/public_api';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore/public_api';
 import { OpenCarImageDialogComponent } from 'src/app/worker/cars/open-car-image-dialog/open-car-image-dialog.component';
 import { MatInputModule } from '@angular/material/input';
 import { CarPhotosDialogComponent } from 'src/app/worker/cars/car-photos-dialog/car-photos-dialog.component';
 import { AuthGuardService } from 'src/app/services/auth-guard.service';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { FourOhFourComponent } from 'src/app/worker/four-oh-four/four-oh-four.component';
+import { CarDetailDialogComponent } from 'src/app/worker/cars/car-detail-dialog/car-detail-dialog.component';
+import { NewCarComponent } from 'src/app/worker/cars/new-car/new-car.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     UserProfileComponent,
-    TablesComponent,
-    IconsComponent,
-    MapsComponent,
     CarsComponent,
     CarUpdateDialogComponent,
     DropzoneDirective,
     UploadTaskComponent,
     OpenCarImageDialogComponent,
     CarPhotosDialogComponent,
+    FourOhFourComponent,
+    CarDetailDialogComponent,
+    NewCarComponent,
   ],
   imports: [
     CommonModule,
@@ -67,13 +66,13 @@ import { AuthGuardService } from 'src/app/services/auth-guard.service';
     MatCardModule,
     MatInputModule,
     MatSliderModule,
-
-    // AngularFireModule.initializeApp(environment.firebase),
-    // AngularFireStorageModule,
-    // AngularFireModule,
-    // AngularFirestoreModule
+    NgxSpinnerModule,
   ],
-  entryComponents: [OpenCarImageDialogComponent, CarUpdateDialogComponent],
+  entryComponents: [
+    OpenCarImageDialogComponent,
+    CarUpdateDialogComponent,
+    CarDetailDialogComponent,
+  ],
   providers: [CityService, SectorService, AuthGuardService],
 })
 export class WorkerLayoutModule {}

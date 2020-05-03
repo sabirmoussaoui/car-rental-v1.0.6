@@ -1,0 +1,113 @@
+<ngb-carousel class="carousel" *ngIf="car.photos">
+  <ng-template *ngFor="let image of car.photos" ngbSlide>
+    <div class="picsum-img-wrapper">
+      <img
+        class="carousel"
+        *ngIf="image"
+        [src]="image"
+        alt="Random first slide"
+      />
+    </div>
+  </ng-template>
+  <ng-template ngbSlide></ng-template
+></ngb-carousel>
+<div class="table-responsive">
+  <table class="table align-items-center table-flush">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">BRANDS</th>
+        <th scope="col">MODELS</th>
+        <th scope="col">CAR CLASS</th>
+        <th scope="col">BODY STYLE</th>
+        <th scope="col">PRICE</th>
+        <th scope="col">QUANTITY</th>
+        <th scope="col">CREATED AT</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">
+          <div class="media align-items-center">
+            <a href="javascript:void(0)" class="avatar rounded-circle mr-3">
+              <img alt="Image placeholder" [src]="car.carBrand.photoUrl" />
+            </a>
+            <div class="media-body">
+              <span class="mb-0 text-sm">{{ car.carBrand.name }}</span>
+            </div>
+          </div>
+        </th>
+        <td>
+          {{ car.carModel.name + " " + car.carModel.year }}
+        </td>
+        <td>
+          {{ car.car_class }}
+        </td>
+        <td>
+          {{ car.body_style }}
+        </td>
+        <td>
+          <span class="badge badge-dot mr-4">
+            <i class="bg-warning"></i>$ {{ car.price }}
+          </span>
+        </td>
+        <td>
+          {{ car.quantity }}
+        </td>
+        <td>
+          {{ car.created_at }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="table-responsive">
+  <table class="table align-items-center table-dark table-flush">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">SEATS</th>
+        <th scope="col">DOORS</th>
+        <th scope="col">FUEL</th>
+        <th scope="col">LARGE BAG</th>
+        <th scope="col">SMALL BAG</th>
+        <th scope="col">GEARBOX</th>
+        <th scope="col">AIR CONDITIONING</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          {{ car.seat }}
+        </td>
+        <td>
+          {{ car.door }}
+        </td>
+        <td>
+          <i class="fas fa-gas-pump"></i>
+          {{ car.fuel }}
+        </td>
+        <td>
+          {{ car.large_bag }}
+        </td>
+        <td>
+          {{ car.small_bag }}
+        </td>
+        <td class="text-right">
+          {{ car.gearbox }}
+        </td>
+        <td class="text-right">
+          {{ car.air_conditioning ? "air conditioning" : "---" }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<hr class="my-4" />
+<!-- Description -->
+<div class="card shadow">
+  <div class="card-header border-0">
+    <h3 class="mb-0">Description</h3>
+  </div>
+  <span class="badge badge-dot">
+    <i class="bg-success"></i> {{ car.description }}
+  </span>
+</div>

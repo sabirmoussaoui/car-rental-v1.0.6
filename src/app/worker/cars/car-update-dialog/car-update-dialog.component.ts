@@ -27,10 +27,10 @@ export class CarUpdateDialogComponent implements OnInit {
   quantity: number;
   carBrand: CarBrand;
   carModel: CarModel;
-  place: number;
+  seat: number;
   door: number;
   fuel: string;
-
+  car: Car;
   carBrands: SelectBrand[] = [];
   carModels: SelectModel[] = [];
 
@@ -40,16 +40,33 @@ export class CarUpdateDialogComponent implements OnInit {
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<CarUpdateDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
-    { price, quantity, carBrand, carModel, place, door, fuel }: Car
+    {
+      car,
+      // price,
+      // quantity,
+      // carBrand,
+      // carModel,
+      // seat,
+      // door,
+      // fuel,
+      // large_bag,
+      // small_bag,
+      // gearbox,
+      // air_conditioning,
+      // description,
+      // car_class,
+      // body_style,
+    } // : Car
   ) {
     this.getCarBrands();
-    this.price = price;
-    this.quantity = quantity;
-    this.carBrand = carBrand;
-    this.carModel = carModel;
-    this.place = place;
-    this.door = door;
-    this.fuel = fuel;
+    // this.car.price = car.price;
+    // this.car.quantity = car.quantity;
+    // this.car.carBrand = car.carBrand;
+    // this.car.carModel = car.carModel;
+    // this.car.seat = car.seat;
+    // this.car.door = car.door;
+    // this.car.fuel = car.fuel;
+    this.car = car;
   }
 
   ngOnInit() {
@@ -57,13 +74,13 @@ export class CarUpdateDialogComponent implements OnInit {
   }
   initform() {
     this.carForm = this.fb.group({
-      price: [this.price, Validators.required],
-      quantity: [this.quantity, Validators.required],
-      carBrand: [this.carBrand, Validators.required],
-      carModel: [this.carModel, Validators.required],
-      door: [this.door, Validators.required],
-      fuel: [this.fuel, Validators.required],
-      place: [this.place, Validators.required],
+      price: [this.car.price, Validators.required],
+      quantity: [this.car.quantity, Validators.required],
+      carBrand: [this.car.carBrand, Validators.required],
+      carModel: [this.car.carModel, Validators.required],
+      door: [this.car.door, Validators.required],
+      fuel: [this.car.fuel, Validators.required],
+      seat: [this.car.seat, Validators.required],
     });
   }
   getCarBrands() {

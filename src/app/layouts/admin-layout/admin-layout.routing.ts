@@ -1,10 +1,6 @@
 import { Routes } from '@angular/router';
 
 import { DashboardComponent } from '../../admin/dashboard/dashboard.component';
-import { IconsComponent } from '../../admin/icons/icons.component';
-import { MapsComponent } from '../../admin/maps/maps.component';
-import { UserProfileComponent } from '../../admin/user-profile/user-profile.component';
-import { TablesComponent } from '../../admin/tables/tables.component';
 import { SettingsComponent } from 'src/app/admin/settings/settings.component';
 import { CityComponent } from 'src/app/admin/settings/city/city.component';
 import { SectorComponent } from 'src/app/admin/settings/sector/sector.component';
@@ -18,23 +14,6 @@ export const AdminLayoutRoutes: Routes = [
     path: 'admin/dashboard',
     component: DashboardComponent,
   },
-  {
-    path: 'admin/user-profile',
-    component: UserProfileComponent,
-  },
-  {
-    path: 'admin/tables',
-    component: TablesComponent,
-  },
-  {
-    path: 'admin/icons',
-    component: IconsComponent,
-  },
-  {
-    path: 'admin/maps',
-    component: MapsComponent,
-  },
-
   {
     path: 'admin/settings',
     component: SettingsComponent,

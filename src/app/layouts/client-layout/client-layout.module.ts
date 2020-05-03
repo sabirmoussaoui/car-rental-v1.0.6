@@ -8,21 +8,12 @@ import { ClientLayoutRoutes } from './client-layout.routing';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from 'src/app/client/dashboard/dashboard.component';
-import { UserProfileComponent } from 'src/app/client/user-profile/user-profile.component';
-import { IconsComponent } from 'src/app/client/icons/icons.component';
-import { MapsComponent } from 'src/app/client/maps/maps.component';
-import { TablesComponent } from 'src/app/client/tables/tables.component';
 import { AuthGuardService } from 'src/app/services/auth-guard.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
-  declarations: [
-    DashboardComponent,
-    UserProfileComponent,
-    TablesComponent,
-    IconsComponent,
-    MapsComponent,
-  ],
+  declarations: [DashboardComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(ClientLayoutRoutes),

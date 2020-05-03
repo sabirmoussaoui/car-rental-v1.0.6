@@ -37,6 +37,14 @@
             <div class="media-body ml-2 d-none d-lg-block">
               <span *ngIf="worker" class="mb-0 text-sm font-weight-bold">
                 {{ worker.name }}
+                <ngx-spinner
+                  bdColor="rgba(0,0,0,0)"
+                  size="small"
+                  color="#ff0244"
+                  type="ball-clip-rotate-multiple"
+                  [fullScreen]="false"
+                  ><p style="color: rgb(253, 201, 201);"></p
+                ></ngx-spinner>
               </span>
             </div>
           </div>

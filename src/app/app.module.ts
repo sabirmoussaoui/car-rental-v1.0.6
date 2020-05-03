@@ -21,9 +21,12 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AuthGuardService } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
+import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
+import { BrowserModule } from '@angular/platform-browser';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
+    BrowserModule,
     FormsModule,
     HttpClientModule,
     ComponentsModule,
@@ -41,6 +44,7 @@ import { AuthService } from './services/auth.service';
     AuthLayoutComponent,
     WorkerLayoutComponent,
     ClientLayoutComponent,
+    HomeLayoutComponent,
   ],
   bootstrap: [AppComponent],
 })

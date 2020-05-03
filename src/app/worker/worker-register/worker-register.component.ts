@@ -13,6 +13,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Worker } from '../../models/Worker.model';
 import { City } from 'src/app/models/City.model';
 import { Sector } from 'src/app/models/Sector.model';
+import { RoleService } from 'src/app/services/role.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 declare const google: any;
 interface CitySelect {
@@ -44,7 +46,9 @@ export class WorkerRegisterComponent implements OnInit {
     private cityService: CityService,
     private sectorService: SectorService,
     private workerService: WorkerService,
-    private authService: AuthService
+    private authService: AuthService,
+    private roleService: RoleService,
+    private spinner: NgxSpinnerService
   ) {}
   ngOnInit() {
     // initialiser la formulaire
@@ -115,6 +119,7 @@ export class WorkerRegisterComponent implements OnInit {
   }
 
   onSaveWorker() {
+    this.spinner.show();
     const name = this.workerForm.get('name').value;
     const email = this.workerForm.get('email').value;
     const phone = this.workerForm.get('phone').value;
@@ -148,19 +153,24 @@ export class WorkerRegisterComponent implements OnInit {
         (workerKey) => {
           this.workerService.createWorker(workerKey, worker).then(
             () => {
+              this.roleService.addRole(workerKey, 'worker');
+              this.spinner.hide();
               this.router.navigate(['/worker/dashboard']);
             },
             (err) => {
               console.log('worker not register');
+              this.spinner.hide();
             }
           );
         },
         (err) => {
           console.log(err);
+          this.spinner.hide();
         }
       );
     } else {
       console.log('not ok');
+      this.spinner.hide();
     }
     console.log(name + email + phone + password + website + city + sector);
     return this.router.navigate(['/worker/dashbord']);
