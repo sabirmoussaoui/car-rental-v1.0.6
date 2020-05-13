@@ -1,5 +1,0 @@
- =====> get Value                     <mat-option *ngFor="let carBrand of carBrands" 
-                                        (click)="carBrandSelected(carBrand.value)"
-                                        [value]="carBrand">
-                                          {{carBrand.viewValue}}
-                                        </mat-option>

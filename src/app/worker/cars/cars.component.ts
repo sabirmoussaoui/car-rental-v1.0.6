@@ -60,6 +60,7 @@ export class CarsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((carUpdate: Car) => {
       if (carUpdate != undefined) {
         console.log('Dialog output:', carUpdate);
+        carUpdate.updated_at = new Date();
         console.log(carUpdate);
         this.onUpdateCar(carKey, carUpdate);
       }

@@ -1,0 +1,384 @@
+<div class="header bg-gradient-danger py-7 py-lg-8">
+  <div class="separator separator-bottom separator-skew zindex-100">
+    <svg
+      x="0"
+      y="0"
+      viewBox="0 0 2560 100"
+      preserveAspectRatio="none"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
+    </svg>
+  </div>
+</div>
+<div class="container-fluid mt--7">
+  <span class="badge badge-pill green">
+    <a href="javascript:void(0)">
+      <img class="avatar-circel-img" [src]="car.carBrand.photoUrl" />
+    </a>
+  </span>
+  <div class="card card-profile shadow">
+    <div class="row justify-content-center">
+      <div class="col-lg-3 order-lg-2">
+        <div class="card-profile-image">
+          <a href="javascript:void(0)">
+            <img
+              [src]="car.main_photo"
+              class="rounded-circle"
+              style="min-height: 180px;"
+            />
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+      <div class="d-flex justify-content-between">
+        <a href="javascript:void(0)" class="btn btn-sm btn-info mr-4"
+          >Car Details <i class="fa fa-eye" aria-hidden="true"></i
+        ></a>
+        <a href="javascript:void(0)" class="btn btn-sm btn-default float-right"
+          >Show on map <i class="ni ni-square-pin" aria-hidden="true"></i
+        ></a>
+      </div>
+    </div>
+    <div class="card-body pt-0 pt-md-4">
+      <div class="d-flex justify-content-center mt-5">
+        <div class="text-center">
+          <div class="row">
+            <ng-template #t let-fill="fill">
+              <span class="star" [class.full]="fill === 100">
+                <span class="half" [style.width.%]="fill">&hearts;</span
+                >&hearts;
+              </span>
+            </ng-template>
+            <ngb-rating
+              [(rate)]="car.rating"
+              [starTemplate]="t"
+              [readonly]="true"
+              [max]="5"
+            ></ngb-rating>
+          </div>
+
+          <div class="row">
+            <h4 class="car-brand-title">
+              {{
+                car.carBrand.name +
+                  " " +
+                  car.carModel.name +
+                  " " +
+                  car.carModel.year
+              }}
+            </h4>
+          </div>
+        </div>
+      </div>
+      <div class="card-car-stats row">
+        <div>
+          <span class="heading"
+            ><span class="icon-solid icon--sm icon-solid-car-door"></span
+          ></span>
+          <span class="description">{{ car.door }}&nbsp;&nbsp; Doors</span>
+        </div>
+        <div>
+          <span class="heading">
+            <span class="icon-solid icon-solid--car-seat"></span>
+          </span>
+          <span class="description">{{ car.seat }}&nbsp;&nbsp; Seats</span>
+        </div>
+        <div>
+          <span class="heading">
+            <span class="icon-solid icon--sm icon-solid--big-bag"></span>
+          </span>
+          <span class="description">{{ car.large_bag }} Large bags</span>
+        </div>
+        <div>
+          <span class="heading">
+            <span class="icon-solid icon--sm icon-solid--small-bag"></span>
+          </span>
+          <span class="description">{{ car.small_bag }} Small bag</span>
+        </div>
+
+        <div>
+          <span class="heading">
+            <i class="fas fa-gas-pump" style="color: #31353c;"></i>
+          </span>
+          <span class="description">{{ car.fuel }}</span>
+        </div>
+        <div *ngIf="car.air_conditioning">
+          <span class="heading">
+            <span
+              class="icon-solid icon--sm icon-solid--air-conditioning"
+            ></span>
+          </span>
+          <span class="description">air conditioning</span>
+        </div>
+        <div>
+          <span class="heading">
+            <span class="icon-solid icon-solid--car-gears-automatic"></span>
+          </span>
+          <span class="description">{{ car.gearbox }}</span>
+        </div>
+        <div>
+          <span class="heading">
+            <i class="fa fa-car" aria-hidden="true"></i>
+          </span>
+          <span class="description">{{ car.body_style }}</span>
+        </div>
+        <div>
+          <span class="heading">
+            <i
+              class="ni ni-square-pin"
+              style="color: #f5365c;"
+              aria-hidden="true"
+            ></i>
+          </span>
+          <span class="description">{{ car.worker.city.name }}</span>
+        </div>
+        <div>
+          <span class="heading">
+            <i
+              class="fa fa-phone"
+              style="color: #f5365c;"
+              aria-hidden="true"
+            ></i>
+          </span>
+          <span class="description">{{ car.worker.phone }}</span>
+        </div>
+        <div>
+          <span class="heading">
+            <i
+              class="fa fa-home"
+              style="color: #f5365c;"
+              aria-hidden="true"
+            ></i>
+          </span>
+          <span class="description">{{ car.worker.name }}</span>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <span class="product_origin_price"
+          ><del>${{ getOriginPrice(car.price) }}</del></span
+        >
+        <span class="product_price">${{ car.price }}</span>
+      </div>
+      <mat-horizontal-stepper linear #stepper>
+        <mat-step [stepControl]="dateFormGroup">
+          <form
+            [formGroup]="dateFormGroup"
+            (ngSubmit)="onSaveDate()"
+            #formone="ngForm"
+          >
+            <ng-template matStepLabel></ng-template>
+            <div class="row">
+              <div class="col-lg-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Pick-up Date:</mat-label>
+                  <input
+                    formControlName="pick_up"
+                    matInput
+                    [ngxMatDatetimePicker]="pick_up"
+                    [min]="minDate"
+                    [max]="maxDate"
+                  />
+                  <mat-datepicker-toggle matSuffix [for]="pick_up">
+                  </mat-datepicker-toggle>
+                  <ngx-mat-datetime-picker
+                    #pick_up
+                    [showSpinners]="showSpinners"
+                    [showSeconds]="showSeconds"
+                    [stepHour]="stepHour"
+                    [stepMinute]="stepMinute"
+                    [stepSecond]="stepSecond"
+                    [touchUi]="touchUi"
+                    [color]="color"
+                  >
+                  </ngx-mat-datetime-picker>
+                </mat-form-field>
+              </div>
+              <div class="col-lg-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Drop-off Date:</mat-label>
+                  <input
+                    formControlName="drop_off"
+                    matInput
+                    [ngxMatDatetimePicker]="drop_off"
+                    [min]="minDate"
+                    [max]="maxDate"
+                  />
+                  <mat-datepicker-toggle matSuffix [for]="drop_off">
+                  </mat-datepicker-toggle>
+                  <ngx-mat-datetime-picker
+                    #drop_off
+                    [showSpinners]="showSpinners"
+                    [showSeconds]="showSeconds"
+                    [stepHour]="stepHour"
+                    [stepMinute]="stepMinute"
+                    [stepSecond]="stepSecond"
+                    [touchUi]="touchUi"
+                    [color]="color"
+                  >
+                  </ngx-mat-datetime-picker>
+                </mat-form-field>
+              </div>
+            </div>
+            <div>
+              <button type="submit" mat-button color="accent" matStepperNext>
+                Next
+              </button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="clientFormGroup" [optional]="false">
+          <form
+            [formGroup]="clientFormGroup"
+            (ngSubmit)="onSaveClient()"
+            #formtwo="ngForm"
+          >
+            <ng-template matStepLabel>Client Information</ng-template>
+            <div class="row">
+              <div class="col-lg-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Enter your email</mat-label>
+                  <input formControlName="email" matInput type="email" />
+                  <button
+                    mat-button
+                    required
+                    type="submit"
+                    (click)="authClient()"
+                    mat-mini-fab
+                    color="warn"
+                    matSuffix
+                    mat-stroked-button
+                    aria-label="search"
+                  >
+                    <mat-icon>search</mat-icon>
+                  </button>
+                </mat-form-field>
+              </div>
+              <div class="col-lg-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Enter your password</mat-label>
+                  <input
+                    formControlName="password"
+                    matInput
+                    required
+                    [type]="hide ? 'password' : 'text'"
+                  />
+                  <button
+                    mat-icon-button
+                    matSuffix
+                    (click)="hide = !hide"
+                    [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide"
+                  >
+                    <mat-icon>{{
+                      hide ? "visibility_off" : "visibility"
+                    }}</mat-icon>
+                  </button>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Enter your first name</mat-label>
+                  <input
+                    formControlName="firstname"
+                    matInput
+                    placeholder="First name"
+                    required
+                  />
+                </mat-form-field>
+              </div>
+              <div class="col-lg-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Enter your last name</mat-label>
+                  <input
+                    matInput
+                    formControlName="lastname"
+                    placeholder="Last name"
+                    required
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Enter your Telephone</mat-label>
+                  <span matPrefix>+212 &nbsp;</span>
+                  <input
+                    type="tel"
+                    formControlName="phone"
+                    matInput
+                    required
+                    placeholder="6-33-33-33-33"
+                  />
+                  <mat-icon matSuffix>mode_edit</mat-icon>
+                </mat-form-field>
+              </div>
+              <div class="col-lg-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Select your City</mat-label>
+                  <mat-select formControlName="city">
+                    <mat-option
+                      *ngFor="let city of cities"
+                      [value]="city.value"
+                    >
+                      {{ city.viewValue }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <mat-form-field appearance="outline">
+                  <mat-label>Adresse</mat-label>
+                  <input
+                    formControlName="adresse"
+                    matInput
+                    placeholder="Ex. 1 Main St, New York, NY"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button type="submit" mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Done</ng-template>
+          <p>You are now done.</p>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button color="warn" (click)="stepper.reset()">
+              Reset
+            </button>
+            <button
+              mat-button
+              color="success"
+              (click)="
+                formone.ngSubmit.emit(); formtwo.ngSubmit.emit(); onSaveForms()
+              "
+            >
+              Save
+            </button>
+          </div>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </div>
+  </div>
+  <ngx-spinner
+    bdColor="rgba(255,255,255,0.8)"
+    size="medium"
+    color="#ff0244"
+    type="ball-clip-rotate-multiple"
+    [fullScreen]="false"
+    ><p style="color: white;">Loading...</p></ngx-spinner
+  >
+</div>

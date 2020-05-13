@@ -1,0 +1,149 @@
+<span class="badge badge-pill green">
+  <a href="javascript:void(0)">
+    <img
+      class="avatar-circel-img"
+      [src]="car.payload.doc.data().carBrand.photoUrl"
+    />
+  </a>
+</span>
+<div class="card card-profile shadow">
+  <div class="row justify-content-center">
+    <div class="col-lg-3 order-lg-2">
+      <div class="card-profile-image">
+        <a href="javascript:void(0)">
+          <img
+            [src]="car.payload.doc.data().main_photo"
+            class="rounded-circle"
+            style="min-height: 180px;"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+    <div class="d-flex justify-content-between">
+      <a href="javascript:void(0)" class="btn btn-sm btn-info mr-4"
+        >Car Details <i class="fa fa-eye" aria-hidden="true"></i
+      ></a>
+      <a href="javascript:void(0)" class="btn btn-sm btn-default float-right"
+        >Show on map <i class="ni ni-square-pin" aria-hidden="true"></i
+      ></a>
+    </div>
+  </div>
+  <div class="card-body pt-0 pt-md-4">
+    <div class="row">
+      <div class="d-flex justify-content-center ml-6" style="margin-top: 30px;">
+        <ng-template #t let-fill="fill">
+          <span class="star" [class.full]="fill === 100">
+            <span class="half" [style.width.%]="fill">&hearts;</span>&hearts;
+          </span>
+        </ng-template>
+        <ngb-rating
+          [(rate)]="car.payload.doc.data().rating"
+          [starTemplate]="t"
+          [readonly]="true"
+          [max]="5"
+        ></ngb-rating>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center">
+      <div class="text-center">
+        <h4 class="car-brand-title">
+          {{
+            car.payload.doc.data().carBrand.name +
+              " " +
+              car.payload.doc.data().carModel.name +
+              " " +
+              car.payload.doc.data().carModel.year
+          }}
+        </h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="card-car-stats d-flex justify-content-center">
+          <div>
+            <span class="heading"
+              ><span class="icon-solid icon--sm icon-solid-car-door"></span
+            ></span>
+            <span class="description"
+              >{{ car.payload.doc.data().door }}&nbsp;&nbsp; Doors</span
+            >
+          </div>
+          <div>
+            <span class="heading">
+              <span class="icon-solid icon-solid--car-seat"></span>
+            </span>
+            <span class="description"
+              >{{ car.payload.doc.data().seat }}&nbsp;&nbsp; Seats</span
+            >
+          </div>
+          <div>
+            <span class="heading">
+              <span class="icon-solid icon--sm icon-solid--big-bag"></span>
+            </span>
+            <span class="description"
+              >{{ car.payload.doc.data().large_bag }} Large bags</span
+            >
+          </div>
+          <div>
+            <span class="heading">
+              <span class="icon-solid icon--sm icon-solid--small-bag"></span>
+            </span>
+            <span class="description"
+              >{{ car.payload.doc.data().small_bag }} Small bag</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="card-car-stats d-flex justify-content-center">
+          <div>
+            <span class="heading">
+              <i class="fas fa-gas-pump" style="color: #31353c;"></i>
+            </span>
+            <span class="description">{{ car.payload.doc.data().fuel }}</span>
+          </div>
+          <div *ngIf="car.payload.doc.data().air_conditioning">
+            <span class="heading">
+              <span
+                class="icon-solid icon--sm icon-solid--air-conditioning"
+              ></span>
+            </span>
+            <span class="description">air conditioning</span>
+          </div>
+          <div>
+            <span class="heading">
+              <span class="icon-solid icon-solid--car-gears-automatic"></span>
+            </span>
+            <span class="description">{{
+              car.payload.doc.data().gearbox
+            }}</span>
+          </div>
+          <div>
+            <span class="heading">
+              <i class="fa fa-car" aria-hidden="true"></i>
+            </span>
+            <span class="description">{{
+              car.payload.doc.data().body_style
+            }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center">
+      <span class="product_origin_price"
+        ><del>${{ getOriginPrice(car.payload.doc.data().price) }}</del></span
+      >
+      <span class="product_price">${{ car.payload.doc.data().price }}</span>
+    </div>
+  </div>
+  <a
+    [routerLink]="['/home/car-requests/', car.payload.doc.id]"
+    class="btn btn-outline-info"
+    role="button"
+    >Reserve Now</a
+  >
+</div>

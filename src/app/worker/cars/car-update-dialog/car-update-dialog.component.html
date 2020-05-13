@@ -25,6 +25,34 @@
       </mat-select>
     </mat-form-field>
   </div>
+  <div class="row">
+    <mat-form-field>
+      <mat-label>Body Style</mat-label>
+      <mat-select formControlName="body_style">
+        <mat-option
+          *ngFor="let body_style of body_styles"
+          [value]="body_style.value"
+        >
+          <img
+            class="rounded-circle"
+            width="60px"
+            height="60px"
+            *ngIf="body_style.avatar"
+            [src]="body_style.avatar"
+          />
+          {{ body_style.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Car Class</mat-label>
+      <mat-select formControlName="car_class">
+        <mat-option *ngFor="let car_cls of car_class" [value]="car_cls.value">
+          {{ car_cls.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
   <mat-form-field>
     <input
       matInput
@@ -43,6 +71,12 @@
   <mat-form-field>
     <input matInput placeholder="door" formControlName="door" />
   </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="large bag" formControlName="large_bag" />
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="small bag" formControlName="small_bag" />
+  </mat-form-field>
   <div
     class="btn-group btn-group-toggle"
     ngbRadioGroup
@@ -59,6 +93,28 @@
       <input ngbButton type="radio" value="pitrol" /> Pitrol
     </label>
   </div>
+  <div
+    class="btn-group btn-group-toggle"
+    ngbRadioGroup
+    name="radioBasic"
+    style="width: -webkit-fill-available;"
+    formControlName="gearbox"
+  >
+    <label ngbButtonLabel class="btn-secondary">
+      <span class="icon-solid icon-solid--car-gears-automatic"></span>
+      Choose the gearbox
+    </label>
+    <label ngbButtonLabel class="btn-secondary">
+      <input ngbButton type="radio" value="automatic" />
+      Automatic
+    </label>
+    <label ngbButtonLabel class="btn-secondary">
+      <input ngbButton type="radio" value="manual" /> Manual
+    </label>
+  </div>
+  <mat-slide-toggle formControlName="air_conditioning"
+    >air conditioning</mat-slide-toggle
+  >
 </mat-dialog-content>
 <mat-dialog-actions>
   <button class="btn btn-warning" (click)="close()">Close</button>

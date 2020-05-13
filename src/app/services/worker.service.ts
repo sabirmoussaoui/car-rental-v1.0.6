@@ -8,6 +8,27 @@ import { Worker } from '../models/Worker.model';
 export class WorkerService {
   constructor(public db: AngularFirestore) {}
 
+  updateWorker(workerKey, worker) {
+    return this.db
+      .collection('workers')
+      .doc(workerKey)
+      .update({
+        name: worker.name,
+        phone: worker.phone,
+        website: worker.website,
+        city: {
+          name: worker.city.name,
+          cityKey: worker.sector.cityKey,
+        },
+        sector: {
+          name: worker.sector.name,
+        },
+        adresse: worker.adresse,
+        email: worker.email,
+        updated_at: worker.updated_at,
+      });
+  }
+
   createWorker(workerKey, worker: Worker) {
     return this.db
       .collection('workers')

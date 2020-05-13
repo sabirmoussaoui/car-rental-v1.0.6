@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { WORKER_ROUTES } from '../sidebar/sidebar.component';
 import { CLIENT_ROUTES } from '../sidebar/sidebar.component';
 import { ADMIN_ROUTES } from '../sidebar/sidebar.component';
+import { HOME_ROUTES } from '../sidebar/sidebar.component';
 
 import {
   Location,
@@ -15,6 +16,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import * as firebase from 'firebase';
 import { RoleService } from 'src/app/services/role.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ClientService } from 'src/app/services/client.service';
+import { Client } from 'src/app/models/Client.model';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -24,13 +27,20 @@ export class NavbarComponent implements OnInit {
   public focus;
   public listTitles: any[];
   public location: Location;
-  worker: any;
+  worker: Worker;
+  client: Client;
+  fullname: string;
+  photoUrl: string;
   isAuth: boolean;
+  page_title: string;
+  user_profile_route;
+
   constructor(
+    element: ElementRef,
     location: Location,
-    private element: ElementRef,
     private router: Router,
     private workerService: WorkerService,
+    private clientService: ClientService,
     private authService: AuthService,
     private roleService: RoleService,
     private spinner: NgxSpinnerService
@@ -45,16 +55,35 @@ export class NavbarComponent implements OnInit {
         if (user) {
           this.isAuth = true;
           this.roleService.getRole(user.uid).subscribe((user) => {
-            if (user.data().role === 'worker') {
-              this.listTitles = WORKER_ROUTES.filter((listTitle) => listTitle);
-              this.getCurrentWorker(user.id);
-            } else if (user.data().role === 'client') {
-              this.listTitles = CLIENT_ROUTES.filter((listTitle) => listTitle);
+            if (user.data().role != undefined) {
+              if (user.data().role === 'worker') {
+                this.user_profile_route = '/' + user.data().role + '/profile';
+                this.listTitles = WORKER_ROUTES.filter(
+                  (listTitle) => listTitle
+                );
+                this.page_title = this.getTitle();
+                this.getCurrentWorker(user.id);
+              } else if (user.data().role === 'client') {
+                this.user_profile_route = '/' + user.data().role + '/profile';
+                this.listTitles = CLIENT_ROUTES.filter(
+                  (listTitle) => listTitle
+                );
+                this.page_title = this.getTitle();
+                this.getCurrentClient(user.id);
+              } else {
+                this.listTitles = ADMIN_ROUTES.filter((listTitle) => listTitle);
+                this.page_title = this.getTitle();
+              }
             } else {
-              this.listTitles = ADMIN_ROUTES.filter((listTitle) => listTitle);
+              console.log('not login');
+              this.listTitles = HOME_ROUTES.filter((listTitle) => listTitle);
+              this.page_title = this.getTitle();
+              this.isAuth = false;
             }
           });
         } else {
+          this.listTitles = HOME_ROUTES.filter((listTitle) => listTitle);
+          this.page_title = this.getTitle();
           this.isAuth = false;
         }
       },
@@ -62,16 +91,27 @@ export class NavbarComponent implements OnInit {
         console.log(err);
       }
     );
-
-    this.listTitles = WORKER_ROUTES.filter((listTitle) => listTitle);
   }
 
   getCurrentWorker(workerKey) {
-    this.workerService.getWorkerSnapShot(workerKey).subscribe((data: any) => {
-      this.worker = data.payload.data();
+    this.workerService.getWorkerSnapShot(workerKey).subscribe((data) => {
+      this.worker = data.payload.data() as Worker;
+      this.worker.workerKey = data.payload.id;
+      this.fullname = this.worker.name;
+      this.photoUrl = this.worker.logo;
       this.spinner.hide();
     });
   }
+  getCurrentClient(clientKey) {
+    this.clientService.getClientSnapShot(clientKey).subscribe((data) => {
+      this.client = data.payload.data() as Client;
+      this.client.clientKey = data.payload.id;
+      this.fullname = this.client.firstname + ' ' + this.client.lastname;
+      this.photoUrl = this.client.profil;
+      this.spinner.hide();
+    });
+  }
+
   getTitle() {
     var titlee = this.location.prepareExternalUrl(this.location.path());
     if (titlee.charAt(0) === '#') {

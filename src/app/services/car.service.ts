@@ -18,14 +18,11 @@ export class CarService {
     this.myMethod$ = this.myMethodSubject.asObservable();
   }
 
-  getCarBrand(carBrandKey) {
-    return this.db.collection('carBrands').doc(carBrandKey).get();
-  }
   updateCar(carKey, car) {
     return this.db
       .collection('cars')
       .doc(carKey)
-      .set({
+      .update({
         price: car.price,
         quantity: car.quantity,
         carBrand: {
@@ -47,6 +44,17 @@ export class CarService {
   }
   myMethod(data) {
     this.myMethodSubject.next(data);
+  }
+  updateCarRating(carKey, averageRating) {
+    return this.db
+      .collection('cars')
+      .doc(carKey)
+      .update({
+        rating: averageRating ? averageRating : 0,
+      })
+      .then(function () {
+        console.log('Rating successfully updated!');
+      });
   }
   updateCarBrandAvatar(carBrandKey, avatar) {
     return this.db
@@ -109,9 +117,18 @@ export class CarService {
   }
 
   getCars() {
-    return this.db.collection('cars').valueChanges();
+    return this.db.collection('cars').get();
+  }
+  getCar(carKey) {
+    return this.db.collection('cars').doc(carKey).snapshotChanges();
   }
 
+  getCarsValueChanges() {
+    return this.db.collection('cars').valueChanges();
+  }
+  getAllCars() {
+    return this.db.collection('cars').snapshotChanges();
+  }
   createCar(car: Car) {
     return this.db.collection('cars').add({
       price: car.price,
@@ -124,7 +141,6 @@ export class CarService {
       carModel: {
         name: car.carModel.name,
         year: car.carModel.year,
-        photoUrl: car.carModel.year,
         carModelKey: car.carModel.carModelKey,
       },
       seat: car.seat,
@@ -141,6 +157,7 @@ export class CarService {
       description: car.description,
       car_class: car.car_class,
       body_style: car.body_style,
+      rating: car.rating,
     });
   }
 

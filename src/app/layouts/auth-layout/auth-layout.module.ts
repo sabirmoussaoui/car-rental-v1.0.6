@@ -16,6 +16,8 @@ import { WorkerService } from 'src/app/services/worker.service';
 import { LoginComponent } from 'src/app/auth/login/login.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserModule } from '@angular/platform-browser';
+import { ClientService } from 'src/app/services/client.service';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
 @NgModule({
   imports: [
@@ -29,6 +31,7 @@ import { BrowserModule } from '@angular/platform-browser';
     MatInputModule,
     MatDialogModule,
     NgxSpinnerModule,
+    AngularFireAuthModule,
   ],
   declarations: [
     LoginComponent,
@@ -36,6 +39,6 @@ import { BrowserModule } from '@angular/platform-browser';
     WorkerRegisterComponent,
     MapsDialogComponent,
   ],
-  providers: [AuthService, WorkerService],
+  providers: [AuthService, WorkerService, ClientService],
 })
 export class AuthLayoutModule {}

@@ -1,0 +1,30 @@
+::ng-deep .mat-form-field {
+  width: 100%;
+}
+.img-thumbnail {
+  width: 443px;
+  height: 372px;
+  margin-left: 17px;
+}
+.example-header-image {
+  // background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+.avatar-circel-img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50% !important;
+}
+.icon-solid {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  padding-left: 8px;
+  background-repeat: no-repeat;
+}
+.icon-solid--car-gears-automatic {
+  background: url(https://cdn2.rcstatic.com/images/site_graphics/newsite/solid--car-gears-automatic.png);
+  background: url(https://cdn2.rcstatic.com/images/site_graphics/newsite/solid--car-gears-automatic.svg),
+    none;
+}

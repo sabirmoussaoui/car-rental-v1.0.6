@@ -2,11 +2,13 @@
   <div class="container-fluid">
     <!-- Brand -->
     <a
+      *ngIf="page_title"
       class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
       routerLinkActive="active"
       [routerLink]="['/dashboard']"
-      >{{ getTitle() }}</a
+      >{{ page_title }}</a
     >
+    <a (click)="onSignOut()"> lougout </a>
     <!-- Form -->
     <form
       class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto"
@@ -31,12 +33,12 @@
       <li class="nav-item" ngbDropdown placement="bottom-right">
         <a class="nav-link pr-0" role="button" ngbDropdownToggle>
           <div class="media align-items-center">
-            <span class="avatar avatar-sm rounded-circle">
-              <img *ngIf="worker" alt="Image placeholder" [src]="worker.logo" />
+            <span *ngIf="photoUrl" class="avatar avatar-sm rounded-circle">
+              <img alt="Image placeholder" [src]="photoUrl" />
             </span>
             <div class="media-body ml-2 d-none d-lg-block">
-              <span *ngIf="worker" class="mb-0 text-sm font-weight-bold">
-                {{ worker.name }}
+              <span *ngIf="fullname" class="mb-0 text-sm font-weight-bold">
+                {{ fullname }}
                 <ngx-spinner
                   bdColor="rgba(0,0,0,0)"
                   size="small"
@@ -55,7 +57,7 @@
           </div>
           <a
             routerLinkActive="active"
-            [routerLink]="['/user-profile']"
+            [routerLink]="[user_profile_route]"
             class="dropdown-item"
           >
             <i class="ni ni-single-02"></i>
@@ -87,7 +89,6 @@
           </a>
           <div class="dropdown-divider"></div>
           <a
-            *ngIf="isAuth"
             href="javascript:void(0)"
             (click)="onSignOut()"
             class="dropdown-item"

@@ -172,8 +172,6 @@ export class WorkerRegisterComponent implements OnInit {
       console.log('not ok');
       this.spinner.hide();
     }
-    console.log(name + email + phone + password + website + city + sector);
-    return this.router.navigate(['/worker/dashbord']);
   }
   detectMainImage(event) {
     this.onUploadMainImage(event.target.files[0]);

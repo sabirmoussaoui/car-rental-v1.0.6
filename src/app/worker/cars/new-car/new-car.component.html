@@ -117,11 +117,11 @@
                       (ngModelChange)="brandSelected()"
                     >
                       <mat-option
-                        *ngFor="let carBrand of carBrands"
                         [value]="carBrand.value"
+                        *ngFor="let carBrand of carBrands"
                       >
                         <img
-                          class="rounded-circle"
+                          class="srounded-circle"
                           width="30px"
                           height="30px"
                           *ngIf="carBrand.value.photoUrl"
@@ -132,7 +132,6 @@
                     </mat-select>
                   </mat-form-field>
                 </div>
-
                 <div class="col-lg-6">
                   <mat-form-field>
                     <mat-label>Car Models</mat-label>
@@ -482,12 +481,6 @@
                   type="submit"
                 >
                   Add car <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                </button>
-                <h1>"angular-notifier" demo</h1>
-
-                <h2>Show notifications</h2>
-                <button class="button button--primary">
-                  Default me!
                 </button>
               </div>
             </form>

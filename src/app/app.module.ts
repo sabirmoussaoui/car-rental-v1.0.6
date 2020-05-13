@@ -19,10 +19,10 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AuthGuardService } from './services/auth-guard.service';
-import { AuthService } from './services/auth.service';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { BrowserModule } from '@angular/platform-browser';
+import { MyRentalsComponent } from './client/my-rentals/my-rentals.component';
+import { ClientProfileComponent } from './client/client-profile/client-profile.component';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -36,7 +36,6 @@ import { BrowserModule } from '@angular/platform-browser';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireStorageModule,
-    AngularFireAuthModule,
   ],
   declarations: [
     AppComponent,

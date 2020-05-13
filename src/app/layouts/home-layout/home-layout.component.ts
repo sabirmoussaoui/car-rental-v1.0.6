@@ -11,6 +11,4 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
 
   ngOnInit() {}
   ngOnDestroy() {}
-
-  getCars() {}
 }

@@ -19,7 +19,10 @@ export class AuthService {
         );
     });
   }
-
+  singUpwithGoogle() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    return firebase.auth().signInWithPopup(provider);
+  }
   signInUser(email: string, password: string) {
     return new Promise((resolve, reject) =>
       firebase

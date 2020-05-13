@@ -1,0 +1,279 @@
+<div
+  class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+  style="
+    min-height: 600px;
+    background-image: url(assets/img/theme/car-cover-design.jpg);
+    background-size: cover;
+    background-position: center top;
+  "
+>
+  <!-- Header container -->
+  <div class="container-fluid d-flex align-items-center">
+    <div class="row">
+      <ul
+        class="nav nav-pills nav-fill flex-column flex-sm-row"
+        id="tabs-text"
+        role="tablist"
+      >
+        <li class="nav-item">
+          <a
+            class="nav-link mb-sm-3 mb-md-0 active"
+            id="tabs-text-1-tab"
+            data-toggle="tab"
+            [routerLink]="['/worker/cars']"
+            role="tab"
+            aria-controls="tabs-text-1"
+            aria-selected="true"
+            >My Cars</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link mb-sm-3 mb-md-0"
+            id="tabs-text-2-tab"
+            data-toggle="tab"
+            [routerLink]="['/admin/settings/sectors']"
+            role="tab"
+            aria-controls="tabs-text-2"
+            aria-selected="false"
+            >Sectors</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link mb-sm-3 mb-md-0"
+            id="tabs-text-3-tab"
+            data-toggle="tab"
+            [routerLink]="['/admin/settings/colors']"
+            role="tab"
+            aria-controls="tabs-text-3"
+            aria-selected="false"
+            >Colors</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link mb-sm-3 mb-md-0"
+            id="tabs-text-3-tab"
+            data-toggle="tab"
+            [routerLink]="['/admin/settings/car-brands']"
+            role="tab"
+            aria-controls="tabs-text-3"
+            aria-selected="false"
+            >Car Brands</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link mb-sm-3 mb-md-0"
+            id="tabs-text-3-tab"
+            data-toggle="tab"
+            [routerLink]="['/admin/settings/car-models']"
+            role="tab"
+            aria-controls="tabs-text-3"
+            aria-selected="false"
+            >Cars Models</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link mb-sm-3 mb-md-0"
+            id="tabs-text-3-tab"
+            data-toggle="tab"
+            href="#tabs-text-3"
+            role="tab"
+            aria-controls="tabs-text-3"
+            aria-selected="false"
+            >Clients</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-xl-12 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-secondary border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">My cars</h3>
+            </div>
+            <div class="col-4 text-right">
+              <a
+                href="javascript:void(0)"
+                (click)="updateRatings()"
+                class="btn btn-sm btn-primary"
+                >Settings</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Brands</th>
+                  <th scope="col">Models</th>
+                  <th scope="col">Prices</th>
+                  <th scope="col">Quantities</th>
+                  <th scope="col">Fuels</th>
+                  <th scope="col">Doors</th>
+                  <th scope="col">Photos</th>
+                  <th scope="col">Actions</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let car of cars">
+                  <td>
+                    <div class="media align-items-center">
+                      <a class="avatar rounded-circle mr-3">
+                        <img
+                          alt="Image placeholder"
+                          *ngIf="car.payload.doc.data().carBrand.photoUrl"
+                          [src]="car.payload.doc.data().carBrand.photoUrl"
+                        />
+                      </a>
+                      <div class="media-body">
+                        <span class="mb-0 text-sm">
+                          {{ car.payload.doc.data().carBrand.name }}
+                        </span>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <span>{{
+                      car.payload.doc.data().carModel.name +
+                        " " +
+                        car.payload.doc.data().carModel.year
+                    }}</span>
+                  </td>
+                  <td>
+                    <span>{{ car.payload.doc.data().price }}</span>
+                  </td>
+                  <td>
+                    <span>{{ car.payload.doc.data().quantity }}</span>
+                  </td>
+                  <td>
+                    <span>{{ car.payload.doc.data().fuel }}</span>
+                  </td>
+                  <td>
+                    <span>{{ car.payload.doc.data().door }}</span>
+                  </td>
+                  <td>
+                    <div class="row" style="width: max-content;">
+                      <a
+                        href="javascript:void(0)"
+                        ngbPopover="this is a main photo"
+                        [openDelay]="100"
+                        [closeDelay]="100"
+                        triggers="mouseenter:mouseleave"
+                      >
+                        <img
+                          class="avatar-circel-img"
+                          [src]="car.payload.doc.data().main_photo"
+                          (click)="
+                            openImageDialog(
+                              car.payload.doc.data().main_photo,
+                              false,
+                              false
+                            )
+                          "
+                        />
+                      </a>
+                      <div
+                        class="avatar-group"
+                        *ngFor="let photo of car.payload.doc.data().photos"
+                      >
+                        <a
+                          href="javascript:void(0)"
+                          data-toggle="tooltip"
+                          data-placement="top"
+                          data-container="body"
+                          data-animation="true"
+                        >
+                          <img
+                            (click)="
+                              openImageDialog(
+                                photo,
+                                car.payload.doc.data().photos,
+                                car.payload.doc.id
+                              )
+                            "
+                            alt="Image placeholder"
+                            [src]="photo"
+                            class="avatar-circel-img"
+                          />
+                        </a>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <button
+                      mat-mini-fab
+                      color="info"
+                      aria-label="show Details"
+                      (click)="showDetails(car.payload.doc.data())"
+                    >
+                      <mat-icon>visibility</mat-icon>
+                    </button>
+                    <button
+                      mat-mini-fab
+                      color="warn"
+                      aria-label="Delete"
+                      (click)="onDeleteCar(car.payload.doc)"
+                    >
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </td>
+                  <td></td>
+                </tr>
+                <ngx-spinner
+                  bdColor="rgba(51,51,51,0.8)"
+                  size="medium"
+                  color="#fff"
+                  type="ball-scale-multiple"
+                  [fullScreen]="false"
+                >
+                  <p style="font-size: 20px; color: white;">Loading...</p>
+                </ngx-spinner>
+              </tbody>
+            </table>
+          </div>
+          <div class="card-footer py-4">
+            <nav aria-label="...">
+              <ul class="pagination justify-content-end mb-0">
+                <li class="page-item disabled">
+                  <a class="page-link" href="javascript:void(0)" tabindex="-1">
+                    <i class="fas fa-angle-left"></i>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                </li>
+                <li class="page-item active">
+                  <a class="page-link" href="javascript:void(0)">1</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="javascript:void(0)"
+                    >2 <span class="sr-only">(current)</span></a
+                  >
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="javascript:void(0)">3</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="javascript:void(0)">
+                    <i class="fas fa-angle-right"></i>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

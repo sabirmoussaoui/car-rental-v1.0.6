@@ -45,13 +45,58 @@ export const WORKER_ROUTES: RouteInfo[] = [
     icon: 'fa fa-plus-circle text-danger',
     class: '',
   },
+  {
+    path: '/worker/worker-profile',
+    title: 'My profile',
+    icon: 'fa fa-plus-circle text-warining',
+    class: '',
+  },
 ];
-export const CLIENT_ROUTES: RouteInfo[] = [];
+export const CLIENT_ROUTES: RouteInfo[] = [
+  {
+    path: '/home',
+    title: 'Home',
+    icon: 'ni-planet text-primary',
+    class: '',
+  },
+  {
+    path: '/client/dashboard',
+    title: 'dashboard',
+    icon: 'ni-tv-2 text-primary',
+    class: '',
+  },
+  {
+    path: '/client/my-rentals',
+    title: 'My rentals',
+    icon: 'fa fa-car text-danger',
+    class: '',
+  },
+  {
+    path: '/client/profile',
+    title: 'My profile',
+    icon: 'fa fa-car text-d',
+    class: '',
+  },
+];
+export const HOME_ROUTES: RouteInfo[] = [
+  {
+    path: '/home',
+    title: 'home',
+    icon: 'fa fa-home text-primary',
+    class: '',
+  },
+];
 export const ADMIN_ROUTES: RouteInfo[] = [
   {
     path: '/admin/dashboard',
     title: 'dashboard',
     icon: 'ni-tv-2 text-primary',
+    class: '',
+  },
+  {
+    path: '/admin/cars',
+    title: 'Cars',
+    icon: 'fa fa-car text-danger',
     class: '',
   },
   {
@@ -108,8 +153,12 @@ export class SidebarComponent implements OnInit {
           }
         });
       } else {
-        this.spinner.hide();
+        this.menuItems = HOME_ROUTES.filter((menuItem) => menuItem);
+        this.router.events.subscribe((event) => {
+          this.isCollapsed = true;
+        });
         this.isAuth = false;
+        this.spinner.hide();
       }
     });
     this.spinner.hide();

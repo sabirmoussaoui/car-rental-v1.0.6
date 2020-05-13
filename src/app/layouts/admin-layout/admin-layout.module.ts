@@ -10,7 +10,6 @@ import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../admin/dashboard/dashboard.component';
 import { UserProfileComponent } from '../../admin/user-profile/user-profile.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-// import { ToastrModule } from 'ngx-toastr';
 import { MatSliderModule } from '@angular/material/slider';
 import { SettingsComponent } from 'src/app/admin/settings/settings.component';
 import { CityService } from 'src/app/services/city.service';
@@ -38,6 +37,13 @@ import { BrandModelService } from 'src/app/services/brand-model.service';
 import { CarBrandLogoDialogComponent } from 'src/app/admin/settings/car-brand/car-brand-logo-dialog/car-brand-logo-dialog.component';
 import { AuthGuardService } from 'src/app/services/auth-guard.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { CarsComponent } from 'src/app/admin/cars/cars.component';
+import { ReviewService } from 'src/app/services/review.service';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { MatIconModule } from '@angular/material/icon';
+import { CarDetailDialogComponent } from 'src/app/admin/cars/car-detail-dialog/car-detail-dialog.component';
+import { OpenCarImageDialogComponent } from 'src/app/admin/cars/open-car-image-dialog/open-car-image-dialog.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   imports: [
@@ -54,6 +60,10 @@ import { AuthService } from 'src/app/services/auth.service';
     MatInputModule,
     MatAutocompleteModule,
     MatSelectModule,
+    NgxSpinnerModule,
+    MatIconModule,
+    NgbModule,
+    NgxPaginationModule,
   ],
   declarations: [
     DashboardComponent,
@@ -70,6 +80,9 @@ import { AuthService } from 'src/app/services/auth.service';
     CarBrandLogoDialogComponent,
     CarModelComponent,
     CarModelUpdateDialogComponent,
+    CarsComponent,
+    CarDetailDialogComponent,
+    OpenCarImageDialogComponent,
   ],
   providers: [
     CityService,
@@ -81,6 +94,7 @@ import { AuthService } from 'src/app/services/auth.service';
     BrandModelService,
     AuthGuardService,
     AuthService,
+    ReviewService,
   ],
   entryComponents: [
     CityUpdateDialogComponent,

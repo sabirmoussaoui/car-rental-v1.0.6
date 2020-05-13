@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "location-voitures": {
+    "car-rental": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/location-voitures",
+            "outputPath": "dist/car-rental",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -69,18 +69,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "location-voitures:build"
+            "browserTarget": "car-rental:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "location-voitures:build:production"
+              "browserTarget": "car-rental:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "location-voitures:build"
+            "browserTarget": "car-rental:build"
           }
         },
         "test": {
@@ -110,18 +110,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "location-voitures:serve"
+            "devServerTarget": "car-rental:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "location-voitures:serve:production"
+              "devServerTarget": "car-rental:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "location-voitures",
+  "defaultProject": "car-rental",
   "cli": {
     "analytics": "7f980dc0-a195-44ab-bbd0-40bd98bb52a1"
   }

@@ -33,8 +33,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { FourOhFourComponent } from 'src/app/worker/four-oh-four/four-oh-four.component';
 import { CarDetailDialogComponent } from 'src/app/worker/cars/car-detail-dialog/car-detail-dialog.component';
 import { NewCarComponent } from 'src/app/worker/cars/new-car/new-car.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -67,6 +66,7 @@ import { BrowserModule } from '@angular/platform-browser';
     MatInputModule,
     MatSliderModule,
     NgxSpinnerModule,
+    MatSlideToggleModule,
   ],
   entryComponents: [
     OpenCarImageDialogComponent,

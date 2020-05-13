@@ -9,7 +9,7 @@ export class RoleService {
 
   addRole(userkey, role: string) {
     return this.db.collection('users').doc(userkey).set({
-      type: role,
+      role: role,
       userkey: userkey,
     });
   }

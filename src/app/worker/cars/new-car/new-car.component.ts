@@ -142,7 +142,6 @@ export class NewCarComponent implements OnInit {
       this.created_at.getMinutes(),
       this.created_at.getSeconds(),
     ].join(':');
-
   constructor(
     private formBuilder: FormBuilder,
     private carBrandService: CarBrandService,
@@ -163,10 +162,10 @@ export class NewCarComponent implements OnInit {
         this.getCurrentWorker(worker.uid);
       }
     });
-
     this.initCarModelForm();
     this.getCarBrands();
   }
+
   initCarModelForm() {
     this.carForm = this.formBuilder.group({
       price: ['', Validators.required],
@@ -216,7 +215,8 @@ export class NewCarComponent implements OnInit {
       seat,
       door,
       fuel,
-      this.dformat,
+      new Date(),
+      new Date(),
       this.worker,
       large_bag,
       small_bag,

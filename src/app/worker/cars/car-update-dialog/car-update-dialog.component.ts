@@ -14,7 +14,15 @@ interface SelectBrand {
   value: CarBrand;
   viewValue: string;
 }
-
+interface Body_Style {
+  value: string;
+  viewValue: string;
+  avatar: string;
+}
+interface Car_Class {
+  value: string;
+  viewValue: string;
+}
 @Component({
   selector: 'app-car-update-dialog',
   templateUrl: './car-update-dialog.component.html',
@@ -33,39 +41,89 @@ export class CarUpdateDialogComponent implements OnInit {
   car: Car;
   carBrands: SelectBrand[] = [];
   carModels: SelectModel[] = [];
-
+  car_class: Car_Class[] = [
+    {
+      value: 'Mini',
+      viewValue: 'Mini',
+    },
+    {
+      value: 'Economy',
+      viewValue: 'Economy',
+    },
+    {
+      value: 'Compact',
+      viewValue: 'Compact',
+    },
+    {
+      value: 'Itermediate',
+      viewValue: 'Itermediate',
+    },
+    {
+      value: 'Standard',
+      viewValue: 'Standard',
+    },
+    {
+      value: 'Full size',
+      viewValue: 'Full size',
+    },
+    {
+      value: 'Luxury',
+      viewValue: 'Luxury',
+    },
+  ];
+  body_styles: Body_Style[] = [
+    {
+      value: 'Small  cars',
+      viewValue: 'Small cars',
+      avatar:
+        'https://cdn2.rcstatic.com/images/car_images/web/chevrolet/spark_lrg.jpg',
+    },
+    {
+      value: 'Medium cars',
+      viewValue: 'Medium cars',
+      avatar:
+        'https://cdn2.rcstatic.com/images/car_images/web/chevrolet/spark_lrg.jpg',
+    },
+    {
+      value: 'Large cars',
+      viewValue: 'Large cars',
+      avatar:
+        'https://cdn2.rcstatic.com/images/car_images/web/nissan/sentra_lrg.jpg',
+    },
+    {
+      value: 'Convertibles',
+      viewValue: 'Convertibles',
+      avatar:
+        'https://cdn2.rcstatic.com/images/car_images/web/ford/mustang_convertible_lrg.jpg',
+    },
+    {
+      value: 'Premium cars',
+      viewValue: 'Premium cars',
+      avatar:
+        'https://cdn2.rcstatic.com/images/car_images/web/toyota/rav4_lrg.jpg',
+    },
+    {
+      value: 'People carriers',
+      viewValue: 'People carriers',
+      avatar:
+        'https://cdn2.rcstatic.com/images/car_images/web/nissan/quest_lrg.jpg',
+    },
+    {
+      value: 'SUVs',
+      viewValue: 'SUVs',
+      avatar:
+        'https://cdn2.rcstatic.com/images/car_images/web/chevrolet/tahoe_lrg.jpg',
+    },
+  ];
   constructor(
     private carModelService: CarModelService,
     private carBrandService: CarBrandService,
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<CarUpdateDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
-    {
-      car,
-      // price,
-      // quantity,
-      // carBrand,
-      // carModel,
-      // seat,
-      // door,
-      // fuel,
-      // large_bag,
-      // small_bag,
-      // gearbox,
-      // air_conditioning,
-      // description,
-      // car_class,
-      // body_style,
-    } // : Car
+    { car }
   ) {
     this.getCarBrands();
-    // this.car.price = car.price;
-    // this.car.quantity = car.quantity;
-    // this.car.carBrand = car.carBrand;
-    // this.car.carModel = car.carModel;
-    // this.car.seat = car.seat;
-    // this.car.door = car.door;
-    // this.car.fuel = car.fuel;
     this.car = car;
   }
 
@@ -81,6 +139,13 @@ export class CarUpdateDialogComponent implements OnInit {
       door: [this.car.door, Validators.required],
       fuel: [this.car.fuel, Validators.required],
       seat: [this.car.seat, Validators.required],
+      large_bag: [this.car.large_bag],
+      small_bag: [this.car.small_bag],
+      body_style: [this.car.body_style, Validators.required],
+      air_conditioning: [this.car.air_conditioning],
+      description: [this.car.description],
+      car_class: [this.car.car_class, Validators.required],
+      gearbox: [this.car.gearbox, Validators.required],
     });
   }
   getCarBrands() {
