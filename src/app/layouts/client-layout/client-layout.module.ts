@@ -9,7 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from 'src/app/client/dashboard/dashboard.component';
 import { AuthGuardService } from 'src/app/services/auth-guard.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -24,12 +24,15 @@ import { CarRequestService } from 'src/app/services/car-requests.service';
 import { MyRentalsComponent } from 'src/app/client/my-rentals/my-rentals.component';
 import { ClientProfileComponent } from 'src/app/client/client-profile/client-profile.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { CarDetailDialogComponent } from 'src/app/client/my-rentals/car-detail-dialog/car-detail-dialog.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     MyRentalsComponent,
     ClientProfileComponent,
+    CarDetailDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -50,6 +53,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NgxSpinnerModule,
     MatSlideToggleModule,
     NgxPaginationModule,
+    MatTabsModule,
   ],
   providers: [AuthGuardService, AuthService, CarRequestService],
 })

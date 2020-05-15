@@ -48,7 +48,7 @@ interface CitySelect {
 })
 export class CarRequestComponent implements OnInit {
   carKey: string;
-  car: Car = new Car();
+  car: Car;
   cities: CitySelect[] = [];
   dateFormGroup: FormGroup;
   clientFormGroup: FormGroup;
@@ -95,8 +95,9 @@ export class CarRequestComponent implements OnInit {
     this.spn.show();
     this.onAuthStateChanged();
     const carKey = this.route.snapshot.params['id'];
-    this.carService.getCar(carKey).subscribe((car) => {
-      this.car = car.payload.data() as Car;
+    this.carService.getCar(carKey).subscribe((car: Car) => {
+      this.car = car;
+      console.log(this.car);
       this.spn.hide();
     });
     this.initDateForm();

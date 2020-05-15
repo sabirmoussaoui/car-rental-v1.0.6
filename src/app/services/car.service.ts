@@ -120,45 +120,50 @@ export class CarService {
     return this.db.collection('cars').get();
   }
   getCar(carKey) {
-    return this.db.collection('cars').doc(carKey).snapshotChanges();
+    return this.db.collection<Car>('cars').doc(carKey).valueChanges();
   }
 
   getCarsValueChanges() {
     return this.db.collection('cars').valueChanges();
   }
   getAllCars() {
-    return this.db.collection('cars').snapshotChanges();
+    return this.db.collection<Car>('cars').valueChanges();
   }
   createCar(car: Car) {
-    return this.db.collection('cars').add({
-      price: car.price,
-      quantity: car.quantity,
-      carBrand: {
-        name: car.carBrand.name,
-        photoUrl: car.carBrand.photoUrl,
-        carBrandKey: car.carBrand.carBrandKey,
-      },
-      carModel: {
-        name: car.carModel.name,
-        year: car.carModel.year,
-        carModelKey: car.carModel.carModelKey,
-      },
-      seat: car.seat,
-      door: car.door,
-      fuel: car.fuel,
-      main_photo: car.main_photo ? car.main_photo : '',
-      photos: car.photos ? car.photos : [],
-      created_at: car.created_at,
-      worker: car.worker as Worker,
-      large_bag: car.large_bag,
-      small_bag: car.small_bag,
-      gearbox: car.gearbox,
-      air_conditioning: car.air_conditioning,
-      description: car.description,
-      car_class: car.car_class,
-      body_style: car.body_style,
-      rating: car.rating,
-    });
+    var uid = this.db.collection('cars').ref.doc().id;
+    return this.db
+      .collection('cars')
+      .doc(uid)
+      .set({
+        carKey: uid,
+        price: car.price,
+        quantity: car.quantity,
+        carBrand: {
+          name: car.carBrand.name,
+          photoUrl: car.carBrand.photoUrl,
+          carBrandKey: car.carBrand.carBrandKey,
+        },
+        carModel: {
+          name: car.carModel.name,
+          year: car.carModel.year,
+          carModelKey: car.carModel.carModelKey,
+        },
+        seat: car.seat,
+        door: car.door,
+        fuel: car.fuel,
+        main_photo: car.main_photo ? car.main_photo : '',
+        photos: car.photos ? car.photos : [],
+        created_at: car.created_at,
+        worker: car.worker as Worker,
+        large_bag: car.large_bag,
+        small_bag: car.small_bag,
+        gearbox: car.gearbox,
+        air_conditioning: car.air_conditioning,
+        description: car.description,
+        car_class: car.car_class,
+        body_style: car.body_style,
+        rating: car.rating,
+      });
   }
 
   createPhotos(allPhotos, carBrand, carModel) {

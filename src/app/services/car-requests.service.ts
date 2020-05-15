@@ -26,10 +26,10 @@ export class CarRequestService {
 
   getCarRequests(clientKey) {
     return this.db
-      .collection('car_requests', (ref) =>
+      .collection<CarRequest>('car_requests', (ref) =>
         ref.where('client.clientKey', '==', clientKey)
       )
-      .get();
+      .valueChanges();
   }
 
   getCities() {

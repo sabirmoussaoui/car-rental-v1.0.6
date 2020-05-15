@@ -18,6 +18,8 @@ import { RoleService } from 'src/app/services/role.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ClientService } from 'src/app/services/client.service';
 import { Client } from 'src/app/models/Client.model';
+import { AdminService } from 'src/app/services/admin.service';
+import { Admin } from 'src/app/models/Admin.model';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -29,6 +31,7 @@ export class NavbarComponent implements OnInit {
   public location: Location;
   worker: Worker;
   client: Client;
+  admin: Admin;
   fullname: string;
   photoUrl: string;
   isAuth: boolean;
@@ -41,6 +44,7 @@ export class NavbarComponent implements OnInit {
     private router: Router,
     private workerService: WorkerService,
     private clientService: ClientService,
+    private adminService: AdminService,
     private authService: AuthService,
     private roleService: RoleService,
     private spinner: NgxSpinnerService
@@ -71,7 +75,9 @@ export class NavbarComponent implements OnInit {
                 this.page_title = this.getTitle();
                 this.getCurrentClient(user.id);
               } else {
+                this.user_profile_route = '/' + user.data().role + '/profile';
                 this.listTitles = ADMIN_ROUTES.filter((listTitle) => listTitle);
+                this.getCurrentAdmin(user.id);
                 this.page_title = this.getTitle();
               }
             } else {
@@ -111,7 +117,15 @@ export class NavbarComponent implements OnInit {
       this.spinner.hide();
     });
   }
-
+  getCurrentAdmin(adminKey) {
+    this.adminService.getAdminSnapShot(adminKey).subscribe((data) => {
+      this.admin = data.payload.data() as Admin;
+      this.admin.adminKey = data.payload.id;
+      this.fullname = this.admin.firstname + ' ' + this.admin.lastname;
+      this.photoUrl = this.admin.photoURL;
+      this.spinner.hide();
+    });
+  }
   getTitle() {
     var titlee = this.location.prepareExternalUrl(this.location.path());
     if (titlee.charAt(0) === '#') {

@@ -1,4 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
+import { Car } from 'src/app/models/Car.model';
+import { CarDetailDialogComponent } from './car-detail-dialog/car-detail-dialog.component';
+import { ReviewService } from 'src/app/services/review.service';
+import { Review } from 'src/app/models/Review.model';
 
 @Component({
   selector: 'app-cars',
@@ -25,12 +30,36 @@ import { Component, OnInit, Input } from '@angular/core';
   ],
 })
 export class CarsComponent implements OnInit {
-  @Input() car: any;
+  @Input() car: Car;
+  reviews: Review[] = [];
+  constructor(
+    private dialog: MatDialog,
+    private reviewService: ReviewService
+  ) {}
 
-  constructor() {}
-
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.car);
+  }
+  // getReviews(carKey){
+  //   this.reviewService.getReviews(carKey).subscribe(
+  //     reviews=>{
+  //       this.reviews = reviews as Review
+  //     }
+  //       )
+  // }
   getOriginPrice(price) {
     return Number(price) + 10;
+  }
+  showDetails(car: Car) {
+    console.log(status);
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '1000px';
+    dialogConfig.maxHeight = '90vh';
+    dialogConfig.data = {
+      car: car,
+    };
+    const dialogRef = this.dialog.open(CarDetailDialogComponent, dialogConfig);
   }
 }

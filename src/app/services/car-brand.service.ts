@@ -57,10 +57,16 @@ export class CarBrandService {
   }
 
   createCarBrand(carBrand) {
-    return this.db.collection('carBrands').add({
-      name: carBrand.name,
-      photoUrl: carBrand.photoUrl ? carBrand.photoUrl : '',
-    });
+    var uid = this.db.collection('carBrands').ref.doc().id;
+    console.log(uid);
+    return this.db
+      .collection('carBrands')
+      .doc(uid)
+      .set({
+        carBrandKey: uid,
+        name: carBrand.name,
+        photoUrl: carBrand.photoUrl ? carBrand.photoUrl : '',
+      });
   }
 
   /// Upload Image

@@ -6,7 +6,7 @@ import { WorkerService } from 'src/app/services/worker.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as firebase from 'firebase';
 import { Worker } from 'src/app/models/Worker.model';
-import { CarDetailDialogComponent } from 'src/app/worker/cars/car-detail-dialog/car-detail-dialog.component';
+import { CarDetailDialogComponent } from 'src/app/client/my-rentals/car-detail-dialog/car-detail-dialog.component';
 import { OpenCarImageDialogComponent } from 'src/app/worker/cars/open-car-image-dialog/open-car-image-dialog.component';
 import { ActivatedRoute } from '@angular/router';
 import { Client } from 'src/app/models/Client.model';
@@ -87,7 +87,7 @@ export class MyRentalsComponent implements OnInit {
       dialogConfig
     );
   }
-  showDetails(car: Car) {
+  showDetails(carRequest: CarRequest) {
     console.log(status);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
@@ -95,25 +95,26 @@ export class MyRentalsComponent implements OnInit {
     dialogConfig.width = '1000px';
     dialogConfig.maxHeight = '90vh';
     dialogConfig.data = {
-      car: car,
+      carRequest: carRequest,
     };
     const dialogRef = this.dialog.open(CarDetailDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe((data) => {
+      if (data) {
+        console.log(data);
+      }
+    });
   }
   getdateFormat(date) {
-    console.log(moment(date).format('YYYY-MM-DD hh:mm:ss'));
-
-    var s = new Date(date).toLocaleDateString('en-US');
-    console.log(s);
-    return s;
+    // console.log(moment(date).format('YYYY-MM-DD hh:mm:ss'));
+    // var s = new Date(date).toLocaleDateString('en-US');
+    // console.log(s);
+    // return s;
   }
   getCarRequests(clientKey) {
     this.carRequestService
       .getCarRequests(clientKey)
       .subscribe((car_requests) => {
-        car_requests.forEach((element) => {
-          console.log(element.data());
-          // this.car_requests.push(element as CarRequest);
-        });
+        this.car_requests = car_requests;
         this.spinner.hide();
       });
     console.log(this.car_requests);

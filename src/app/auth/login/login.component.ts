@@ -35,6 +35,24 @@ export class LoginComponent implements OnInit, OnDestroy {
       ],
     });
   }
+  singUpwithGoogle() {
+    this.authService
+      .singUpwithGoogle()
+      .then((result) => {
+        return this.getCurrentuser(result.user.uid);
+      })
+      .catch(function (error) {
+        // Handle Errors here.
+        console.log(error);
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        // ...
+      });
+  }
   onLogin() {
     this.spinner.show();
     const email = this.loginForm.get('email').value;

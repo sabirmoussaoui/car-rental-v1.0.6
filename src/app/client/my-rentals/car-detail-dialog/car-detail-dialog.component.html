@@ -1,0 +1,216 @@
+<ngb-carousel
+  class="carousel"
+  *ngIf="allPhotos"
+  #carousel
+  [interval]="1000"
+  [pauseOnHover]="pauseOnHover"
+  (slide)="onSlide($event)"
+>
+  <ng-template ngbSlide *ngFor="let img of allPhotos; index as i">
+    <div class="carousel-caption">
+      <h3>My slide {{ i + 1 }} title</h3>
+    </div>
+    <div class="picsum-img-wrapper">
+      <img class="carousel" [src]="img" alt="" />
+    </div>
+  </ng-template>
+</ngb-carousel>
+<mat-tab-group animationDuration="2000ms">
+  <mat-tab label="car details">
+    <div class="table-responsive">
+      <table class="table align-items-center table-flush">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">BRANDS</th>
+            <th scope="col">MODELS</th>
+            <th scope="col">CAR CLASS</th>
+            <th scope="col">BODY STYLE</th>
+            <th scope="col">PRICE</th>
+            <th scope="col">SEATS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">
+              <div class="media align-items-center">
+                <a href="javascript:void(0)" class="avatar rounded-circle mr-3">
+                  <img
+                    alt="Image placeholder"
+                    [src]="carRequest.car.carBrand.photoUrl"
+                  />
+                </a>
+                <div class="media-body">
+                  <span class="mb-0 text-sm">{{
+                    carRequest.car.carBrand.name
+                  }}</span>
+                </div>
+              </div>
+            </th>
+            <td>
+              {{
+                carRequest.car.carModel.name +
+                  " " +
+                  carRequest.car.carModel.year
+              }}
+            </td>
+            <td>
+              {{ carRequest.car.car_class }}
+            </td>
+            <td>
+              {{ carRequest.car.body_style }}
+            </td>
+            <td>
+              <span class="badge badge-dot mr-4">
+                <i class="bg-warning"></i>$ {{ carRequest.car.price }}
+              </span>
+            </td>
+            <td>
+              {{ carRequest.car.seat }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table-responsive">
+      <table class="table align-items-center table-flush">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">DOORS</th>
+            <th scope="col">FUEL</th>
+            <th scope="col">LARGE BAG</th>
+            <th scope="col">SMALL BAG</th>
+            <th scope="col">GEARBOX</th>
+            <th scope="col">AIR CONDITIONING</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              {{ carRequest.car.door }}
+            </td>
+            <td>
+              <i class="fas fa-gas-pump"></i>
+              {{ carRequest.car.fuel }}
+            </td>
+            <td>
+              {{ carRequest.car.large_bag }}
+            </td>
+            <td>
+              {{ carRequest.car.small_bag }}
+            </td>
+            <td>
+              {{ carRequest.car.gearbox }}
+            </td>
+            <td>
+              {{ carRequest.car.air_conditioning ? "air conditioning" : "---" }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <hr class="my-4" />
+    <!-- Description -->
+    <div class="card shadow">
+      <div class="card-header border-0">
+        <h3 class="mb-0">Description</h3>
+      </div>
+      <span class="badge badge-dot">
+        <i class="bg-success"></i> {{ carRequest.car.description }}
+      </span>
+    </div>
+  </mat-tab>
+  <mat-tab label="rental details">
+    <div class="alert alert-danger" role="alert">
+      <i class="fa fa-calendar" aria-hidden="true"></i> Pick up Date :
+      {{ carRequest.pick_up }}
+    </div>
+    <div class="alert alert-warning" role="alert">
+      <i class="fa fa-calendar" aria-hidden="true"></i> Drop off Date :
+      {{ carRequest.drop_off }}
+    </div>
+    <div *ngIf="!carRequest.blocked" class="alert alert-warning" role="alert">
+      <i
+        *ngIf="!carRequest.accepted"
+        class="fa fa-cog fa-spin fa-3x fa-fw"
+        aria-hidden="true"
+      ></i>
+      Status : processing ..
+    </div>
+    <div *ngIf="!carRequest.blocked" class="alert alert-success" role="alert">
+      <i *ngIf="carRequest.accepted" class="fa fa-check" aria-hidden="true"></i>
+      Status : accepted with success
+    </div>
+    <div *ngIf="carRequest.blocked" class="alert alert-danger" role="alert">
+      <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+      Status : Sorry ! not accepted
+    </div>
+  </mat-tab>
+  <mat-tab label="agency details">
+    <div class="alert alert-danger" role="alert">
+      <i class="fa fa-home" aria-hidden="true"></i> Agence :
+      {{ carRequest.car.worker.name }}
+    </div>
+    <div class="alert alert-warning" role="alert">
+      <i class="fa fa-phone" aria-hidden="true"></i> Phone :
+      {{ carRequest.car.worker.phone }}
+    </div>
+    <div class="alert alert-default" role="alert">
+      <i class="fas fa-city"></i> City {{ carRequest.car.worker.city.name }}
+    </div>
+    <div class="alert alert-success" role="alert">
+      <i class="fa fa-map" aria-hidden="true"></i> Sector :
+      {{ carRequest.car.worker.sector }}
+    </div>
+    <div class="alert alert-info" role="alert">
+      <i class="fas fa-map-marked-alt"></i> Adresse :
+      {{ carRequest.car.worker.adresse }}
+    </div>
+  </mat-tab>
+  <mat-tab label="Important Information">Content 3</mat-tab>
+  <mat-tab label="Customer Reviews">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div
+          mat-card-avatar
+          [ngStyle]="{
+            'background-image': 'url(' + carRequest.client.profil + ')'
+          }"
+          class="example-header-image"
+        ></div>
+        <mat-card-title>{{
+          carRequest.client.firstname + " " + carRequest.client.lastname
+        }}</mat-card-title>
+        <mat-card-subtitle>active</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <ngb-rating [max]="5" [(rate)]="currentRate">
+          <ng-template let-fill="fill" let-index="index">
+            <span
+              class="star"
+              [class.filled]="fill === 100"
+              [class.bad]="index < 3"
+              >&hearts;</span
+            >
+          </ng-template>
+        </ngb-rating>
+        <form [formGroup]="reviewForm">
+          <div class="form-group">
+            <label>Write your review</label>
+            <textarea
+              formControlName="comment"
+              rows="4"
+              class="form-control form-control-alternative"
+              placeholder="What did you like or dislike ?"
+            ></textarea>
+          </div>
+        </form>
+      </mat-card-content>
+      <mat-card-actions>
+        <button class="btn btn-danger" (click)="onSaveReview()">
+          <i class="fa fa-paper-plane" aria-hidden="true"></i>
+          Send
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </mat-tab>
+</mat-tab-group>

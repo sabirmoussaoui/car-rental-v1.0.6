@@ -1,9 +1,6 @@
 <span class="badge badge-pill green">
   <a href="javascript:void(0)">
-    <img
-      class="avatar-circel-img"
-      [src]="car.payload.doc.data().carBrand.photoUrl"
-    />
+    <img class="avatar-circel-img" [src]="car.carBrand.photoUrl" />
   </a>
 </span>
 <div class="card card-profile shadow">
@@ -12,7 +9,7 @@
       <div class="card-profile-image">
         <a href="javascript:void(0)">
           <img
-            [src]="car.payload.doc.data().main_photo"
+            [src]="car.main_photo"
             class="rounded-circle"
             style="min-height: 180px;"
           />
@@ -22,7 +19,10 @@
   </div>
   <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
     <div class="d-flex justify-content-between">
-      <a href="javascript:void(0)" class="btn btn-sm btn-info mr-4"
+      <a
+        href="javascript:void(0)"
+        (click)="showDetails(car)"
+        class="btn btn-sm btn-info mr-4"
         >Car Details <i class="fa fa-eye" aria-hidden="true"></i
       ></a>
       <a href="javascript:void(0)" class="btn btn-sm btn-default float-right"
@@ -39,7 +39,7 @@
           </span>
         </ng-template>
         <ngb-rating
-          [(rate)]="car.payload.doc.data().rating"
+          [(rate)]="car.rating"
           [starTemplate]="t"
           [readonly]="true"
           [max]="5"
@@ -50,11 +50,11 @@
       <div class="text-center">
         <h4 class="car-brand-title">
           {{
-            car.payload.doc.data().carBrand.name +
+            car.carBrand.name +
               " " +
-              car.payload.doc.data().carModel.name +
+              car.carModel.name +
               " " +
-              car.payload.doc.data().carModel.year
+              car.carModel.year
           }}
         </h4>
       </div>
@@ -66,33 +66,25 @@
             <span class="heading"
               ><span class="icon-solid icon--sm icon-solid-car-door"></span
             ></span>
-            <span class="description"
-              >{{ car.payload.doc.data().door }}&nbsp;&nbsp; Doors</span
-            >
+            <span class="description">{{ car.door }}&nbsp;&nbsp; Doors</span>
           </div>
           <div>
             <span class="heading">
               <span class="icon-solid icon-solid--car-seat"></span>
             </span>
-            <span class="description"
-              >{{ car.payload.doc.data().seat }}&nbsp;&nbsp; Seats</span
-            >
+            <span class="description">{{ car.seat }}&nbsp;&nbsp; Seats</span>
           </div>
           <div>
             <span class="heading">
               <span class="icon-solid icon--sm icon-solid--big-bag"></span>
             </span>
-            <span class="description"
-              >{{ car.payload.doc.data().large_bag }} Large bags</span
-            >
+            <span class="description">{{ car.large_bag }} Large bags</span>
           </div>
           <div>
             <span class="heading">
               <span class="icon-solid icon--sm icon-solid--small-bag"></span>
             </span>
-            <span class="description"
-              >{{ car.payload.doc.data().small_bag }} Small bag</span
-            >
+            <span class="description">{{ car.small_bag }} Small bag</span>
           </div>
         </div>
       </div>
@@ -104,9 +96,9 @@
             <span class="heading">
               <i class="fas fa-gas-pump" style="color: #31353c;"></i>
             </span>
-            <span class="description">{{ car.payload.doc.data().fuel }}</span>
+            <span class="description">{{ car.fuel }}</span>
           </div>
-          <div *ngIf="car.payload.doc.data().air_conditioning">
+          <div *ngIf="car.air_conditioning">
             <span class="heading">
               <span
                 class="icon-solid icon--sm icon-solid--air-conditioning"
@@ -118,30 +110,26 @@
             <span class="heading">
               <span class="icon-solid icon-solid--car-gears-automatic"></span>
             </span>
-            <span class="description">{{
-              car.payload.doc.data().gearbox
-            }}</span>
+            <span class="description">{{ car.gearbox }}</span>
           </div>
           <div>
             <span class="heading">
               <i class="fa fa-car" aria-hidden="true"></i>
             </span>
-            <span class="description">{{
-              car.payload.doc.data().body_style
-            }}</span>
+            <span class="description">{{ car.body_style }}</span>
           </div>
         </div>
       </div>
     </div>
     <div class="text-center">
       <span class="product_origin_price"
-        ><del>${{ getOriginPrice(car.payload.doc.data().price) }}</del></span
+        ><del>${{ getOriginPrice(car.price) }}</del></span
       >
-      <span class="product_price">${{ car.payload.doc.data().price }}</span>
+      <span class="product_price">${{ car.price }}</span>
     </div>
   </div>
   <a
-    [routerLink]="['/home/car-requests/', car.payload.doc.id]"
+    [routerLink]="['/home/car-requests/', car.carKey]"
     class="btn btn-outline-info"
     role="button"
     >Reserve Now</a

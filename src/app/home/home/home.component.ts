@@ -11,7 +11,7 @@ import { element } from 'protractor';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  cars: any[] = [];
+  cars: Car[] = [];
   p: number = 1;
   constructor(
     private carService: CarService,

@@ -26,12 +26,15 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { CarRequestService } from 'src/app/services/car-requests.service';
+import { MatTabsModule } from '@angular/material/tabs';
 import { AuthClientDialogComponent } from 'src/app/home/home/cars/car-request/auth-client-dialog/auth-client-dialog.component';
 import {
   NgxMatDatetimePickerModule,
   NgxMatTimepickerModule,
   NgxMatNativeDateModule,
 } from '@angular-material-components/datetime-picker';
+import { CarDetailDialogComponent } from 'src/app/home/home/cars/car-detail-dialog/car-detail-dialog.component';
+import { MatCardModule } from '@angular/material/card';
 @NgModule({
   imports: [
     CommonModule,
@@ -55,12 +58,15 @@ import {
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
     NgxMatNativeDateModule,
+    MatTabsModule,
+    MatCardModule,
   ],
   declarations: [
     CarRequestComponent,
     HomeComponent,
     CarsComponent,
     AuthClientDialogComponent,
+    CarDetailDialogComponent,
   ],
   providers: [AuthService, WorkerService, ReviewService, CarRequestService],
 })

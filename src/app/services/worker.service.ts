@@ -29,6 +29,22 @@ export class WorkerService {
       });
   }
 
+  updateAllDocuments(workerKey, Worker) {
+    this.db
+      .collection('cars', (ref) =>
+        ref.where('worker.workerKey', '==', workerKey)
+      )
+      .get()
+      .subscribe(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          doc.ref.update({
+            worker: {
+              //kteb les champs
+            },
+          });
+        });
+      });
+  }
   createWorker(workerKey, worker: Worker) {
     return this.db
       .collection('workers')

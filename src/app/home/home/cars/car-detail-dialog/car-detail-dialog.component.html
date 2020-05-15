@@ -1,0 +1,160 @@
+<ngb-carousel
+  class="carousel"
+  *ngIf="allPhotos"
+  #carousel
+  [interval]="1000"
+  [pauseOnHover]="pauseOnHover"
+  (slide)="onSlide($event)"
+>
+  <ng-template ngbSlide *ngFor="let img of allPhotos; index as i">
+    <div class="carousel-caption">
+      <h3>My slide {{ i + 1 }} title</h3>
+    </div>
+    <div class="picsum-img-wrapper">
+      <img class="carousel" [src]="img" alt="" />
+    </div>
+  </ng-template>
+</ngb-carousel>
+<mat-tab-group animationDuration="2000ms">
+  <mat-tab label="car details">
+    <div class="table-responsive">
+      <table class="table align-items-center table-flush">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">BRANDS</th>
+            <th scope="col">MODELS</th>
+            <th scope="col">CAR CLASS</th>
+            <th scope="col">BODY STYLE</th>
+            <th scope="col">PRICE</th>
+            <th scope="col">SEATS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">
+              <div class="media align-items-center">
+                <a href="javascript:void(0)" class="avatar rounded-circle mr-3">
+                  <img alt="Image placeholder" [src]="car.carBrand.photoUrl" />
+                </a>
+                <div class="media-body">
+                  <span class="mb-0 text-sm">{{ car.carBrand.name }}</span>
+                </div>
+              </div>
+            </th>
+            <td>
+              {{ car.carModel.name + " " + car.carModel.year }}
+            </td>
+            <td>
+              {{ car.car_class }}
+            </td>
+            <td>
+              {{ car.body_style }}
+            </td>
+            <td>
+              <span class="badge badge-dot mr-4">
+                <i class="bg-warning"></i>$ {{ car.price }}
+              </span>
+            </td>
+            <td>
+              {{ car.seat }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table-responsive">
+      <table class="table align-items-center table-flush">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">DOORS</th>
+            <th scope="col">FUEL</th>
+            <th scope="col">LARGE BAG</th>
+            <th scope="col">SMALL BAG</th>
+            <th scope="col">GEARBOX</th>
+            <th scope="col">AIR CONDITIONING</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              {{ car.door }}
+            </td>
+            <td>
+              <i class="fas fa-gas-pump"></i>
+              {{ car.fuel }}
+            </td>
+            <td>
+              {{ car.large_bag }}
+            </td>
+            <td>
+              {{ car.small_bag }}
+            </td>
+            <td>
+              {{ car.gearbox }}
+            </td>
+            <td>
+              {{ car.air_conditioning ? "air conditioning" : "---" }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <hr class="my-4" />
+    <!-- Description -->
+    <div class="card shadow">
+      <div class="card-header border-0">
+        <h3 class="mb-0">Description</h3>
+      </div>
+      <span class="badge badge-dot">
+        <i class="bg-success"></i> {{ car.description }}
+      </span>
+    </div>
+  </mat-tab>
+  <mat-tab label="agency details">
+    <div class="alert alert-danger" role="alert">
+      <i class="fa fa-home" aria-hidden="true"></i> Agence :
+      {{ car.worker.name }}
+    </div>
+    <div class="alert alert-warning" role="alert">
+      <i class="fa fa-phone" aria-hidden="true"></i> Phone :
+      {{ car.worker.phone }}
+    </div>
+    <div class="alert alert-default" role="alert">
+      <i class="fas fa-city"></i> City {{ car.worker.city.name }}
+    </div>
+    <div class="alert alert-success" role="alert">
+      <i class="fa fa-map" aria-hidden="true"></i> Sector :
+      {{ car }}
+    </div>
+    <div class="alert alert-info" role="alert">
+      <i class="fas fa-map-marked-alt"></i> Adresse :
+      {{ car.worker.adresse }}
+    </div>
+  </mat-tab>
+  <mat-tab label="Important Information">Content 3</mat-tab>
+  <mat-tab label="Customer Reviews">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Shiba Inu</mat-card-title>
+        <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+      </mat-card-header>
+      <img
+        mat-card-image
+        src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+        alt="Photo of a Shiba Inu"
+      />
+      <mat-card-content>
+        <p>
+          The Shiba Inu is the smallest of the six original and distinct spitz
+          breeds of dog from Japan. A small, agile dog that copes very well with
+          mountainous terrain, the Shiba Inu was originally bred for hunting.
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button>LIKE</button>
+        <button mat-button>SHARE</button>
+      </mat-card-actions>
+    </mat-card>
+  </mat-tab>
+</mat-tab-group>
