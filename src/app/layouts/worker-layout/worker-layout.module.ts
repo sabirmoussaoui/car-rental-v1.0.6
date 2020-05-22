@@ -34,6 +34,9 @@ import { FourOhFourComponent } from 'src/app/worker/four-oh-four/four-oh-four.co
 import { CarDetailDialogComponent } from 'src/app/worker/cars/car-detail-dialog/car-detail-dialog.component';
 import { NewCarComponent } from 'src/app/worker/cars/new-car/new-car.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { WorkerProfileComponent } from 'src/app/worker/worker-profile/worker-profile.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MyRequestsComponent } from 'src/app/worker/my-requests/my-requests.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +51,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     FourOhFourComponent,
     CarDetailDialogComponent,
     NewCarComponent,
+    WorkerProfileComponent,
+    MyRequestsComponent,
   ],
   imports: [
     CommonModule,
@@ -67,6 +72,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatSliderModule,
     NgxSpinnerModule,
     MatSlideToggleModule,
+    MatTabsModule,
   ],
   entryComponents: [
     OpenCarImageDialogComponent,

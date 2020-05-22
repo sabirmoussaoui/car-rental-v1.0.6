@@ -6,6 +6,7 @@ import { Car } from '../models/Car.model';
 import { Worker } from '../models/Worker.model';
 import { CarModel } from '../models/CarModel.model';
 import { CarBrand } from '../models/CarBrand.model';
+import { City } from '../models/City.model';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,39 @@ export class CarService {
   constructor(public db: AngularFirestore) {
     this.myMethod$ = this.myMethodSubject.asObservable();
   }
-
+  findCarsByCity(city: City) {
+    return this.db
+      .collection<Car>('cars', (ref) =>
+        ref.where('worker.city.name', '==', city.name)
+      )
+      .valueChanges();
+  }
+  findCarsByBrand(carBrandKey: string) {
+    return this.db
+      .collection<Car>('cars', (ref) =>
+        ref.where('carBrand.carBrandKey', '==', carBrandKey)
+      )
+      .valueChanges();
+  }
+  findCarsByModel(carModelKey: string) {
+    return this.db
+      .collection<Car>('cars', (ref) =>
+        ref.where('carModel.carModelKey', '==', carModelKey)
+      )
+      .valueChanges();
+  }
+  findCarsByBodyStyle(body_style: string) {
+    return this.db
+      .collection<Car>('cars', (ref) =>
+        ref.where('body_style', '==', body_style)
+      )
+      .valueChanges();
+  }
+  findCarsByTopRating() {
+    return this.db
+      .collection<Car>('cars', (ref) => ref.orderBy('rating', 'desc'))
+      .valueChanges();
+  }
   updateCar(carKey, car) {
     return this.db
       .collection('cars')
@@ -117,14 +150,18 @@ export class CarService {
   }
 
   getCars() {
-    return this.db.collection('cars').get();
+    return this.db.collection<Car>('cars').valueChanges();
   }
   getCar(carKey) {
     return this.db.collection<Car>('cars').doc(carKey).valueChanges();
   }
 
-  getCarsValueChanges() {
-    return this.db.collection('cars').valueChanges();
+  getCarsByWorker(workerKey) {
+    return this.db
+      .collection<Car>('cars', (ref) =>
+        ref.where('worker.workerKey', '==', workerKey)
+      )
+      .valueChanges();
   }
   getAllCars() {
     return this.db.collection<Car>('cars').valueChanges();

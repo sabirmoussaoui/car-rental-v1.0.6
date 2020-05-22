@@ -1,0 +1,188 @@
+<div
+  class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+  style="
+    min-height: 600px;
+    background-image: url(assets/img/theme/car-cover-design.jpg);
+    background-size: cover;
+    background-position: center top;
+  "
+></div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-xl-12 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-secondary border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">My cars</h3>
+            </div>
+            <div class="col-4 text-right">
+              <a href="#!" class="btn btn-sm btn-primary">Settings</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Brands</th>
+                  <th scope="col">Models</th>
+                  <th scope="col">Prices</th>
+                  <th scope="col">Pick up</th>
+                  <th scope="col">Drop off</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let car_request of car_requests">
+                  <td>
+                    <div class="media align-items-center">
+                      <a class="avatar rounded-circle mr-3">
+                        <img
+                          alt="Image placeholder"
+                          *ngIf="car_request.car.carBrand.photoUrl"
+                          [src]="car_request.car.carBrand.photoUrl"
+                        />
+                      </a>
+                      <div class="media-body">
+                        <span class="mb-0 text-sm">
+                          {{ car_request.car.carBrand.name }}
+                        </span>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <span>{{
+                      car_request.car.carModel.name +
+                        " " +
+                        car_request.car.carModel.year
+                    }}</span>
+                  </td>
+                  <td>
+                    <span>{{ car_request.car.price }}</span>
+                  </td>
+                  <td>
+                    <span>{{
+                      car_request.pick_up + " " + car_request.pick_up_time
+                    }}</span>
+                  </td>
+                  <td>
+                    <span>{{
+                      car_request.drop_off + " " + car_request.drop_off_time
+                    }}</span>
+                  </td>
+                  <td>
+                    <button
+                      *ngIf="!car_request.blocked && !car_request.accepted"
+                      mat-mini-fab
+                      color="success"
+                      aria-label="accepted"
+                      (click)="acceptRequest(car_request.carRequestKey)"
+                    >
+                      <mat-icon>done</mat-icon>
+                    </button>
+
+                    <button
+                      *ngIf="!car_request.blocked && car_request.accepted"
+                      mat-mini-fab
+                      color="warn"
+                      aria-label="not accepted"
+                      (click)="removeRequest(car_request.carRequestKey)"
+                    >
+                      <mat-icon>cancel</mat-icon>
+                    </button>
+                    <button
+                      *ngIf="!car_request.blocked"
+                      mat-mini-fab
+                      color="accent"
+                      aria-label="block"
+                      (click)="blockRequest(car_request.carRequestKey, true)"
+                    >
+                      <mat-icon>lock</mat-icon>
+                    </button>
+                    <button
+                      *ngIf="car_request.blocked"
+                      mat-mini-fab
+                      color="success"
+                      aria-label="deblock"
+                      (click)="blockRequest(car_request.carRequestKey, false)"
+                    >
+                      <mat-icon>no_encryption</mat-icon>
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      mat-mini-fab
+                      color="info"
+                      aria-label="show Details"
+                      (click)="showDetails(car_request)"
+                    >
+                      <mat-icon>visibility</mat-icon>
+                    </button>
+                    <button
+                      mat-mini-fab
+                      color="primary"
+                      aria-label="Edit"
+                      (click)="openDialog(car_request)"
+                    >
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <!-- <button
+                      mat-mini-fab
+                      color="warn"
+                      aria-label="Delete"
+                      (click)="onDeleteCar(car.payload.doc)"
+                    >
+                      <mat-icon>delete</mat-icon>
+                    </button> -->
+                  </td>
+                  <td></td>
+                </tr>
+                <ngx-spinner
+                  bdColor="rgba(51,51,51,0.8)"
+                  size="medium"
+                  color="#fff"
+                  type="ball-scale-multiple"
+                  [fullScreen]="false"
+                >
+                  <p style="font-size: 20px; color: white;">Loading...</p>
+                </ngx-spinner>
+              </tbody>
+            </table>
+          </div>
+          <div class="card-footer py-4">
+            <nav aria-label="...">
+              <ul class="pagination justify-content-end mb-0">
+                <li class="page-item disabled">
+                  <a class="page-link" href="javascript:void(0)" tabindex="-1">
+                    <i class="fas fa-angle-left"></i>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                </li>
+                <li class="page-item active">
+                  <a class="page-link" href="javascript:void(0)">1</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="javascript:void(0)"
+                    >2 <span class="sr-only">(current)</span></a
+                  >
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="javascript:void(0)">3</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="javascript:void(0)">
+                    <i class="fas fa-angle-right"></i>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -102,7 +102,6 @@ export class CarsComponent implements OnInit {
     });
   }
   showDetails(car: Car) {
-    console.log(status);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;

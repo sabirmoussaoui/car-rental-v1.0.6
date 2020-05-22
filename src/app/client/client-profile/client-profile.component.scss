@@ -1,0 +1,26 @@
+.card-car-stats {
+  padding: 1rem 0;
+
+  > div {
+    text-align: center;
+    margin-right: 1rem;
+    padding: 0.175rem;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    .heading {
+      font-size: 1.1rem;
+      font-weight: bold;
+      display: block;
+    }
+    .description {
+      font-size: 0.875rem;
+      color: #c7d6d2;
+    }
+  }
+}
+::ng-deep .mat-form-field {
+  width: 100%;
+}

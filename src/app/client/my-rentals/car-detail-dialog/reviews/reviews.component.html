@@ -1,0 +1,50 @@
+<mat-card-header>
+  <div
+    mat-card-avatar
+    [ngStyle]="{
+      'background-image': 'url(' + review.client.profil + ')'
+    }"
+    class="example-header-image"
+  ></div>
+  <mat-card-title>{{
+    review.client.firstname + " " + review.client.lastname
+  }}</mat-card-title>
+  <mat-card-subtitle *ngIf="clientKey === review.client.clientKey">
+    <span class="badge badge-dot">
+      <i class="bg-success"></i> connect
+    </span></mat-card-subtitle
+  >
+  <mat-card-subtitle *ngIf="clientKey != review.client.clientKey">
+    <span class="badge badge-dot"> <i class="bg-danger"></i> disconnect </span>
+  </mat-card-subtitle>
+</mat-card-header>
+<mat-card-content>
+  <ng-template #t let-fill="fill">
+    <span class="star" [class.full]="fill === 100">
+      <span class="half" [style.width.%]="fill">&hearts;</span>&hearts;
+    </span>
+  </ng-template>
+  <ngb-rating
+    [(rate)]="review.stars"
+    [starTemplate]="t"
+    [readonly]="true"
+    [max]="5"
+  ></ngb-rating>
+  <div class="alert alert-danger">
+    <i class="fa fa-comment" aria-hidden="true"></i>
+    {{ review.comment }}
+  </div>
+</mat-card-content>
+<mat-card-actions>
+  <button
+    *ngIf="review.client.clientKey === clientKey"
+    mat-mini-fab
+    (click)="onDeleteReview(review)"
+  >
+    <mat-icon>delete</mat-icon>
+  </button>
+  <span>
+    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+    {{ review.createdAt }}
+  </span>
+</mat-card-actions>

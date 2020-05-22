@@ -100,9 +100,8 @@ export class NavbarComponent implements OnInit {
   }
 
   getCurrentWorker(workerKey) {
-    this.workerService.getWorkerSnapShot(workerKey).subscribe((data) => {
-      this.worker = data.payload.data() as Worker;
-      this.worker.workerKey = data.payload.id;
+    this.workerService.getWorker(workerKey).subscribe((data) => {
+      this.worker = data as Worker;
       this.fullname = this.worker.name;
       this.photoUrl = this.worker.logo;
       this.spinner.hide();

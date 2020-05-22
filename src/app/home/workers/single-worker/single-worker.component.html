@@ -1,0 +1,156 @@
+<div class="header bg-gradient-danger py-7 py-lg-8">
+  <div class="separator separator-bottom separator-skew zindex-100">
+    <svg
+      x="0"
+      y="0"
+      viewBox="0 0 2560 100"
+      preserveAspectRatio="none"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
+    </svg>
+  </div>
+</div>
+<div class="container-fluid mt--7">
+  <span class="badge badge-primary"> {{ worker.nbCars }} Cars </span>
+  <div
+    class="card card-profile shadow"
+    style="background-color: #172b4d; color: white;"
+  >
+    <div class="row justify-content-center">
+      <div class="col-lg-3 order-lg-2">
+        <div class="card-profile-image">
+          <a href="javascript:void(0)">
+            <img
+              [src]="worker.logo"
+              class="rounded-circle"
+              style="min-height: 180px;"
+            />
+          </a>
+        </div>
+      </div>
+    </div>
+    <div
+      class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4"
+      style="background-color: rgba(0, 0, 0, 0.2);"
+    >
+      <div class="d-flex justify-content-between">
+        <a href="javascript:void(0)" class="btn btn-sm btn-info mr-4"
+          >Car Details <i class="fa fa-eye" aria-hidden="true"></i
+        ></a>
+        <a href="javascript:void(0)" class="btn btn-sm btn-success float-right"
+          >Show on map <i class="ni ni-square-pin" aria-hidden="true"></i
+        ></a>
+      </div>
+    </div>
+    <div class="card-body pt-0 pt-md-4">
+      <div class="d-flex justify-content-center mt-5">
+        <div class="text-center">
+          <div class="row">
+            <ng-template #t let-fill="fill">
+              <span class="star" [class.full]="fill === 100">
+                <span class="half" [style.width.%]="fill">&hearts;</span
+                >&hearts;
+              </span>
+            </ng-template>
+            <ngb-rating
+              [(rate)]="currentrate"
+              [starTemplate]="t"
+              [readonly]="true"
+              [max]="5"
+            ></ngb-rating>
+          </div>
+
+          <div class="row">
+            <h2 class="car-brand-title" style="color: #f7fafc;">
+              <strong>{{ worker.name }}</strong>
+            </h2>
+          </div>
+        </div>
+      </div>
+      <div class="card-car-stats row" style="float: left;">
+        <div>
+          <span class="heading">
+            <i class="fa fa-phone" aria-hidden="true"></i>
+          </span>
+          <span class="description">{{ worker.phone }}</span>
+        </div>
+        <div>
+          <span class="heading">
+            <i class="fas fa-city"></i>
+          </span>
+          <span class="description">{{ worker.city.name }}</span>
+        </div>
+        <div>
+          <span class="heading">
+            <i class="fa fa-map-pin" aria-hidden="true"></i>
+          </span>
+          <span class="description">{{ worker.sector.name }}</span>
+        </div>
+        <div>
+          <span class="heading">
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+          </span>
+          <span class="description">{{ worker.email }}</span>
+        </div>
+        <div>
+          <span class="heading">
+            <i class="fa fa-link" aria-hidden="true"></i>
+          </span>
+          <span class="description">
+            <a href="{{ worker.website }}"> {{ worker.website }}</a>
+          </span>
+        </div>
+        <div>
+          <span class="heading">
+            <i class="fa fa-car" aria-hidden="true"></i>
+          </span>
+          <span class="description">
+            {{ worker.nbCars }}
+          </span>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <h5 class="heading-small text-muted mb-4">
+          <i class="fa fa-map-marker" aria-hidden="true"></i> Adresse
+        </h5>
+        <span class="description mx-5" style="text-transform: lowercase;">
+          <strong>{{ worker.adresse }}</strong>
+        </span>
+      </div>
+    </div>
+  </div>
+  <ngx-spinner
+    bdColor="rgba(255,255,255,0.8)"
+    size="medium"
+    color="#ff0244"
+    type="ball-clip-rotate-multiple"
+    [fullScreen]="false"
+    ><p style="color: white;">Loading...</p></ngx-spinner
+  >
+</div>
+
+<div class="container-fluid mt-6">
+  <div class="row">
+    <div
+      *ngFor="let car of cars | paginate: { itemsPerPage: 6, currentPage: p }"
+      class="col-xl-4 order-xl-2 mb-7"
+    >
+      <app-cars [car]="car"> </app-cars>
+    </div>
+    <ngx-spinner
+      bdColor="rgba(51,51,51,0.8)"
+      size="medium"
+      color="#fff"
+      type="ball-scale-multiple"
+      [fullScreen]="false"
+    >
+      <p style="font-size: 20px; color: white;">Loading...</p>
+    </ngx-spinner>
+  </div>
+  <div class="row">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+</div>

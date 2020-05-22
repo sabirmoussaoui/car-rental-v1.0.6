@@ -1,0 +1,59 @@
+<mat-dialog-content [formGroup]="dateFormGroup">
+  <div class="row">
+    <div class="col-lg-6">
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Pick-up Date:</mat-label>
+        <input
+          formControlName="pick_up"
+          matInput
+          [min]="minDate"
+          [max]="maxDate"
+          [matDatepicker]="pick_up"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="pick_up"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #pick_up></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="col-lg-6">
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Drop-off Date : </mat-label>
+        <input
+          formControlName="drop_off"
+          matInput
+          [min]="minDate"
+          [max]="maxDate"
+          [matDatepicker]="drop_off"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="drop_off"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #drop_off></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <label for="pick_up_time">pick up time :</label>
+      <ngb-timepicker
+        id="pick_up_time"
+        formControlName="pick_up_time"
+        [(ngModel)]="pick_up_time"
+      ></ngb-timepicker>
+    </div>
+    <div class="col-lg-6">
+      <label for="drop_off_time">drop off time :</label>
+      <ngb-timepicker
+        formControlName="drop_off_time"
+        [(ngModel)]="drop_off_time"
+      ></ngb-timepicker>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button class="btn btn-success" (click)="save()">Update</button>
+  <button class="btn btn-warning" (click)="close()">Close</button>
+</mat-dialog-actions>

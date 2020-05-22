@@ -19,7 +19,6 @@ export class CarDetailDialogComponent implements OnInit {
   car: Car;
   allPhotos: any[] = [];
   constructor(
-    private carBrandService: CarBrandService,
     public dialogRef: MatDialogRef<CarDetailDialogComponent>,
     @Inject(MAT_DIALOG_DATA) { car }
   ) {

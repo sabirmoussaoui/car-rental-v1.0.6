@@ -12,24 +12,12 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import * as firebase from 'firebase';
 import { Worker } from 'src/app/models/Worker.model';
 import { CarPhotosDialogComponent } from '../car-photos-dialog/car-photos-dialog.component';
-
-interface SelectModel {
-  value: CarModel;
-  viewValue: string;
-}
-interface SelectBrand {
-  value: CarBrand;
-  viewValue: string;
-}
-interface Body_Style {
-  value: string;
-  viewValue: string;
-  avatar: string;
-}
-interface Car_Class {
-  value: string;
-  viewValue: string;
-}
+import {
+  SelectBrand,
+  SelectModel,
+  Car_Class,
+  Body_Style,
+} from 'src/app/interfaces/Select';
 
 @Component({
   selector: 'app-new-car',

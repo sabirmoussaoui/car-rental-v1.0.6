@@ -7,7 +7,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import * as firebase from 'firebase';
 import { Worker } from 'src/app/models/Worker.model';
 import { CarDetailDialogComponent } from 'src/app/client/my-rentals/car-detail-dialog/car-detail-dialog.component';
-import { OpenCarImageDialogComponent } from 'src/app/worker/cars/open-car-image-dialog/open-car-image-dialog.component';
 import { ActivatedRoute } from '@angular/router';
 import { Client } from 'src/app/models/Client.model';
 import { CarRequestService } from 'src/app/services/car-requests.service';
@@ -16,17 +15,24 @@ import { CarRequest } from 'src/app/models/CarRequest.model';
 import { element } from 'protractor';
 import { format } from 'path';
 import moment from 'moment';
-
+import { CarRequestUpdateDialogComponent } from './car-request-update-dialog/car-request-update-dialog.component';
+import { OpenCarImageDialogComponent } from './open-car-image-dialog/open-car-image-dialog.component';
+interface NgbTime {
+  hour: number;
+  minute: number;
+  second: number;
+}
 @Component({
   selector: 'app-my-rentals',
   templateUrl: './my-rentals.component.html',
   styleUrls: ['./my-rentals.component.scss'],
 })
 export class MyRentalsComponent implements OnInit {
-  public photos: any[] = [];
   client: Client;
   clientKey: string;
   car_requests: CarRequest[] = [];
+  pick_up_time: NgbTime;
+  drop_off_time: NgbTime;
   constructor(
     private carRequestService: CarRequestService,
     private dialog: MatDialog,
@@ -45,38 +51,46 @@ export class MyRentalsComponent implements OnInit {
   }
 
   getCurrentClient(clientKey) {
-    this.clientService.getClient(clientKey).subscribe((data) => {
-      this.client = data.data() as Client;
-      this.client.clientKey = data.id;
+    this.clientService.getClient(clientKey).subscribe((client) => {
+      this.client = client as Client;
       this.getCarRequests(this.client.clientKey);
     });
   }
 
-  openDialog(car: Car, carKey) {
-    // const dialogConfig = new MatDialogConfig();
-    // dialogConfig.disableClose = true;
-    // dialogConfig.autoFocus = true;
-    // dialogConfig.width = '1098px';
-    // dialogConfig.data = {
-    //   car: car,
-    // };
-    // const dialogRef = this.dialog.open(CarUpdateDialogComponent, dialogConfig);
-    // dialogRef.afterClosed().subscribe((carUpdate: Car) => {
-    //   if (carUpdate != undefined) {
-    //     console.log('Dialog output:', carUpdate);
-    //     carUpdate.updated_at = new Date();
-    //     console.log(carUpdate);
-    //     this.onUpdateCar(carKey, carUpdate);
-    //   }
-    // });
-  }
-  // onUpdateCar(carKey, carUpdate) {
-  //   this.carService.updateCar(carKey, carUpdate);
-  // }
-  openImageDialog(photoUrl) {
-    console.log(status);
+  openDialog(car_request: CarRequest) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '1098px';
+    dialogConfig.data = {
+      carRequest: car_request,
+    };
+    const dialogRef = this.dialog.open(
+      CarRequestUpdateDialogComponent,
+      dialogConfig
+    );
+    dialogRef.afterClosed().subscribe((data) => {
+      if (data != undefined) {
+        car_request.updated_at = new Date();
+        car_request.pick_up = moment(data.pick_up).format('YYYY-MM-DD');
+        car_request.drop_off = moment(data.drop_off).format('YYYY-MM-DD');
+        this.pick_up_time = data.pick_up_time as NgbTime;
+        this.drop_off_time = data.drop_off_time as NgbTime;
+        car_request.pick_up_time =
+          this.pick_up_time.hour + ':' + this.pick_up_time.minute;
+        car_request.drop_off_time =
+          this.drop_off_time.hour + ':' + this.drop_off_time.minute;
+
+        this.onUpdateCarRequest(car_request);
+      }
+    });
+  }
+  onUpdateCarRequest(carRequest: CarRequest) {
+    this.carRequestService.updateCarRequest(carRequest);
+  }
+  openImageDialog(photoUrl) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '600px';
     dialogConfig.data = {
@@ -88,7 +102,6 @@ export class MyRentalsComponent implements OnInit {
     );
   }
   showDetails(carRequest: CarRequest) {
-    console.log(status);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
@@ -98,11 +111,6 @@ export class MyRentalsComponent implements OnInit {
       carRequest: carRequest,
     };
     const dialogRef = this.dialog.open(CarDetailDialogComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe((data) => {
-      if (data) {
-        console.log(data);
-      }
-    });
   }
   getdateFormat(date) {
     // console.log(moment(date).format('YYYY-MM-DD hh:mm:ss'));

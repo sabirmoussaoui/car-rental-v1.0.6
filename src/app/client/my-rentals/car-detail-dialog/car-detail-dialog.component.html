@@ -112,11 +112,9 @@
     <!-- Description -->
     <div class="card shadow">
       <div class="card-header border-0">
-        <h3 class="mb-0">Description</h3>
+        <h3 class="mb-0"><i class="fas fa-info-circle"></i> Description</h3>
       </div>
-      <span class="badge badge-dot">
-        <i class="bg-success"></i> {{ carRequest.car.description }}
-      </span>
+      {{ carRequest.car.description }}
     </div>
   </mat-tab>
   <mat-tab label="rental details">
@@ -128,21 +126,25 @@
       <i class="fa fa-calendar" aria-hidden="true"></i> Drop off Date :
       {{ carRequest.drop_off }}
     </div>
-    <div *ngIf="!carRequest.blocked" class="alert alert-warning" role="alert">
-      <i
-        *ngIf="!carRequest.accepted"
-        class="fa fa-cog fa-spin fa-3x fa-fw"
-        aria-hidden="true"
-      ></i>
-      Status : processing ..
+    <div
+      *ngIf="!carRequest.blocked && !carRequest.accepted"
+      class="alert alert-warning"
+      role="alert"
+    >
+      <i class="fa fa-cog fa-spin fa-3x fa-fw" aria-hidden="true"></i>
+      Status : in progress ...
     </div>
-    <div *ngIf="!carRequest.blocked" class="alert alert-success" role="alert">
-      <i *ngIf="carRequest.accepted" class="fa fa-check" aria-hidden="true"></i>
-      Status : accepted with success
+    <div
+      *ngIf="!carRequest.blocked && carRequest.accepted"
+      class="alert alert-success"
+      role="alert"
+    >
+      <i class="fa fa-check" aria-hidden="true"></i>
+      Status : your request is accepted with success
     </div>
     <div *ngIf="carRequest.blocked" class="alert alert-danger" role="alert">
       <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-      Status : Sorry ! not accepted
+      Status : Sorry ! your request is not accepted
     </div>
   </mat-tab>
   <mat-tab label="agency details">
@@ -167,7 +169,7 @@
     </div>
   </mat-tab>
   <mat-tab label="Important Information">Content 3</mat-tab>
-  <mat-tab label="Customer Reviews">
+  <mat-tab label="Add Review">
     <mat-card class="example-card">
       <mat-card-header>
         <div
@@ -180,7 +182,11 @@
         <mat-card-title>{{
           carRequest.client.firstname + " " + carRequest.client.lastname
         }}</mat-card-title>
-        <mat-card-subtitle>active</mat-card-subtitle>
+        <mat-card-subtitle>
+          <span class="badge badge-dot">
+            <i class="bg-success"></i> connect
+          </span>
+        </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
         <ngb-rating [max]="5" [(rate)]="currentRate">
@@ -206,11 +212,41 @@
         </form>
       </mat-card-content>
       <mat-card-actions>
-        <button class="btn btn-danger" (click)="onSaveReview()">
+        <button class="btn btn-warning" (click)="onSaveReview()">
           <i class="fa fa-paper-plane" aria-hidden="true"></i>
           Send
         </button>
       </mat-card-actions>
+      <ngx-spinner
+        bdColor="rgba(51,51,51,0.8)"
+        size="medium"
+        color="#fff"
+        type="ball-scale-multiple"
+        [fullScreen]="false"
+      >
+        <p style="font-size: 20px; color: white;">Loading...</p>
+      </ngx-spinner>
+    </mat-card>
+  </mat-tab>
+  <mat-tab label="Customer Reviews">
+    <mat-card
+      *ngFor="let review of reviews"
+      class="example-card"
+      style="background: #f7fafc; color: #172b4d; margin: 24px;"
+    >
+      <app-reviews
+        [review]="review"
+        [clientKey]="carRequest.client.clientKey"
+      ></app-reviews>
+      <ngx-spinner
+        bdColor="rgba(51,51,51,0.8)"
+        size="medium"
+        color="#fff"
+        type="ball-scale-multiple"
+        [fullScreen]="false"
+      >
+        <p style="font-size: 20px; color: white;">Loading...</p>
+      </ngx-spinner>
     </mat-card>
   </mat-tab>
 </mat-tab-group>

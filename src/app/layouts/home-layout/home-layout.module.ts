@@ -35,6 +35,13 @@ import {
 } from '@angular-material-components/datetime-picker';
 import { CarDetailDialogComponent } from 'src/app/home/home/cars/car-detail-dialog/car-detail-dialog.component';
 import { MatCardModule } from '@angular/material/card';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ReviewsComponent } from 'src/app/home/home/cars/car-detail-dialog/reviews/reviews.component';
+import { WorkersComponent } from 'src/app/home/workers/workers.component';
+import { SingleWorkerComponent } from 'src/app/home/workers/single-worker/single-worker.component';
+import { MatRippleModule } from '@angular/material/core';
+import { TopRatedCarsComponent } from 'src/app/home/top-rated-cars/top-rated-cars.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -55,11 +62,10 @@ import { MatCardModule } from '@angular/material/card';
     MatDatepickerModule,
     MatNativeDateModule,
     MatMomentDateModule,
-    NgxMatDatetimePickerModule,
-    NgxMatTimepickerModule,
-    NgxMatNativeDateModule,
     MatTabsModule,
     MatCardModule,
+    MatSnackBarModule,
+    MatRippleModule,
   ],
   declarations: [
     CarRequestComponent,
@@ -67,6 +73,10 @@ import { MatCardModule } from '@angular/material/card';
     CarsComponent,
     AuthClientDialogComponent,
     CarDetailDialogComponent,
+    ReviewsComponent,
+    WorkersComponent,
+    SingleWorkerComponent,
+    TopRatedCarsComponent,
   ],
   providers: [AuthService, WorkerService, ReviewService, CarRequestService],
 })

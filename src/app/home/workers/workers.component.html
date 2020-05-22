@@ -1,0 +1,240 @@
+<div
+  class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+  style="
+    min-height: 600px;
+    background-size: cover;
+    background-position: center top;
+  "
+>
+  <!-- Header container -->
+  <div class="container-fluid align-items-center">
+    <div class="row">
+      <div class="col-xl-12 order-xl-1">
+        <div
+          class="card bg-secondary shadow"
+          style="
+            color: #172b4d;
+            border-bottom: 10px solid;
+            border-bottom-left-radius: 46px;
+            border-bottom-right-radius: 46px;
+          "
+        >
+          <div class="card-header bg-secondary border-0">
+            <div class="row align-items-center">
+              <div class="col-8">
+                <h1 class="mb-0">
+                  <strong
+                    >Let’s find your ideal agency
+                    <i class="fas fa-search-location"></i
+                  ></strong>
+                </h1>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-header bg-secondary border-0">
+              <form [formGroup]="searchForm">
+                <div class="row">
+                  <div class="col-lg-4">
+                    <mat-form-field
+                      class="border-field-worker"
+                      appearance="outline"
+                    >
+                      <mat-label>Search by Agency Name</mat-label>
+                      <input
+                        formControlName="name"
+                        matInput
+                        placeholder="Search by Agency Name"
+                        (keyup)="searchByName()"
+                      />
+                      <mat-icon matSuffix>search</mat-icon>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-lg-4">
+                    <mat-form-field
+                      class="border-field-worker"
+                      appearance="outline"
+                    >
+                      <mat-label>City</mat-label>
+                      <mat-select
+                        formControlName="city"
+                        (ngModelChange)="onCitySelected()"
+                      >
+                        <mat-option
+                          *ngFor="let city of cities"
+                          [value]="city.value"
+                        >
+                          {{ city.viewValue }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-lg-4">
+                    <mat-form-field
+                      appearance="outline"
+                      class="border-field-worker"
+                    >
+                      <mat-label>Sector</mat-label>
+                      <mat-select
+                        (ngModelChange)="onSectorSelected()"
+                        formControlName="sector"
+                      >
+                        <mat-option
+                          *ngFor="let sector of sectors"
+                          [value]="sector.value"
+                        >
+                          {{ sector.viewValue }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div
+      *ngFor="
+        let worker of workers | paginate: { itemsPerPage: 6, currentPage: p }
+      "
+      class="col-xl-4 order-xl-2 mb-7"
+    >
+      <span class="badge badge-primary"> {{ worker.nbCars }} Cars </span>
+
+      <div class="card card-profile shadow">
+        <div class="row justify-content-center">
+          <div class="col-lg-3 order-lg-2">
+            <div class="card-profile-image">
+              <a href="javascript:void(0)">
+                <img
+                  [src]="worker.logo"
+                  class="rounded-circle"
+                  style="min-height: 180px;"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+          <div class="d-flex justify-content-between">
+            <a
+              href="javascript:void(0)"
+              (click)="showDetails(worker)"
+              class="btn btn-sm btn-info mr-4"
+              >Worker Details <i class="fa fa-eye" aria-hidden="true"></i
+            ></a>
+            <a
+              href="javascript:void(0)"
+              class="btn btn-sm btn-default float-right"
+              >Show on map <i class="ni ni-square-pin" aria-hidden="true"></i
+            ></a>
+          </div>
+        </div>
+        <div class="card-body pt-0 pt-md-4">
+          <div class="row">
+            <div
+              class="d-flex justify-content-center ml-6"
+              style="margin-top: 30px;"
+            >
+              <ng-template #t let-fill="fill">
+                <span class="star" [class.full]="fill === 100">
+                  <span class="half" [style.width.%]="fill">&hearts;</span
+                  >&hearts;
+                </span>
+              </ng-template>
+              <ngb-rating
+                [(rate)]="currentrate"
+                [starTemplate]="t"
+                [readonly]="true"
+                [max]="5"
+              ></ngb-rating>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <div class="text-center">
+              <h2 class="car-brand-title">
+                <strong>{{ worker.name }}</strong>
+              </h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="card-car-stats d-flex justify-content-center">
+                <div>
+                  <span class="heading">
+                    <i class="fa fa-phone" aria-hidden="true"></i>
+                  </span>
+                  <span class="description">{{ worker.phone }}</span>
+                </div>
+                <div>
+                  <span class="heading">
+                    <i class="fas fa-city"></i>
+                  </span>
+                  <span class="description">{{ worker.city.name }}</span>
+                </div>
+                <div>
+                  <span class="heading">
+                    <i class="fa fa-map-pin" aria-hidden="true"></i>
+                  </span>
+                  <span class="description">{{ worker.sector.name }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="card-car-stats d-flex justify-content-center">
+              <div>
+                <span class="heading">
+                  <i class="fa fa-envelope" aria-hidden="true"></i>
+                </span>
+                <span class="description">{{ worker.email }}</span>
+              </div>
+              <div>
+                <span class="heading">
+                  <i class="fa fa-link" aria-hidden="true"></i>
+                </span>
+                <span class="description">
+                  <a href="{{ worker.website }}"> {{ worker.website }}</a>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="text-center">
+            <h5 class="heading-small text-muted mb-4">
+              <i class="fa fa-map-marker" aria-hidden="true"></i> Adresse
+            </h5>
+            <span class="description mx-5" style="text-transform: lowercase;">
+              <strong>{{ worker.adresse }}</strong>
+            </span>
+          </div>
+        </div>
+        <a
+          [routerLink]="['/home/workers/', worker.workerKey]"
+          class="btn btn-outline-danger"
+          role="button"
+          >Show <i class="ni ni-spaceship"></i>
+        </a>
+      </div>
+    </div>
+    <ngx-spinner
+      bdColor="rgba(51,51,51,0.8)"
+      size="medium"
+      color="#fff"
+      type="ball-scale-multiple"
+      [fullScreen]="false"
+    >
+      <p style="font-size: 20px; color: white;">Loading...</p>
+    </ngx-spinner>
+  </div>
+  <div class="row">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+</div>

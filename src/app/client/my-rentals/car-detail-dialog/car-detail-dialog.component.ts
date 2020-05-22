@@ -13,7 +13,12 @@ import { CarRequest } from 'src/app/models/CarRequest.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ReviewService } from 'src/app/services/review.service';
 import { Review } from 'src/app/models/Review.model';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { CarService } from 'src/app/services/car.service';
+export interface Rating {
+  weight: number;
+  count: number;
+}
 @Component({
   selector: 'app-car-detail-dialog',
   templateUrl: './car-detail-dialog.component.html',
@@ -21,11 +26,11 @@ import { Review } from 'src/app/models/Review.model';
   styles: [
     `
       .star {
-        font-size: 2rem;
-        color: #deb0b0;
+        font-size: 1.5rem;
+        color: #b0c4de;
       }
       .filled {
-        color: #ff1e1e;
+        color: #1e90ff;
       }
       .bad {
         color: #deb0b0;
@@ -41,14 +46,23 @@ export class CarDetailDialogComponent implements OnInit {
   allPhotos: any[] = [];
   currentRate = 6;
   reviewForm: FormGroup;
+  reviews: Review[] = [];
+  ratings: Rating[] = [];
+  car: Car;
   constructor(
-    private fb: FormBuilder,
+    private carService: CarService,
+    private _snackBar: MatSnackBar,
     private reviewService: ReviewService,
+    private fb: FormBuilder,
     public dialogRef: MatDialogRef<CarDetailDialogComponent>,
     @Inject(MAT_DIALOG_DATA) { carRequest }
   ) {
     this.carRequest = carRequest;
-    this.allPhotos = this.carRequest.car.photos;
+    this.getReviews(this.carRequest.car.carKey);
+
+    this.allPhotos = this.carRequest.car.photos
+      ? this.carRequest.car.photos
+      : [];
     this.allPhotos.push(this.carRequest.car.main_photo);
   }
   paused = false;
@@ -89,18 +103,66 @@ export class CarDetailDialogComponent implements OnInit {
       comment: [''],
     });
   }
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
   onSaveReview() {
     const comment = this.reviewForm.get('comment').value;
-    this.reviewService.addReview(
-      new Review(
-        this.carRequest.car.carKey,
-        this.currentRate,
-        comment,
-        this.carRequest.client,
-        new Date().toDateString()
+    this.reviewService
+      .addReview(
+        new Review(
+          this.carRequest.car.carKey,
+          this.currentRate,
+          comment,
+          this.carRequest.client,
+          new Date().toDateString()
+        )
       )
-    );
-    // this.dialogRef.close(this.currentRate,this.reviewForm.value);
+      .then(() => {
+        this.openSnackBar('review added with success', 'done');
+        return this.updateRatings(this.carRequest.car.carKey);
+      });
+  }
+  calcAverageRating(ratings) {
+    let totalWeight = 0;
+    let totalReviews = 0;
+    ratings.forEach((rating) => {
+      const weightMultipliedByNumber = rating.weight * rating.count;
+      totalWeight += weightMultipliedByNumber;
+      totalReviews += rating.count;
+    });
+
+    const averageRating = totalWeight / totalReviews;
+
+    return averageRating.toFixed(2);
+  }
+  updateRatings(carKey) {
+    this.reviews = [];
+    this.ratings = [];
+    this.reviewService.getReviews(carKey).subscribe((reviews) => {
+      console.log('=>' + reviews + '=>' + reviews.length);
+      if (reviews.length != 0) {
+        this.reviews = reviews;
+        const stars = [];
+        for (var i = 1; i <= 5; i++) {
+          stars[i] = this.reviews.filter((review) => review.stars === i).length;
+        }
+        for (var i = 1; i <= 5; i++) {
+          this.ratings.push({ weight: i, count: stars[i] });
+        }
+        this.carService.updateCarRating(
+          carKey,
+          this.calcAverageRating(this.ratings)
+        );
+      }
+    });
+  }
+  getReviews(carKey) {
+    this.reviewService.getReviews(carKey).subscribe((reviews) => {
+      this.reviews = reviews;
+    });
   }
   close() {
     this.dialogRef.close();

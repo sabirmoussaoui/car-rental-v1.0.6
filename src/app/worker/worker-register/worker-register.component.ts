@@ -15,16 +15,10 @@ import { City } from 'src/app/models/City.model';
 import { Sector } from 'src/app/models/Sector.model';
 import { RoleService } from 'src/app/services/role.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-
+import { CitySelect, SectorSelect } from 'src/app/interfaces/Select';
+import { from } from 'rxjs';
 declare const google: any;
-interface CitySelect {
-  value: City;
-  viewValue: string;
-}
-interface SectorSelect {
-  value: Sector;
-  viewValue: string;
-}
+
 @Component({
   selector: 'app-worker-register',
   templateUrl: './worker-register.component.html',

@@ -30,6 +30,7 @@ export class ClientService {
       .collection('clients')
       .doc(clientkey)
       .set({
+        clientKey: clientkey,
         firstname: client.firstname,
         lastname: client.lastname,
         phone: client.phone,
@@ -45,14 +46,11 @@ export class ClientService {
       });
   }
 
-  getClient(clientkey) {
-    return this.db.collection('clients').doc(clientkey).get();
-  }
   getClientSnapShot(clientkey) {
     return this.db.collection('clients').doc(clientkey).snapshotChanges();
   }
-  getClients() {
-    return this.db.collection('clinets').get();
+  getClient(clientkey) {
+    return this.db.collection<Client>('clients').doc(clientkey).valueChanges();
   }
 
   uploadMainImage(file: File, progress: { percentage: number }) {
@@ -105,7 +103,6 @@ export class ClientService {
         },
         adresse: client.adresse,
         email: client.email,
-        profil: client.profil,
         created_at: client.created_at,
         updated_at: client.updated_at,
       });
@@ -131,6 +128,41 @@ export class ClientService {
         // The firebase.auth.AuthCredential type that was used.
         var credential = error.credential;
         // ...
+      });
+  }
+  updateProfil(fileurl, workerKey, client: Client) {
+    return this.db
+      .collection('clients')
+      .doc(workerKey)
+      .update({
+        profil: fileurl,
+      })
+      .then((complete) => {
+        // delete photos
+        if (
+          client.profil &&
+          client.profil != 'assets/img/avatar/avatar_profile.png'
+        ) {
+          const storageRef = firebase.storage().refFromURL(client.profil);
+          storageRef.delete().then(
+            () => {
+              console.log('main Photo removed!');
+            },
+            (error) => {
+              console.log('Could not remove main photo! : ' + error);
+            }
+          );
+        }
+      });
+  }
+  updatPassword(password: String, user) {
+    user
+      .updatePassword(password)
+      .then(function () {
+        console.log('password updated');
+      })
+      .catch(function (error) {
+        console.log(error);
       });
   }
   createClientwithGoogle(client) {

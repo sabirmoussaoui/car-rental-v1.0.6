@@ -4,8 +4,10 @@ import { Client } from './Client.model';
 
 export class CarRequest {
   carRequestKey: string;
-  pick_up: Date;
-  drop_off: Date;
+  pick_up: string;
+  drop_off: string;
+  pick_up_time: string;
+  drop_off_time: string;
   constructor();
   constructor(
     public client?: Client,

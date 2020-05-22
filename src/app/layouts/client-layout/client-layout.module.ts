@@ -26,13 +26,22 @@ import { ClientProfileComponent } from 'src/app/client/client-profile/client-pro
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CarDetailDialogComponent } from 'src/app/client/my-rentals/car-detail-dialog/car-detail-dialog.component';
 import { MatTabsModule } from '@angular/material/tabs';
-
+import { ReviewsComponent } from 'src/app/client/my-rentals/car-detail-dialog/reviews/reviews.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { CarRequestUpdateDialogComponent } from 'src/app/client/my-rentals/car-request-update-dialog/car-request-update-dialog.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatNativeDateModule } from '@angular/material/core';
+import { OpenCarImageDialogComponent } from 'src/app/client/my-rentals/open-car-image-dialog/open-car-image-dialog.component';
 @NgModule({
   declarations: [
     DashboardComponent,
     MyRentalsComponent,
     ClientProfileComponent,
     CarDetailDialogComponent,
+    ReviewsComponent,
+    CarRequestUpdateDialogComponent,
+    OpenCarImageDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -40,11 +49,13 @@ import { MatTabsModule } from '@angular/material/tabs';
     RouterModule.forChild(ClientLayoutRoutes),
     MatFormFieldModule,
     MatSelectModule,
+    MatDatepickerModule,
     ClipboardModule,
     ReactiveFormsModule,
     NgbModule,
     MatRadioModule,
     MatDialogModule,
+    MatSnackBarModule,
     MatButtonModule,
     MatIconModule,
     MatCardModule,
@@ -54,6 +65,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatSlideToggleModule,
     NgxPaginationModule,
     MatTabsModule,
+    MatNativeDateModule,
+    MatMomentDateModule,
   ],
   providers: [AuthGuardService, AuthService, CarRequestService],
 })

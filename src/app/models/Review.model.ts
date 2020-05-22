@@ -1,5 +1,6 @@
 import { Client } from './Client.model';
 export class Review {
+  reviewKey: string;
   constructor(
     public carKey,
     public stars: number,

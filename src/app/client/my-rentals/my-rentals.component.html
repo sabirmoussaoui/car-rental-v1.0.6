@@ -29,11 +29,10 @@
                   <th scope="col">Brands</th>
                   <th scope="col">Models</th>
                   <th scope="col">Prices</th>
-                  <th scope="col">pick up</th>
-                  <th scope="col">drop off</th>
-                  <th scope="col">Photos</th>
-                  <th scope="col">status</th>
-                  <th scope="col"></th>
+                  <th scope="col">Pick up</th>
+                  <th scope="col">Drop off</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -65,46 +64,29 @@
                     <span>{{ car_request.car.price }}</span>
                   </td>
                   <td>
-                    <span>{{ getdateFormat(car_request.pick_up) }}</span>
+                    <span>{{
+                      car_request.pick_up + " " + car_request.pick_up_time
+                    }}</span>
                   </td>
                   <td>
-                    <span>{{ car_request.drop_off }}</span>
+                    <span>{{
+                      car_request.drop_off + " " + car_request.drop_off_time
+                    }}</span>
                   </td>
                   <td>
-                    <div class="row" style="width: max-content;">
-                      <a
-                        href="javascript:void(0)"
-                        ngbPopover="this is a main photo"
-                        [openDelay]="100"
-                        [closeDelay]="100"
-                        triggers="mouseenter:mouseleave"
-                      >
-                        <img
-                          class="avatar-circel-img"
-                          [src]="car_request.car.main_photo"
-                          (click)="openImageDialog(car_request.car.main_photo)"
-                        />
-                      </a>
-                      <div
-                        class="avatar-group"
-                        *ngFor="let photo of car_request.car.photos"
-                      >
-                        <a
-                          href="javascript:void(0)"
-                          data-toggle="tooltip"
-                          data-placement="top"
-                          data-container="body"
-                          data-animation="true"
-                        >
-                          <img
-                            (click)="openImageDialog(photo)"
-                            alt="Image placeholder"
-                            [src]="photo"
-                            class="avatar-circel-img"
-                          />
-                        </a>
-                      </div>
-                    </div>
+                    <span
+                      *ngIf="!car_request.blocked && car_request.accepted"
+                      class="badge badge-success"
+                      >Valid</span
+                    >
+                    <span
+                      *ngIf="!car_request.blocked && !car_request.accepted"
+                      class="badge badge-warning"
+                      >in progress..</span
+                    >
+                    <span *ngIf="car_request.blocked" class="badge badge-danger"
+                      >invalid</span
+                    >
                   </td>
                   <td>
                     <button
@@ -119,9 +101,7 @@
                       mat-mini-fab
                       color="primary"
                       aria-label="Edit"
-                      (click)="
-                        openDialog(car_request, car_request.carRequestKey)
-                      "
+                      (click)="openDialog(car_request)"
                     >
                       <mat-icon>edit</mat-icon>
                     </button>

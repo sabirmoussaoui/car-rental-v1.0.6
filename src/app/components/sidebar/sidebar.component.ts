@@ -16,21 +16,40 @@ export const WORKER_ROUTES: RouteInfo[] = [
   // { path: '/register', title: 'Register',  icon:'ni-circle-08 text-pink', class: '' },
   //worker route
   {
-    path: '/worker/dashboard',
-    title: 'Dashboard',
-    icon: 'ni-tv-2 text-primary',
-    class: '',
-  },
-  {
     path: '/home',
     title: 'Home',
     icon: 'ni-planet text-primary',
     class: '',
   },
   {
+    path: '/worker/dashboard',
+    title: 'Dashboard',
+    icon: 'ni-tv-2 text-primary',
+    class: '',
+  },
+  {
+    path: '/home/workers',
+    title: 'Agencies',
+    icon: 'fa fa-store-alt text-danger',
+    class: '',
+  },
+  {
+    path: '/home/top-rated-car',
+    title: 'Top Rated Car',
+    icon: 'fa fa-star text-warning',
+    class: '',
+  },
+
+  {
+    path: '/worker/my-requests',
+    title: 'My Requets',
+    icon: 'fa fa-rocket text-success',
+    class: '',
+  },
+  {
     path: '/worker/cars',
     title: 'My Cars',
-    icon: 'ni-circle-08 text-info',
+    icon: 'fa fa-car text-info',
     class: '',
   },
   {
@@ -45,10 +64,11 @@ export const WORKER_ROUTES: RouteInfo[] = [
     icon: 'fa fa-plus-circle text-danger',
     class: '',
   },
+
   {
-    path: '/worker/worker-profile',
+    path: '/worker/profile',
     title: 'My profile',
-    icon: 'fa fa-plus-circle text-warining',
+    icon: 'fa fa-user text-warning',
     class: '',
   },
 ];
@@ -66,6 +86,18 @@ export const CLIENT_ROUTES: RouteInfo[] = [
     class: '',
   },
   {
+    path: '/home/workers',
+    title: 'Agencies',
+    icon: 'fa fa-store-alt text-danger',
+    class: '',
+  },
+  {
+    path: '/home/top-rated-car',
+    title: 'Top Rated Car',
+    icon: 'fa fa-star text-warning',
+    class: '',
+  },
+  {
     path: '/client/my-rentals',
     title: 'My rentals',
     icon: 'fa fa-car text-danger',
@@ -74,7 +106,7 @@ export const CLIENT_ROUTES: RouteInfo[] = [
   {
     path: '/client/profile',
     title: 'My profile',
-    icon: 'fa fa-car text-d',
+    icon: 'fa fa-user text-warning',
     class: '',
   },
 ];
@@ -85,12 +117,60 @@ export const HOME_ROUTES: RouteInfo[] = [
     icon: 'fa fa-home text-primary',
     class: '',
   },
+  {
+    path: '/home/workers',
+    title: 'Agencies',
+    icon: 'fa fa-store-alt text-danger',
+    class: '',
+  },
+  {
+    path: '/home/top-rated-car',
+    title: 'Top Rated Car',
+    icon: 'fa fa-star text-warning',
+    class: '',
+  },
+  {
+    path: '/login',
+    title: 'Login',
+    icon: 'ni ni-key-25 text-success',
+    class: '',
+  },
+  {
+    path: '/client-register',
+    title: 'client register',
+    icon: 'ni ni-circle-08 text-warning',
+    class: '',
+  },
+  {
+    path: '/worker-register',
+    title: 'client register',
+    icon: 'fa fa-car text-info',
+    class: '',
+  },
 ];
 export const ADMIN_ROUTES: RouteInfo[] = [
   {
     path: '/admin/dashboard',
     title: 'dashboard',
     icon: 'ni-tv-2 text-primary',
+    class: '',
+  },
+  {
+    path: '/home',
+    title: 'home',
+    icon: 'fa fa-home text-primary',
+    class: '',
+  },
+  {
+    path: '/home/workers',
+    title: 'Agencies',
+    icon: 'fa fa-store-alt text-danger',
+    class: '',
+  },
+  {
+    path: '/home/top-rated-car',
+    title: 'Top Rated Car',
+    icon: 'fa fa-star text-warning',
     class: '',
   },
   {

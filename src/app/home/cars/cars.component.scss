@@ -1,0 +1,272 @@
+.icon-solid {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  padding-left: 8px;
+  background-repeat: no-repeat;
+}
+.icon-solid-car-door {
+  background: url(https://cdn2.rcstatic.com/images/site_graphics/newsite/solid--car-door.svg),
+    none;
+}
+.icon-solid--car-seat {
+  background-image: url(https://cdn2.rcstatic.com/images/site_graphics/newsite/solid--car-seat.png);
+  background: url(https://cdn2.rcstatic.com/images/site_graphics/newsite/solid--car-seat.svg),
+    none;
+}
+.icon-solid--big-bag {
+  background: url(https://cdn2.rcstatic.com/images/site_graphics/newsite/solid--big-bag.png);
+  background: url(https://cdn2.rcstatic.com/images/site_graphics/newsite/solid--big-bag.svg),
+    none;
+}
+.icon-solid--small-bag {
+  background: url(https://cdn2.rcstatic.com/images/site_graphics/newsite/solid--small-bag.png);
+  background: url(https://cdn2.rcstatic.com/images/site_graphics/newsite/solid--small-bag.svg),
+    none;
+}
+.icon-solid--air-conditioning {
+  background: url(https://cdn2.rcstatic.com/images/site_graphics/newsite/solid--air-conditioning.png);
+  background: url(https://cdn2.rcstatic.com/images/site_graphics/newsite/solid--air-conditioning.svg),
+    none;
+}
+.icon-solid--car-gears-automatic {
+  background: url(https://cdn2.rcstatic.com/images/site_graphics/newsite/solid--car-gears-automatic.png);
+  background: url(https://cdn2.rcstatic.com/images/site_graphics/newsite/solid--car-gears-automatic.svg),
+    none;
+}
+.avatar-circel-img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50% !important;
+}
+.product_price {
+  color: #f5365c;
+  font-size: 30px;
+  font-weight: 600;
+  margin-left: 30px;
+}
+.product_origin_price {
+  color: #c7d6d2;
+  font-size: 30px;
+  font-weight: 600;
+}
+.car-brand-title {
+  font-family: ubuntu, Helvetica, Arial, sans-serif !important;
+  font-weight: 700 !important;
+}
+.ctn {
+  display: block;
+  margin: auto;
+  text-align: center;
+}
+.card-car-stats {
+  padding: 1rem 0;
+
+  > div {
+    text-align: center;
+    margin-right: 1rem;
+    padding: 0.175rem;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    .heading {
+      font-size: 1.1rem;
+      font-weight: bold;
+      display: block;
+    }
+    .description {
+      font-size: 0.875rem;
+      color: #c7d6d2;
+    }
+  }
+}
+/*GRADIENTS*/
+/*GREEN*/
+.b-green,
+.b-green:before {
+  background: rgba(73, 155, 234, 1);
+  background: -moz-linear-gradient(
+    45deg,
+    rgba(73, 155, 234, 1) 0%,
+    rgba(26, 188, 156, 1) 100%
+  );
+  background: -webkit-gradient(
+    left bottom,
+    right top,
+    color-stop(0%, rgba(73, 155, 234, 1)),
+    color-stop(100%, rgba(26, 188, 156, 1))
+  );
+  background: -webkit-linear-gradient(
+    45deg,
+    rgba(73, 155, 234, 1) 0%,
+    rgba(26, 188, 156, 1) 100%
+  );
+  background: -o-linear-gradient(
+    45deg,
+    rgba(73, 155, 234, 1) 0%,
+    rgba(26, 188, 156, 1) 100%
+  );
+  background: -ms-linear-gradient(
+    45deg,
+    rgba(73, 155, 234, 1) 0%,
+    rgba(26, 188, 156, 1) 100%
+  );
+  background: linear-gradient(
+    45deg,
+    rgba(73, 155, 234, 1) 0%,
+    rgba(26, 188, 156, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#499bea', endColorstr='#1abc9c', GradientType=1 );
+}
+/*PINK*/
+.b-pink,
+.b-pink:before {
+  background: rgba(231, 72, 234, 1);
+  background: -moz-linear-gradient(
+    45deg,
+    rgba(231, 72, 234, 1) 0%,
+    rgba(75, 26, 188, 1) 100%
+  );
+  background: -webkit-gradient(
+    left bottom,
+    right top,
+    color-stop(0%, rgba(231, 72, 234, 1)),
+    color-stop(100%, rgba(75, 26, 188, 1))
+  );
+  background: -webkit-linear-gradient(
+    45deg,
+    rgba(231, 72, 234, 1) 0%,
+    rgba(75, 26, 188, 1) 100%
+  );
+  background: -o-linear-gradient(
+    45deg,
+    rgba(231, 72, 234, 1) 0%,
+    rgba(75, 26, 188, 1) 100%
+  );
+  background: -ms-linear-gradient(
+    45deg,
+    rgba(231, 72, 234, 1) 0%,
+    rgba(75, 26, 188, 1) 100%
+  );
+  background: linear-gradient(
+    45deg,
+    rgba(231, 72, 234, 1) 0%,
+    rgba(75, 26, 188, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e748ea', endColorstr='#4b1abc', GradientType=1 );
+}
+/*RED*/
+.b-red,
+.b-red:before {
+  background: rgba(234, 110, 72, 1);
+  background: -moz-linear-gradient(
+    45deg,
+    rgba(234, 110, 72, 1) 0%,
+    rgba(188, 26, 99, 1) 100%
+  );
+  background: -webkit-gradient(
+    left bottom,
+    right top,
+    color-stop(0%, rgba(234, 110, 72, 1)),
+    color-stop(100%, rgba(188, 26, 99, 1))
+  );
+  background: -webkit-linear-gradient(
+    45deg,
+    rgba(234, 110, 72, 1) 0%,
+    rgba(188, 26, 99, 1) 100%
+  );
+  background: -o-linear-gradient(
+    45deg,
+    rgba(234, 110, 72, 1) 0%,
+    rgba(188, 26, 99, 1) 100%
+  );
+  background: -ms-linear-gradient(
+    45deg,
+    rgba(234, 110, 72, 1) 0%,
+    rgba(188, 26, 99, 1) 100%
+  );
+  background: linear-gradient(
+    45deg,
+    rgba(234, 110, 72, 1) 0%,
+    rgba(188, 26, 99, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ea6e48', endColorstr='#bc1a63', GradientType=1 );
+}
+/*ORANGE*/
+.b-orange,
+.b-orange:before {
+  background: rgba(255, 193, 7, 1);
+  background: -moz-linear-gradient(
+    45deg,
+    rgba(255, 193, 7, 1) 0%,
+    rgba(255, 87, 34, 1) 100%
+  );
+  background: -webkit-gradient(
+    left bottom,
+    right top,
+    color-stop(0%, rgba(255, 193, 7, 1)),
+    color-stop(100%, rgba(255, 87, 34, 1))
+  );
+  background: -webkit-linear-gradient(
+    45deg,
+    rgba(255, 193, 7, 1) 0%,
+    rgba(255, 87, 34, 1) 100%
+  );
+  background: -o-linear-gradient(
+    45deg,
+    rgba(255, 193, 7, 1) 0%,
+    rgba(255, 87, 34, 1) 100%
+  );
+  background: -ms-linear-gradient(
+    45deg,
+    rgba(255, 193, 7, 1) 0%,
+    rgba(255, 87, 34, 1) 100%
+  );
+  background: linear-gradient(
+    45deg,
+    rgba(255, 193, 7, 1) 0%,
+    rgba(255, 87, 34, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffc107', endColorstr='#ff5722', GradientType=1 );
+}
+/*BLUE*/
+.b-blue,
+.b-blue:before {
+  background: rgba(5, 118, 255, 1);
+  background: -moz-linear-gradient(
+    45deg,
+    rgba(5, 118, 255, 1) 0%,
+    rgba(36, 248, 255, 1) 100%
+  );
+  background: -webkit-gradient(
+    left bottom,
+    right top,
+    color-stop(0%, rgba(5, 118, 255, 1)),
+    color-stop(100%, rgba(36, 248, 255, 1))
+  );
+  background: -webkit-linear-gradient(
+    45deg,
+    rgba(5, 118, 255, 1) 0%,
+    rgba(36, 248, 255, 1) 100%
+  );
+  background: -o-linear-gradient(
+    45deg,
+    rgba(5, 118, 255, 1) 0%,
+    rgba(36, 248, 255, 1) 100%
+  );
+  background: -ms-linear-gradient(
+    45deg,
+    rgba(5, 118, 255, 1) 0%,
+    rgba(36, 248, 255, 1) 100%
+  );
+  background: linear-gradient(
+    45deg,
+    rgba(5, 118, 255, 1) 0%,
+    rgba(36, 248, 255, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0576ff', endColorstr='#24f8ff', GradientType=1 );
+}
+/*END GRADIENTS*/
+/*BASE BUTTON*/

@@ -6,6 +6,8 @@ import { CarsComponent } from 'src/app/worker/cars/cars.component';
 import { AuthGuardService } from 'src/app/services/auth-guard.service';
 import { FourOhFourComponent } from 'src/app/worker/four-oh-four/four-oh-four.component';
 import { NewCarComponent } from 'src/app/worker/cars/new-car/new-car.component';
+import { WorkerProfileComponent } from 'src/app/worker/worker-profile/worker-profile.component';
+import { MyRequestsComponent } from 'src/app/worker/my-requests/my-requests.component';
 
 export const WorkerLayoutRoutes: Routes = [
   {
@@ -13,8 +15,8 @@ export const WorkerLayoutRoutes: Routes = [
     component: DashboardComponent,
   },
   {
-    path: 'worker/user-profile',
-    component: UserProfileComponent,
+    path: 'worker/profile',
+    component: WorkerProfileComponent,
   },
   {
     path: 'worker/cars',
@@ -24,6 +26,11 @@ export const WorkerLayoutRoutes: Routes = [
     path: 'worker/new-car',
     component: NewCarComponent,
   },
+  {
+    path: 'worker/my-requests',
+    component: MyRequestsComponent,
+  },
+
   // { path: 'not-found', component: FourOhFourComponent },
   // { path: '**', redirectTo: 'not-found' },
 ];

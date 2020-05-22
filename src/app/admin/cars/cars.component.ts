@@ -7,10 +7,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { CarDetailDialogComponent } from 'src/app/admin/cars/car-detail-dialog/car-detail-dialog.component';
 import { ReviewService } from 'src/app/services/review.service';
 import { Review } from 'src/app/models/Review.model';
-export interface Rating {
-  weight: number;
-  count: number;
-}
 @Component({
   selector: 'app-cars',
   templateUrl: './cars.component.html',
@@ -19,8 +15,6 @@ export interface Rating {
 export class CarsComponent implements OnInit {
   public photos: any[] = [];
   cars: Array<any>;
-  ratings: Rating[] = [];
-  reviews: Review[] = [];
   constructor(
     private carService: CarService,
     private dialog: MatDialog,
@@ -84,49 +78,6 @@ export class CarsComponent implements OnInit {
     });
   }
 
-  calcAverageRating(ratings) {
-    let totalWeight = 0;
-    let totalReviews = 0;
-    ratings.forEach((rating) => {
-      const weightMultipliedByNumber = rating.weight * rating.count;
-      totalWeight += weightMultipliedByNumber;
-      totalReviews += rating.count;
-    });
-
-    const averageRating = totalWeight / totalReviews;
-
-    return averageRating.toFixed(2);
-  }
-  updateRatings() {
-    this.carService.getCars().subscribe((cars) => {
-      cars.forEach((element) => {
-        this.reviews = [];
-        this.ratings = [];
-        this.reviewService.getReviews(element.id).subscribe((reviews) => {
-          console.log(element.id + '=>' + reviews + '=>' + reviews.length);
-
-          if (reviews.length != 0) {
-            reviews.forEach((e) => {
-              this.reviews.push(e as Review);
-            });
-            const stars = [];
-            for (var i = 1; i <= 5; i++) {
-              stars[i] = this.reviews.filter(
-                (review) => review.stars === i
-              ).length;
-            }
-            for (var i = 1; i <= 5; i++) {
-              this.ratings.push({ weight: i, count: stars[i] });
-            }
-            this.carService.updateCarRating(
-              element.id,
-              this.calcAverageRating(this.ratings)
-            );
-          }
-        });
-      });
-    });
-  }
   onDeleteCar(car) {
     this.carService.deleteCar(car);
   }
