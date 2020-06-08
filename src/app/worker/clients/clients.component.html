@@ -14,15 +14,7 @@
         <div class="card-header bg-secondary border-0">
           <div class="row align-items-center">
             <div class="col-8">
-              <h3 class="mb-0">My cars</h3>
-            </div>
-            <div class="col-4 text-right">
-              <a
-                [routerLink]="['/admin/settings']"
-                href="javascript:void(0)"
-                class="btn btn-sm btn-primary"
-                >Settings</a
-              >
+              <h3 class="mb-0">My Clients</h3>
             </div>
           </div>
         </div>
@@ -31,74 +23,49 @@
             <table class="table align-items-center table-flush">
               <thead class="thead-light">
                 <tr>
-                  <th scope="col">Brands</th>
-                  <th scope="col">Models</th>
-                  <th scope="col">Prices</th>
-                  <th scope="col">Quantities</th>
-                  <th scope="col">Agencies</th>
+                  <th scope="col">Photos</th>
+                  <th scope="col">firstname</th>
+                  <th scope="col">lastname</th>
                   <th scope="col">phone</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Actions</th>
-                  <th scope="col"></th>
+                  <th scope="col">city</th>
+                  <th scope="col">adresse</th>
+                  <th scope="col">email</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let car of cars">
+                <tr *ngFor="let client of clients">
                   <td>
                     <div class="media align-items-center">
                       <a class="avatar rounded-circle mr-3">
                         <img
                           alt="Image placeholder"
-                          *ngIf="car.carBrand.photoUrl"
-                          [src]="car.carBrand.photoUrl"
+                          *ngIf="client.profil"
+                          [src]="client.profil"
                         />
                       </a>
                       <div class="media-body">
-                        <span class="mb-0 text-sm">
-                          {{ car.carBrand.name }}
-                        </span>
+                        <span class="mb-0 text-sm"> </span>
                       </div>
                     </div>
                   </td>
                   <td>
-                    <span>{{
-                      car.carModel.name + " " + car.carModel.year
-                    }}</span>
+                    <span>{{ client.firstname }}</span>
                   </td>
                   <td>
-                    <span>{{ car.price }}</span>
+                    <span>{{ client.lastname }}</span>
                   </td>
                   <td>
-                    <span>{{ car.quantity }}</span>
+                    <span>{{ client.phone }}</span>
                   </td>
                   <td>
-                    <span>{{ car.worker.name }}</span>
+                    <span>{{ client.city.name }}</span>
                   </td>
                   <td>
-                    <span>{{ car.worker.phone }}</span>
+                    <span>{{ client.adresse }}</span>
                   </td>
                   <td>
-                    <span>{{ car.worker.email }}</span>
+                    <span>{{ client.email }}</span>
                   </td>
-                  <td>
-                    <button
-                      mat-mini-fab
-                      color="info"
-                      aria-label="show Details"
-                      (click)="showDetails(car)"
-                    >
-                      <mat-icon>visibility</mat-icon>
-                    </button>
-                    <button
-                      mat-mini-fab
-                      color="warn"
-                      aria-label="Delete"
-                      (click)="onDeleteCar(car)"
-                    >
-                      <mat-icon>delete</mat-icon>
-                    </button>
-                  </td>
-                  <td></td>
                 </tr>
                 <ngx-spinner
                   bdColor="rgba(51,51,51,0.8)"

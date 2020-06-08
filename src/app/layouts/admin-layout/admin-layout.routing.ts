@@ -9,6 +9,7 @@ import { CarBrandComponent } from 'src/app/admin/settings/car-brand/car-brand.co
 import { CarModelComponent } from 'src/app/admin/settings/car-model/car-model.component';
 import { AuthGuardService } from 'src/app/services/auth-guard.service';
 import { CarsComponent } from 'src/app/admin/cars/cars.component';
+import { WorkersComponent } from 'src/app/admin/workers/workers.component';
 
 export const AdminLayoutRoutes: Routes = [
   {
@@ -22,6 +23,10 @@ export const AdminLayoutRoutes: Routes = [
   {
     path: 'admin/cars',
     component: CarsComponent,
+  },
+  {
+    path: 'admin/workers',
+    component: WorkersComponent,
   },
   {
     path: 'admin/settings/cities',

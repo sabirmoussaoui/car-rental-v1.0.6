@@ -6,7 +6,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { ClipboardModule } from 'ngx-clipboard';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
-import { UserProfileComponent } from 'src/app/worker/user-profile/user-profile.component';
 import { DashboardComponent } from 'src/app/worker/dashboard/dashboard.component';
 import { WorkerLayoutRoutes } from './worker-layout.routing';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -37,11 +36,11 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { WorkerProfileComponent } from 'src/app/worker/worker-profile/worker-profile.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MyRequestsComponent } from 'src/app/worker/my-requests/my-requests.component';
+import { ClientsComponent } from 'src/app/worker/clients/clients.component';
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    UserProfileComponent,
     CarsComponent,
     CarUpdateDialogComponent,
     DropzoneDirective,
@@ -53,6 +52,7 @@ import { MyRequestsComponent } from 'src/app/worker/my-requests/my-requests.comp
     NewCarComponent,
     WorkerProfileComponent,
     MyRequestsComponent,
+    ClientsComponent,
   ],
   imports: [
     CommonModule,

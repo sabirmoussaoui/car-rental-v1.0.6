@@ -14,14 +14,15 @@
         <div class="card-header bg-secondary border-0">
           <div class="row align-items-center">
             <div class="col-8">
-              <h3 class="mb-0">My cars</h3>
+              <h3 class="mb-0"><i class="fas fa-store-alt"></i> Agencies</h3>
             </div>
             <div class="col-4 text-right">
               <a
                 [routerLink]="['/admin/settings']"
                 href="javascript:void(0)"
                 class="btn btn-sm btn-primary"
-                >Settings</a
+              >
+                <i class="fa fa-cog" aria-hidden="true"></i> Settings</a
               >
             </div>
           </div>
@@ -31,71 +32,93 @@
             <table class="table align-items-center table-flush">
               <thead class="thead-light">
                 <tr>
-                  <th scope="col">Brands</th>
-                  <th scope="col">Models</th>
-                  <th scope="col">Prices</th>
-                  <th scope="col">Quantities</th>
-                  <th scope="col">Agencies</th>
-                  <th scope="col">phone</th>
+                  <th scope="col">Photo</th>
+                  <th scope="col">Name</th>
                   <th scope="col">Email</th>
-                  <th scope="col">Actions</th>
-                  <th scope="col"></th>
+                  <th scope="col">Adresse</th>
+                  <th scope="col">phone</th>
+                  <th scope="col">City</th>
+                  <th scope="col">Sector</th>
+                  <th scope="col">Created at</th>
+                  <th scope="col">Action</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let car of cars">
+                <tr *ngFor="let worker of workers">
                   <td>
                     <div class="media align-items-center">
                       <a class="avatar rounded-circle mr-3">
                         <img
                           alt="Image placeholder"
-                          *ngIf="car.carBrand.photoUrl"
-                          [src]="car.carBrand.photoUrl"
+                          *ngIf="worker.logo"
+                          [src]="worker.logo"
                         />
                       </a>
                       <div class="media-body">
-                        <span class="mb-0 text-sm">
-                          {{ car.carBrand.name }}
-                        </span>
+                        <span class="mb-0 text-sm"> </span>
                       </div>
                     </div>
                   </td>
                   <td>
-                    <span>{{
-                      car.carModel.name + " " + car.carModel.year
-                    }}</span>
+                    <span> {{ worker.name }}</span>
                   </td>
                   <td>
-                    <span>{{ car.price }}</span>
+                    <span>{{ worker.email }}</span>
+                  </td>
+
+                  <td>
+                    <span>{{ worker.adresse }}</span>
                   </td>
                   <td>
-                    <span>{{ car.quantity }}</span>
+                    <span>{{ worker.phone }}</span>
                   </td>
                   <td>
-                    <span>{{ car.worker.name }}</span>
+                    <span>{{ worker.city.name }}</span>
                   </td>
                   <td>
-                    <span>{{ car.worker.phone }}</span>
+                    <span>{{ worker.sector.name }}</span>
                   </td>
                   <td>
-                    <span>{{ car.worker.email }}</span>
+                    <span>{{ worker.created_at }}</span>
                   </td>
+
                   <td>
                     <button
+                      *ngIf="!worker.blocked && !worker.accepted"
                       mat-mini-fab
-                      color="info"
-                      aria-label="show Details"
-                      (click)="showDetails(car)"
+                      color="success"
+                      aria-label="accepted"
+                      (click)="acceptWorker(worker.workerKey)"
                     >
-                      <mat-icon>visibility</mat-icon>
+                      <mat-icon>done</mat-icon>
                     </button>
+
                     <button
+                      *ngIf="!worker.blocked && worker.accepted"
                       mat-mini-fab
                       color="warn"
-                      aria-label="Delete"
-                      (click)="onDeleteCar(car)"
+                      aria-label="not accepted"
+                      (click)="disacceptedWorker(worker.workerKey)"
                     >
-                      <mat-icon>delete</mat-icon>
+                      <mat-icon>cancel</mat-icon>
+                    </button>
+                    <button
+                      *ngIf="!worker.blocked"
+                      mat-mini-fab
+                      color="accent"
+                      aria-label="block"
+                      (click)="blockWorker(worker.workerKey, true)"
+                    >
+                      <mat-icon>lock</mat-icon>
+                    </button>
+                    <button
+                      *ngIf="worker.blocked"
+                      mat-mini-fab
+                      color="success"
+                      aria-label="deblock"
+                      (click)="blockWorker(worker.workerKey, false)"
+                    >
+                      <mat-icon>no_encryption</mat-icon>
                     </button>
                   </td>
                   <td></td>

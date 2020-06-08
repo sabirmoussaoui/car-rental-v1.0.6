@@ -18,6 +18,7 @@ import {
   Car_Class,
   Body_Style,
 } from 'src/app/interfaces/Select';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-car',
@@ -137,7 +138,8 @@ export class NewCarComponent implements OnInit {
     private carService: CarService,
     private dialog: MatDialog,
     private workerService: WorkerService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private route: Router
   ) {
     this.carService.myMethod$.subscribe((data) => {
       this.photos.push(data);
@@ -179,7 +181,7 @@ export class NewCarComponent implements OnInit {
     });
   }
 
-  onSaveCarModel() {
+  onSaveCar() {
     const price = this.carForm.get('price').value;
     const quantity = this.carForm.get('quantity').value;
     const fuel = this.carForm.get('fuel').value;
@@ -223,6 +225,7 @@ export class NewCarComponent implements OnInit {
     this.allPhoots = this.photos;
     console.log(this.allPhoots);
     this.carService.createPhotos(this.allPhoots, carBrand, carModel); //create all photos with car brand and car model
+    this.route.navigate(['/worker/cars']);
   }
   searchMainPhoto() {
     const dialogRef = this.dialog.open(CarPhotosDialogComponent, {

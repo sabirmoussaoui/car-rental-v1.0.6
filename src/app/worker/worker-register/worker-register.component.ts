@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import {
   FormControl,
   FormBuilder,
@@ -17,14 +17,15 @@ import { RoleService } from 'src/app/services/role.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CitySelect, SectorSelect } from 'src/app/interfaces/Select';
 import { from } from 'rxjs';
-declare const google: any;
+import * as L from 'leaflet';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-worker-register',
   templateUrl: './worker-register.component.html',
   styleUrls: ['./worker-register.component.scss'],
 })
-export class WorkerRegisterComponent implements OnInit {
+export class WorkerRegisterComponent implements OnInit, AfterViewInit {
   workerForm: FormGroup;
   cities: CitySelect[] = [];
   sectors: SectorSelect[] = [];
@@ -33,8 +34,13 @@ export class WorkerRegisterComponent implements OnInit {
   imageUploaded = false;
   imageUrl: string;
   progress: { percentage: number } = { percentage: 0 };
-
+  map;
+  parcThabor = {
+    lat: 33.5950627,
+    lng: -7.6187768,
+  };
   constructor(
+    private _snackBar: MatSnackBar,
     private router: Router,
     private formBuilder: FormBuilder,
     private cityService: CityService,
@@ -48,50 +54,43 @@ export class WorkerRegisterComponent implements OnInit {
     // initialiser la formulaire
     this.getCities();
     this.initForm();
-
-    // MAP
-    //   let maps = document.getElementById('map-canvas');
-    //   let lat = maps.getAttribute('data-lat');
-    //   let lng = maps.getAttribute('data-lng');
-
-    //   var myLatlng = new google.maps.LatLng(lat, lng);
-    //   var mapOptions = {
-    //       zoom: 12,
-    //       scrollwheel: false,
-    //       center: myLatlng,
-    //       mapTypeId: google.maps.MapTypeId.ROADMAP,
-    //       styles: [
-    //         {"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},
-    //         {"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},
-    //         {"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},
-    //         {"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},
-    //         {"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},
-    //         {"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},
-    //         {"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},
-    //         {"featureType":"water","elementType":"all","stylers":[{"color":'#5e72e4'},{"visibility":"on"}]}]
-    //   }
-
-    //   maps = new google.maps.Map(maps, mapOptions);
-
-    //   var marker = new google.maps.Marker({
-    //       position: myLatlng,
-    //       map: maps,
-    //       animation: google.maps.Animation.DROP,
-    //       title: 'Hello World!'
-    //                                       });
-
-    //   var contentString = '<div class="info-window-content"><h2>Car Rental</h2>' +
-    //       '<p>*************************************</p></div>';
-
-    //   var infowindow = new google.maps.InfoWindow({
-    //       content: contentString
-    //   });
-
-    //   google.maps.event.addListener(marker, 'click', function() {
-    //       infowindow.open(map, marker);
-    //   });
+  }
+  ngAfterViewInit() {
+    this.createMap();
   }
 
+  createMap() {
+    const zoomLevel = 12;
+
+    this.map = L.map('map', {
+      center: [this.parcThabor.lat, this.parcThabor.lng],
+      zoom: zoomLevel,
+    });
+
+    const mainLayer = L.tileLayer(
+      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }
+    );
+    mainLayer.addTo(this.map);
+    this.map.on('click', (e) => {
+      this.parcThabor = {
+        lat: e.latlng.lat,
+        lng: e.latlng.lng,
+      };
+      this.openSnackBar(
+        'alt :' + e.latlng.lat + ' lng :' + e.latlng.lng,
+        'done'
+      );
+    });
+  }
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 3000,
+    });
+  }
   initForm() {
     this.workerForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -132,13 +131,14 @@ export class WorkerRegisterComponent implements OnInit {
         sector,
         adresse,
         email,
-        'not working',
-        'not working',
+        this.parcThabor.lng,
+        this.parcThabor.lat,
         false,
         false,
         new Date(),
         new Date()
       );
+      console.log(worker);
 
       if (this.imageUrl && this.imageUrl !== '') {
         worker.logo = this.imageUrl;
@@ -166,21 +166,6 @@ export class WorkerRegisterComponent implements OnInit {
       console.log('not ok');
       this.spinner.hide();
     }
-  }
-  detectMainImage(event) {
-    this.onUploadMainImage(event.target.files[0]);
-  }
-  onUploadMainImage(file: File) {
-    console.log(file);
-    this.mainImageIsUploading = true;
-    this.workerService
-      .uploadMainImage(file, this.progress)
-      .then((url: string) => {
-        this.imageUrl = url;
-        console.log('Url =>' + url);
-        this.mainImageIsUploading = false;
-        this.imageUploaded = true;
-      });
   }
 
   getCities() {

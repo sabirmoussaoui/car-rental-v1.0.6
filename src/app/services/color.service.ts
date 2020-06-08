@@ -2,37 +2,35 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ColorService {
-
   constructor(public db: AngularFirestore) {}
 
-getColor(colorKey){
+  getColor(colorKey) {
     return this.db.collection('users').doc(colorKey).get();
   }
-updateColor(colorKey, color){
+  updateColor(colorKey, color) {
     return this.db.collection('colors').doc(colorKey).set({
-      name:color.name,
+      name: color.name,
     });
   }
 
-deleteColor(colorKey){
+  deleteColor(colorKey) {
     return this.db.collection('colors').doc(colorKey).delete();
   }
 
-getColorsSnapshot(){
+  getColorsSnapshot() {
     return this.db.collection('colors').snapshotChanges();
   }
-  
-getColors(){
+
+  getColors() {
     return this.db.collection('colors').get();
   }
 
-
-  createColor(color){
+  createColor(color) {
     return this.db.collection('colors').add({
-      name:color.name
+      name: color.name,
     });
   }
 }

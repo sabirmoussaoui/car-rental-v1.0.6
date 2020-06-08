@@ -32,7 +32,7 @@
       <div class="card bg-secondary shadow border-0">
         <div class="card-body px-lg-5 py-lg-5">
           <div class="text-center text-muted mb-4">
-            <small>Or sign up with credentials</small>
+            <small>sign up with credentials</small>
           </div>
           <form
             role="form"
@@ -153,7 +153,7 @@
             </div>
             <div class="row">
               <div class="col-lg-4">
-                <mat-form-field>
+                <mat-form-field appearance="outline">
                   <mat-label>City</mat-label>
                   <mat-select
                     formControlName="city"
@@ -169,7 +169,7 @@
                 </mat-form-field>
               </div>
               <div class="col-lg-4">
-                <mat-form-field>
+                <mat-form-field appearance="outline">
                   <mat-label>Sector</mat-label>
                   <mat-select formControlName="sector">
                     <mat-option
@@ -199,61 +199,18 @@
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-lg-6">
-                <input
-                  type="file"
-                  class="custom-file-input"
-                  id="main-image"
-                  (change)="detectMainImage($event)"
-                  accept="image/*"
-                />
-                <label
-                  class="btn btn-warning btn-block btn-round"
-                  for="main-image"
-                  >Choose main photo <i class="ni ni-image"></i>
-                </label>
-                <div *ngIf="mainImageIsUploading" class="progress-wrapper">
-                  <div class="progress-info">
-                    <div class="progress-percentage">
-                      <span> {{ progress.percentage }}%</span>
-                    </div>
-                  </div>
-                  <div class="progress">
-                    <div
-                      class="progress-bar bg-warning"
-                      role="progressbar"
-                      attr.aria-valuenow="{{ progress.percentage }}"
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                      [ngStyle]="{ width: progress.percentage + '%' }"
-                    ></div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div
-                    *ngIf="imageUrl as url"
-                    class="d-flex align-content-center flex-wrap"
-                  >
-                    <img class="img-thumbnail" [src]="url" />
-                  </div>
-                </div>
+            <div class="map-wrapper">
+              <div class="map-border">
+                <div id="map" style="height: 351px;"></div>
               </div>
             </div>
-            <div class="text-muted font-italic">
-              <small
-                >password strength:
-                <span class="text-success font-weight-700">strong</span></small
-              >
-            </div>
-            <div
+            <!-- <div
               id="map-canvas"
               class="map-canvas"
               data-lat="40.748817"
               data-lng="-73.985428"
               style="height: 600px;"
-            ></div>
-            <!-- <button mat-button (click)="openDialog()">Open dialog</button> -->
+            ></div> -->
             <div class="row my-4">
               <div class="col-12">
                 <div

@@ -120,11 +120,11 @@
   <mat-tab label="rental details">
     <div class="alert alert-danger" role="alert">
       <i class="fa fa-calendar" aria-hidden="true"></i> Pick up Date :
-      {{ carRequest.pick_up }}
+      {{ carRequest.pick_up + " " + carRequest.pick_up_time }}
     </div>
     <div class="alert alert-warning" role="alert">
       <i class="fa fa-calendar" aria-hidden="true"></i> Drop off Date :
-      {{ carRequest.drop_off }}
+      {{ carRequest.drop_off + " " + carRequest.drop_off_time }}
     </div>
     <div
       *ngIf="!carRequest.blocked && !carRequest.accepted"

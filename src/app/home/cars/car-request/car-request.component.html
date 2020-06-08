@@ -158,10 +158,10 @@
       </div>
 
       <div class="text-center">
-        <span class="product_origin_price"
-          ><del>${{ getOriginPrice(car.price) }}</del></span
-        >
-        <span class="product_price">${{ car.price }}</span>
+        <h2 class="car-brand-title">
+          <strong> Price for {{ days }} day: </strong>
+        </h2>
+        <span class="product_price">$ {{ priceTotal }} </span>
       </div>
       <mat-horizontal-stepper linear #stepper>
         <mat-step [stepControl]="dateFormGroup">
@@ -198,6 +198,7 @@
                     [min]="minDate"
                     [max]="maxDate"
                     [matDatepicker]="drop_off"
+                    (ngModelChange)="changePrice()"
                   />
                   <mat-datepicker-toggle
                     matSuffix

@@ -26,6 +26,7 @@ interface NgbTime {
   minute: number;
   second: number;
 }
+
 @Component({
   selector: 'app-car-request',
   templateUrl: './car-request.component.html',
@@ -68,6 +69,10 @@ export class CarRequestComponent implements OnInit {
   already_authenticated: boolean = false;
   pick_up_time: NgbTime = { hour: 8, minute: 0, second: 0 };
   drop_off_time: NgbTime = { hour: 8, minute: 0, second: 0 };
+  pick_up_moment;
+  drop_off_moment;
+  days: number = 1;
+  priceTotal: number;
   constructor(
     private route: ActivatedRoute,
     private _formBuilder: FormBuilder,
@@ -93,15 +98,21 @@ export class CarRequestComponent implements OnInit {
     const carKey = this.route.snapshot.params['id'];
     this.carService.getCar(carKey).subscribe((car: Car) => {
       this.car = car;
-      console.log(this.car);
+      this.priceTotal = this.car.price;
       this.spn.hide();
     });
     this.initDateForm();
     this.initClientForm();
     this.getCities();
+    setTimeout(() => {
+      this.addVisitor(this.car);
+    }, 5000);
   }
   getOriginPrice(price) {
     return Number(price) + 10;
+  }
+  addVisitor(car: Car) {
+    this.carService.addVisitor(car.carKey, car.visitor);
   }
   initDateForm() {
     this.dateFormGroup = this._formBuilder.group({
@@ -126,10 +137,21 @@ export class CarRequestComponent implements OnInit {
       adresse: [''],
     });
   }
+  changePrice() {
+    this.pick_up_moment = moment(this.dateFormGroup.get('pick_up').value);
+    this.drop_off_moment = moment(this.dateFormGroup.get('drop_off').value);
+    this.days = this.drop_off_moment.diff(this.pick_up_moment, 'days');
+    this.days = this.days <= 0 ? 1 : this.days;
+    this.priceTotal = this.days * this.car.price;
+    console.log(
+      this.priceTotal + '----' + this.days + '----' + this.pick_up_moment
+    );
+  }
   onSaveDate() {
     this.car_request.pick_up = moment(
       this.dateFormGroup.get('pick_up').value
     ).format('YYYY-MM-DD');
+
     this.car_request.drop_off = moment(
       this.dateFormGroup.get('drop_off').value
     ).format('YYYY-MM-DD');
@@ -140,8 +162,6 @@ export class CarRequestComponent implements OnInit {
       this.pick_up_time.hour + ':' + this.pick_up_time.minute;
     this.car_request.drop_off_time =
       this.drop_off_time.hour + ':' + this.drop_off_time.minute;
-    console.log(this.pick_up_time);
-    console.log(this.car_request.pick_up);
   }
   onSaveClient() {
     this.client.email = this.clientFormGroup.get('email').value;
@@ -244,6 +264,12 @@ export class CarRequestComponent implements OnInit {
   createCarRequest() {
     this.car_request.car = this.car;
     this.car_request.client = this.client;
+    this.car_request.clientKey = this.client.clientKey;
+    this.car_request.workerKey = this.car.worker.workerKey;
+    this.car_request.carBrandKey = this.car.carBrand.name;
+    this.car_request.clientCityKey = this.client.city.name;
+    this.car_request.price_total = this.priceTotal;
+    this.car_request.days = this.days;
     console.log(this.car_request);
     this.carRequestService.createCarRequest(this.car_request).then(
       (ref) => {

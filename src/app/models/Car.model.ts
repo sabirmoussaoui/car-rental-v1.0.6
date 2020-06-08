@@ -4,6 +4,9 @@ import { Worker } from './Worker.model';
 
 export class Car {
   carKey: string;
+  carBrandKey: string;
+  workerKey: string;
+  visitor: number = 0;
   main_photo: string;
   rating: number = 0;
   photos: any[];

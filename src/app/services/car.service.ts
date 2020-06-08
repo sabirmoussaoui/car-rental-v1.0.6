@@ -1,22 +1,26 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import * as firebase from 'firebase';
 import { Observable, Subject } from 'rxjs';
 import { Car } from '../models/Car.model';
 import { Worker } from '../models/Worker.model';
 import { CarModel } from '../models/CarModel.model';
 import { CarBrand } from '../models/CarBrand.model';
 import { City } from '../models/City.model';
+import { FireSQL } from 'firesql';
+import * as firebase from 'firebase/app';
+import 'firesql/rx'; // <-- Important! Don't forget
 
 @Injectable({
   providedIn: 'root',
 })
 export class CarService {
   myMethod$: Observable<any>;
+  public fireSQL: FireSQL;
   private myMethodSubject = new Subject<any>();
 
   constructor(public db: AngularFirestore) {
     this.myMethod$ = this.myMethodSubject.asObservable();
+    this.fireSQL = new FireSQL(firebase.firestore());
   }
   findCarsByCity(city: City) {
     return this.db
@@ -89,6 +93,17 @@ export class CarService {
         console.log('Rating successfully updated!');
       });
   }
+  addVisitor(carKey, visitor) {
+    return this.db
+      .collection('cars')
+      .doc(carKey)
+      .update({
+        visitor: visitor + 1,
+      })
+      .then(function () {
+        console.log('Visitor successfully added!');
+      });
+  }
   updateCarBrandAvatar(carBrandKey, avatar) {
     return this.db
       .collection('carBrands')
@@ -111,7 +126,7 @@ export class CarService {
         console.log('Photo successfully removed!');
       });
   }
-  deleteCar(car) {
+  deleteCar(carKey) {
     // delete photos
     // if (car.data().main_photo) {
     //   const storageRef = firebase.storage().refFromURL(car.data().main_photo);
@@ -138,7 +153,7 @@ export class CarService {
     //     );
     //   });
     // }
-    return this.db.collection('cars').doc(car.id).delete();
+    return this.db.collection('cars').doc(carKey).delete();
   }
 
   getCarsSnapshot(workerKey) {
@@ -163,6 +178,15 @@ export class CarService {
       )
       .valueChanges();
   }
+  getVisitorByBrand(workerKey) {
+    return this.fireSQL.rxQuery(
+      `
+      SELECT carBrand ,SUM(visitor) AS visitors
+      FROM cars  WHERE  workerKey = '${workerKey}' 
+      GROUP BY carBrandKey
+     `
+    );
+  }
   getAllCars() {
     return this.db.collection<Car>('cars').valueChanges();
   }
@@ -173,6 +197,8 @@ export class CarService {
       .doc(uid)
       .set({
         carKey: uid,
+        carBrandKey: car.carBrand.carBrandKey,
+        workerKey: car.worker.workerKey,
         price: car.price,
         quantity: car.quantity,
         carBrand: {
@@ -200,6 +226,7 @@ export class CarService {
         car_class: car.car_class,
         body_style: car.body_style,
         rating: car.rating,
+        visitor: car.visitor,
       });
   }
 
@@ -215,7 +242,6 @@ export class CarService {
         carModel: {
           name: carModel.name,
           year: carModel.year,
-          photoUrl: carModel.year,
           carBrandKey: carModel.carBrandKey,
           carModelKey: carModel.carModelKey,
         },

@@ -28,7 +28,7 @@
                 <tr>
                   <th scope="col">Brands</th>
                   <th scope="col">Models</th>
-                  <th scope="col">Prices</th>
+                  <th scope="col">Price Total</th>
                   <th scope="col">Pick up</th>
                   <th scope="col">Drop off</th>
                   <th scope="col">Status</th>
@@ -61,7 +61,7 @@
                     }}</span>
                   </td>
                   <td>
-                    <span>{{ car_request.car.price }}</span>
+                    <span>{{ car_request.price_total }}</span>
                   </td>
                   <td>
                     <span>{{
@@ -98,12 +98,22 @@
                       <mat-icon>visibility</mat-icon>
                     </button>
                     <button
+                      *ngIf="!car_request.accepted"
                       mat-mini-fab
                       color="primary"
                       aria-label="Edit"
                       (click)="openDialog(car_request)"
                     >
                       <mat-icon>edit</mat-icon>
+                    </button>
+                    <button
+                      *ngIf="!car_request.blocked && car_request.accepted"
+                      mat-mini-fab
+                      color="warn"
+                      aria-label="Edit"
+                      (click)="showPDF(car_request)"
+                    >
+                      <mat-icon>picture_as_pdf</mat-icon>
                     </button>
                     <!-- <button
                       mat-mini-fab

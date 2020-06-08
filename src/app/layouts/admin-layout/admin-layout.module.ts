@@ -8,7 +8,6 @@ import { ClipboardModule } from 'ngx-clipboard';
 
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../admin/dashboard/dashboard.component';
-import { UserProfileComponent } from '../../admin/user-profile/user-profile.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatSliderModule } from '@angular/material/slider';
 import { SettingsComponent } from 'src/app/admin/settings/settings.component';
@@ -29,7 +28,6 @@ import { CarBrandComponent } from 'src/app/admin/settings/car-brand/car-brand.co
 import { CarBrandUpdateDialogComponent } from 'src/app/admin/settings/car-brand/car-brand-update-dialog/car-brand-update-dialog.component';
 import { CarModelComponent } from 'src/app/admin/settings/car-model/car-model.component';
 import { CarModelUpdateDialogComponent } from 'src/app/admin/settings/car-model/car-model-update-dialog/car-model-update-dialog.component';
-import { ColorService } from 'src/app/services/color.service';
 import { CarModelService } from 'src/app/services/car-model.service';
 import { CarBrandService } from 'src/app/services/car-brand.service';
 import { PositionService } from 'src/app/services/position.service';
@@ -44,6 +42,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { CarDetailDialogComponent } from 'src/app/admin/cars/car-detail-dialog/car-detail-dialog.component';
 import { OpenCarImageDialogComponent } from 'src/app/admin/cars/open-car-image-dialog/open-car-image-dialog.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { WorkersComponent } from 'src/app/admin/workers/workers.component';
+import { MatButtonModule } from '@angular/material/button';
+import { ColorService } from 'src/app/services/color.service';
 
 @NgModule({
   imports: [
@@ -64,10 +65,11 @@ import { NgxPaginationModule } from 'ngx-pagination';
     MatIconModule,
     NgbModule,
     NgxPaginationModule,
+    MatButtonModule,
+    MatIconModule,
   ],
   declarations: [
     DashboardComponent,
-    UserProfileComponent,
     SettingsComponent,
     CityComponent,
     CityUpdateDialogComponent,
@@ -83,6 +85,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     CarsComponent,
     CarDetailDialogComponent,
     OpenCarImageDialogComponent,
+    WorkersComponent,
   ],
   providers: [
     CityService,

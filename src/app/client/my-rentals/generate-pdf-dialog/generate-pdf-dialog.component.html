@@ -1,0 +1,148 @@
+<div id="pdfTable" #pdfTable>
+  <div class="container">
+    <div class="invoice">
+      <div class="row">
+        <div class="col-7">
+          <img [src]="carRequest.car.worker.logo" class="logo" />
+        </div>
+        <div class="col-5">
+          <h2 style="color: #f5365c;"><strong>FACTURE</strong></h2>
+          <p>
+            <strong>N°{{ carRequest.carRequestKey }}</strong>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-7">
+          <h1>
+            <strong>{{ carRequest.car.worker.name }}</strong>
+          </h1>
+          <p>
+            <br />
+            {{
+              carRequest.car.worker.city.name +
+                " " +
+                carRequest.car.worker.sector.name
+            }}<br />
+            {{ carRequest.car.worker.adresse }}
+          </p>
+        </div>
+        <div class="col-5">
+          <br /><br /><br />
+          <p>
+            <strong>{{
+              carRequest.client.firstname + " " + carRequest.client.lastname
+            }}</strong
+            ><br />
+            Réf. Client <em>{{ carRequest.client.clientKey }}</em
+            ><br />
+            {{ carRequest.client.city.name }}<br />
+            {{ carRequest.client.adresse }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xl-12 order-xl-1">
+        <div class="card bg-white shadow">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">car Brand</th>
+                    <th scope="col">car Model</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Pick up Date</th>
+                    <th scope="col">Drop off Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="media align-items-center">
+                        <div class="media-body">
+                          <span class="mb-0 text-sm">
+                            {{ carRequest.car.carBrand.name }}
+                          </span>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <span>{{
+                        carRequest.car.carModel.name +
+                          " " +
+                          carRequest.car.carModel.year
+                      }}</span>
+                    </td>
+                    <td>
+                      <span>${{ carRequest.car.price }} for 1 day</span>
+                    </td>
+                    <td>
+                      <span>{{
+                        carRequest.pick_up + " " + carRequest.pick_up_time
+                      }}</span>
+                    </td>
+                    <td>
+                      <span>{{
+                        carRequest.drop_off + " " + carRequest.drop_off_time
+                      }}</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xl-12 order-xl-1">
+        <div class="card bg-white shadow">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">-</th>
+                    <th scope="col">-</th>
+                    <th scope="col">price</th>
+                    <th scope="col">days</th>
+                    <th scope="col">price total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td>
+                      <span>$ {{ carRequest.car.price }}</span>
+                    </td>
+                    <td>
+                      <span>{{ carRequest.days }}</span>
+                    </td>
+                    <td>
+                      <span>$ {{ carRequest.price_total }}</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+  <button class="btn btn-outline-danger" (click)="close()">
+    Close
+  </button>
+  <button class="btn btn-outline-warning" (click)="convertToPdf()">
+    Export To PDF <i class="fas fa-file-pdf"></i>
+  </button>
+</div>

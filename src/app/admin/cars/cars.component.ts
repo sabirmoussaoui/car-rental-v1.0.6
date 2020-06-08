@@ -4,17 +4,17 @@ import { Car } from 'src/app/models/Car.model';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { OpenCarImageDialogComponent } from './open-car-image-dialog/open-car-image-dialog.component';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { CarDetailDialogComponent } from 'src/app/admin/cars/car-detail-dialog/car-detail-dialog.component';
 import { ReviewService } from 'src/app/services/review.service';
 import { Review } from 'src/app/models/Review.model';
+import { CarDetailDialogComponent } from 'src/app/home/cars/car-detail-dialog/car-detail-dialog.component';
 @Component({
   selector: 'app-cars',
   templateUrl: './cars.component.html',
   styleUrls: ['./cars.component.scss'],
 })
 export class CarsComponent implements OnInit {
-  public photos: any[] = [];
-  cars: Array<any>;
+  private photos: any[] = [];
+  cars: Car[] = [];
   constructor(
     private carService: CarService,
     private dialog: MatDialog,

@@ -4,6 +4,7 @@ import { Car } from 'src/app/models/Car.model';
 import { CarDetailDialogComponent } from './car-detail-dialog/car-detail-dialog.component';
 import { ReviewService } from 'src/app/services/review.service';
 import { Review } from 'src/app/models/Review.model';
+import { MapsComponent } from 'src/app/maps/maps.component';
 
 @Component({
   selector: 'app-cars',
@@ -61,5 +62,18 @@ export class CarsComponent implements OnInit {
       car: car,
     };
     const dialogRef = this.dialog.open(CarDetailDialogComponent, dialogConfig);
+  }
+  showMaps(car: Car) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '1000px';
+    dialogConfig.maxHeight = '150vh';
+    dialogConfig.data = {
+      worker: car.worker,
+      lat: car.worker.latitude,
+      lng: car.worker.longitude,
+    };
+    const dialogRef = this.dialog.open(MapsComponent, dialogConfig);
   }
 }

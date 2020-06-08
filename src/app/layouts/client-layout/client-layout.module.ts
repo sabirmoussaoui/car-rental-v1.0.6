@@ -33,6 +33,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatNativeDateModule } from '@angular/material/core';
 import { OpenCarImageDialogComponent } from 'src/app/client/my-rentals/open-car-image-dialog/open-car-image-dialog.component';
+import { GeneratePdfDialogComponent } from 'src/app/client/my-rentals/generate-pdf-dialog/generate-pdf-dialog.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -42,6 +43,7 @@ import { OpenCarImageDialogComponent } from 'src/app/client/my-rentals/open-car-
     ReviewsComponent,
     CarRequestUpdateDialogComponent,
     OpenCarImageDialogComponent,
+    GeneratePdfDialogComponent,
   ],
   imports: [
     CommonModule,

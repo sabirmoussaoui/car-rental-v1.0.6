@@ -8,88 +8,6 @@
   "
 >
   <!-- Header container -->
-  <div class="container-fluid d-flex align-items-center">
-    <div class="row">
-      <ul
-        class="nav nav-pills nav-fill flex-column flex-sm-row"
-        id="tabs-text"
-        role="tablist"
-      >
-        <li class="nav-item">
-          <a
-            class="nav-link mb-sm-3 mb-md-0 active"
-            id="tabs-text-1-tab"
-            data-toggle="tab"
-            [routerLink]="['/worker/cars']"
-            role="tab"
-            aria-controls="tabs-text-1"
-            aria-selected="true"
-            >My Cars</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link mb-sm-3 mb-md-0"
-            id="tabs-text-2-tab"
-            data-toggle="tab"
-            [routerLink]="['/admin/settings/sectors']"
-            role="tab"
-            aria-controls="tabs-text-2"
-            aria-selected="false"
-            >Sectors</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link mb-sm-3 mb-md-0"
-            id="tabs-text-3-tab"
-            data-toggle="tab"
-            [routerLink]="['/admin/settings/colors']"
-            role="tab"
-            aria-controls="tabs-text-3"
-            aria-selected="false"
-            >Colors</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link mb-sm-3 mb-md-0"
-            id="tabs-text-3-tab"
-            data-toggle="tab"
-            [routerLink]="['/admin/settings/car-brands']"
-            role="tab"
-            aria-controls="tabs-text-3"
-            aria-selected="false"
-            >Car Brands</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link mb-sm-3 mb-md-0"
-            id="tabs-text-3-tab"
-            data-toggle="tab"
-            [routerLink]="['/admin/settings/car-models']"
-            role="tab"
-            aria-controls="tabs-text-3"
-            aria-selected="false"
-            >Cars Models</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link mb-sm-3 mb-md-0"
-            id="tabs-text-3-tab"
-            data-toggle="tab"
-            href="#tabs-text-3"
-            role="tab"
-            aria-controls="tabs-text-3"
-            aria-selected="false"
-            >Clients</a
-          >
-        </li>
-      </ul>
-    </div>
-  </div>
 </div>
 <div class="container-fluid mt--7">
   <div class="row">
@@ -107,7 +25,7 @@
         </div>
         <div class="card-body">
           <div class="card-header bg-secondary border-0">
-            <form [formGroup]="carForm" (ngSubmit)="onSaveCarModel()">
+            <form [formGroup]="carForm" (ngSubmit)="onSaveCar()">
               <div class="row">
                 <div class="col-lg-6">
                   <mat-form-field>

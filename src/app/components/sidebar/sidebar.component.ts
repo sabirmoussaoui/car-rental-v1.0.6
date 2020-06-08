@@ -143,7 +143,7 @@ export const HOME_ROUTES: RouteInfo[] = [
   },
   {
     path: '/worker-register',
-    title: 'client register',
+    title: 'agency register',
     icon: 'fa fa-car text-info',
     class: '',
   },
@@ -162,7 +162,7 @@ export const ADMIN_ROUTES: RouteInfo[] = [
     class: '',
   },
   {
-    path: '/home/workers',
+    path: '/admin/workers',
     title: 'Agencies',
     icon: 'fa fa-store-alt text-danger',
     class: '',
@@ -182,7 +182,7 @@ export const ADMIN_ROUTES: RouteInfo[] = [
   {
     path: '/admin/settings',
     title: 'Settings',
-    icon: 'ni-single-02 text-yellow',
+    icon: 'fa fa-cog text-yellow',
     class: '',
   },
 ];

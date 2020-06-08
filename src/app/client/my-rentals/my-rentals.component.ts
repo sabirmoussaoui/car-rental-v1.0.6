@@ -17,6 +17,7 @@ import { format } from 'path';
 import moment from 'moment';
 import { CarRequestUpdateDialogComponent } from './car-request-update-dialog/car-request-update-dialog.component';
 import { OpenCarImageDialogComponent } from './open-car-image-dialog/open-car-image-dialog.component';
+import { GeneratePdfDialogComponent } from './generate-pdf-dialog/generate-pdf-dialog.component';
 interface NgbTime {
   hour: number;
   minute: number;
@@ -56,7 +57,20 @@ export class MyRentalsComponent implements OnInit {
       this.getCarRequests(this.client.clientKey);
     });
   }
-
+  showPDF(carRequest: CarRequest) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '1000px';
+    dialogConfig.maxHeight = '90vh';
+    dialogConfig.data = {
+      carRequest: carRequest,
+    };
+    const dialogRef = this.dialog.open(
+      GeneratePdfDialogComponent,
+      dialogConfig
+    );
+  }
   openDialog(car_request: CarRequest) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;

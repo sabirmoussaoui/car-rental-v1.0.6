@@ -18,6 +18,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserModule } from '@angular/platform-browser';
 import { ClientService } from 'src/app/services/client.service';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
     MatDialogModule,
     NgxSpinnerModule,
     AngularFireAuthModule,
+    MatSnackBarModule,
   ],
   declarations: [
     LoginComponent,

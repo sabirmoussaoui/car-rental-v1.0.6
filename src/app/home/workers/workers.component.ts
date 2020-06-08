@@ -8,6 +8,8 @@ import { CitySelect, SectorSelect } from 'src/app/interfaces/Select';
 import { City } from 'src/app/models/City.model';
 import { SectorService } from 'src/app/services/sector.service';
 import { Sector } from 'src/app/models/Sector.model';
+import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
+import { MapsComponent } from 'src/app/maps/maps.component';
 
 @Component({
   selector: 'app-workers',
@@ -49,7 +51,8 @@ export class WorkersComponent implements OnInit {
     private workerService: WorkerService,
     private carService: CarService,
     private fb: FormBuilder,
-    private sectorService: SectorService
+    private sectorService: SectorService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -83,7 +86,19 @@ export class WorkersComponent implements OnInit {
       this.workers = this.combineLists(result, this.name_filtered_items);
     });
   }
-
+  showMaps(worker: Worker) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '1000px';
+    dialogConfig.maxHeight = '150vh';
+    dialogConfig.data = {
+      worker: worker,
+      lat: worker.latitude,
+      lng: worker.longitude,
+    };
+    const dialogRef = this.dialog.open(MapsComponent, dialogConfig);
+  }
   getCities() {
     this.cityService.getCities().subscribe((result) => {
       result.forEach((doc) => {

@@ -119,7 +119,7 @@ export class CarsComponent implements OnInit {
     });
   }
 
-  onDeleteCar(car) {
-    this.carService.deleteCar(car);
+  onDeleteCar(carKey) {
+    this.carService.deleteCar(carKey);
   }
 }

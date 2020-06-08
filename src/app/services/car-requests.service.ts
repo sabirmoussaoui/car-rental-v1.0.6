@@ -4,12 +4,17 @@ import { CarRequest } from '../models/CarRequest.model';
 import { Client } from '../models/Client.model';
 import { Car } from '../models/Car.model';
 import { database } from 'firebase';
-
+import { FireSQL } from 'firesql';
+import * as firebase from 'firebase/app';
+import 'firesql/rx'; // <-- Important! Don't forget
 @Injectable({
   providedIn: 'root',
 })
 export class CarRequestService {
-  constructor(public db: AngularFirestore) {}
+  public fireSQL: FireSQL;
+  constructor(public db: AngularFirestore) {
+    this.fireSQL = new FireSQL(firebase.firestore());
+  }
 
   getCity(cityKey) {
     return this.db.collection('users').doc(cityKey).get();
@@ -39,7 +44,39 @@ export class CarRequestService {
       )
       .valueChanges();
   }
+  getCarRequestByDate(workerKey) {
+    return this.fireSQL.rxQuery(
+      `
+    SELECT created_at,SUM(price_total) AS price_total
+    FROM car_requests  WHERE accepted=true AND workerKey='${workerKey}' GROUP BY  created_at
+   `
+    );
+  }
+  getProfits(workerKey) {
+    return this.fireSQL.rxQuery(
+      `
+      SELECT SUM(price_total) AS profits
+      FROM car_requests  WHERE accepted=true AND workerKey='${workerKey}' 
+     `
+    );
+  }
 
+  getCarRequestByBrand(workerKey) {
+    return this.fireSQL.rxQuery(
+      `
+    SELECT \`car.carBrand.name\` AS brand,SUM(price_total) AS price_total
+    FROM car_requests  WHERE accepted=true AND workerKey='${workerKey}' 
+    GROUP BY carBrandKey
+   `
+    );
+  }
+  getClientsByWorker(workerKey) {
+    return this.fireSQL.rxQuery(
+      `
+      SELECT client,SUM(price_total) as price  FROM car_requests where workerKey='${workerKey}' GROUP BY clientKey 
+      `
+    );
+  }
   acceptRequest(carRequestKey) {
     return this.db.collection('car_requests').doc(carRequestKey).update({
       accepted: true,
@@ -74,6 +111,11 @@ export class CarRequestService {
       .doc(uid)
       .set({
         carRequestKey: uid,
+        workerKey: carRequest.workerKey,
+        clientKey: carRequest.clientKey,
+        carBrandKey: carRequest.carBrandKey,
+        clientCityKey: carRequest.clientCityKey,
+        price_total: carRequest.price_total,
         client: {
           clientKey: carRequest.client.clientKey,
           firstname: carRequest.client.firstname,
@@ -92,10 +134,11 @@ export class CarRequestService {
         drop_off: carRequest.drop_off,
         pick_up_time: carRequest.pick_up_time,
         drop_off_time: carRequest.drop_off_time,
+        days: carRequest.days,
         accepted: false,
         blocked: false,
-        created_at: new Date(),
-        updated_at: new Date(),
+        created_at: new Date().toDateString(),
+        updated_at: new Date().toDateString(),
       });
   }
   updateCarRequest(carRequest: CarRequest) {
@@ -107,7 +150,7 @@ export class CarRequestService {
         drop_off: carRequest.drop_off,
         pick_up_time: carRequest.pick_up_time,
         drop_off_time: carRequest.drop_off_time,
-        updated_at: new Date(),
+        updated_at: new Date().toDateString(),
       });
   }
 }

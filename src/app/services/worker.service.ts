@@ -73,7 +73,7 @@ export class WorkerService {
         },
         adresse: worker.adresse,
         // email: worker.email,
-        updated_at: worker.updated_at,
+        updated_at: new Date().toDateString(),
       });
   }
 
@@ -116,8 +116,8 @@ export class WorkerService {
         latitude: worker.latitude,
         accepted: worker.accepted,
         blocked: worker.blocked,
-        created_at: worker.created_at,
-        updated_at: worker.updated_at,
+        created_at: new Date().toDateString(),
+        updated_at: new Date().toDateString(),
       });
   }
 
@@ -164,6 +164,21 @@ export class WorkerService {
           resolve(upload.snapshot.ref.getDownloadURL());
         }
       );
+    });
+  }
+  acceptWorker(workerKey) {
+    return this.db.collection('workers').doc(workerKey).update({
+      accepted: true,
+    });
+  }
+  disacceptedWorker(workerKey) {
+    return this.db.collection('workers').doc(workerKey).update({
+      accepted: false,
+    });
+  }
+  blockWorker(workerKey, status: boolean) {
+    return this.db.collection('workers').doc(workerKey).update({
+      blocked: status,
     });
   }
 }
