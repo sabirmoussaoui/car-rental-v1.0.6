@@ -2,7 +2,7 @@
   class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
   style="
     min-height: 600px;
-    background-image: url(assets/img/theme/car-cover-design.jpg);
+    background-image: url(assets/img/theme/3156704.jpg);
     background-size: cover;
     background-position: center top;
   "
@@ -14,10 +14,7 @@
         <div class="card-header bg-secondary border-0">
           <div class="row align-items-center">
             <div class="col-8">
-              <h3 class="mb-0">My cars</h3>
-            </div>
-            <div class="col-4 text-right">
-              <a href="#!" class="btn btn-sm btn-primary">Settings</a>
+              <h3 class="mb-0">My rentals</h3>
             </div>
           </div>
         </div>
@@ -115,14 +112,15 @@
                     >
                       <mat-icon>picture_as_pdf</mat-icon>
                     </button>
-                    <!-- <button
+                    <button
+                      *ngIf="!car_request.blocked && !car_request.accepted"
                       mat-mini-fab
                       color="warn"
                       aria-label="Delete"
-                      (click)="onDeleteCar(car.payload.doc)"
+                      (click)="onDeleteCarRequests(car_request.carRequestKey)"
                     >
                       <mat-icon>delete</mat-icon>
-                    </button> -->
+                    </button>
                   </td>
                   <td></td>
                 </tr>

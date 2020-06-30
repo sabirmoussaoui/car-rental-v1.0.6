@@ -19,6 +19,7 @@ import {
   Body_Style,
 } from 'src/app/interfaces/Select';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-new-car',
@@ -139,7 +140,8 @@ export class NewCarComponent implements OnInit {
     private dialog: MatDialog,
     private workerService: WorkerService,
     private spinner: NgxSpinnerService,
-    private route: Router
+    private route: Router,
+    private _snackBar: MatSnackBar
   ) {
     this.carService.myMethod$.subscribe((data) => {
       this.photos.push(data);
@@ -221,6 +223,7 @@ export class NewCarComponent implements OnInit {
     }
     car.photos = this.photos;
     this.carService.createCar(car); //create car
+    this.openSnackBar('car added with successfully', 'done');
     this.photos.push(this.imageUrl);
     this.allPhoots = this.photos;
     console.log(this.allPhoots);
@@ -258,7 +261,11 @@ export class NewCarComponent implements OnInit {
     const carBrand = this.carForm.get('carBrand').value;
     this.getCarModels(carBrand.carBrandKey);
   }
-
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 8000,
+    });
+  }
   getCarModels(carBrandKey) {
     this.carModels = [];
     this.carModelService

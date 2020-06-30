@@ -16,10 +16,10 @@
         <div class="card-header bg-secondary border-0">
           <div class="row align-items-center">
             <div class="col-8">
-              <h3 class="mb-0">Add new cars</h3>
-            </div>
-            <div class="col-4 text-right">
-              <a href="#!" class="btn btn-sm btn-primary">Settings</a>
+              <h3 class="mb-0">
+                <i class="fa fa-plus-circle text-danger" aria-hidden="true"></i>
+                Add new car
+              </h3>
             </div>
           </div>
         </div>
@@ -28,7 +28,7 @@
             <form [formGroup]="carForm" (ngSubmit)="onSaveCar()">
               <div class="row">
                 <div class="col-lg-6">
-                  <mat-form-field>
+                  <mat-form-field appearance="outline">
                     <mat-label>Car Brands</mat-label>
                     <mat-select
                       formControlName="carBrand"
@@ -51,7 +51,7 @@
                   </mat-form-field>
                 </div>
                 <div class="col-lg-6">
-                  <mat-form-field>
+                  <mat-form-field appearance="outline">
                     <mat-label>Car Models</mat-label>
                     <mat-select formControlName="carModel">
                       <mat-option
@@ -66,7 +66,7 @@
               </div>
               <div class="row">
                 <div class="col-lg-6">
-                  <mat-form-field>
+                  <mat-form-field appearance="outline">
                     <mat-label>Body Style</mat-label>
                     <mat-select formControlName="body_style">
                       <mat-option
@@ -86,7 +86,7 @@
                   </mat-form-field>
                 </div>
                 <div class="col-lg-6">
-                  <mat-form-field>
+                  <mat-form-field appearance="outline">
                     <mat-label>Car Class</mat-label>
                     <mat-select formControlName="car_class">
                       <mat-option

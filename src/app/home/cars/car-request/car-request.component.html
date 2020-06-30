@@ -354,8 +354,74 @@
           </form>
         </mat-step>
         <mat-step>
-          <ng-template matStepLabel>Done</ng-template>
-          <p>You are now done.</p>
+          <ng-template matStepLabel>Finish</ng-template>
+          <div class="card text-white bg-info">
+            <h1
+              class="card-header"
+              style="background-color: var(--green); color: var(--neutral);"
+            >
+              <i class="fa fa-info" aria-hidden="true"></i> rental terms
+            </h1>
+            <div class="card-body">
+              <h5 class="card-title">
+                <i class="fa fa-user" aria-hidden="true"></i> &nbsp; DRIVER &
+                LICENCE <strong>Requirements</strong>
+              </h5>
+              <p class="card-text">When you pick the car up, you'll need:</p>
+              <ul class="important-info__checkList">
+                <li class="important-info__checkListItem">
+                  Passport or national ID card
+                </li>
+                <li class="important-info__checkListItem">Driving licence</li>
+                <li class="important-info__checkListItem">
+                  Credit or debit card
+                </li>
+              </ul>
+              <p class="card-text">
+                You must be at least 21 to drive this car.
+              </p>
+              <h5 class="card-title">
+                <i class="fas fa-gas-pump"></i> &nbsp; FUEL POLICY
+                <strong>Full to Full</strong>
+              </h5>
+              <p class="card-text">
+                When you pick your car up, the fuel tank will be full or partly
+                full. You will leave a deposit to cover the cost of the fuel:
+                the counter staff will block this money on your credit card.
+                Just before you return your car, please replace the fuel you’ve
+                used.
+              </p>
+              <form
+                [formGroup]="termFormGroup"
+                (ngSubmit)="onSaveForms()"
+                #formtree="ngForm"
+              >
+                <div class="row my-4">
+                  <div class="col-12">
+                    <div
+                      class="custom-control custom-control-alternative custom-checkbox"
+                    >
+                      <input
+                        class="custom-control-input"
+                        id="customCheckRegister"
+                        type="checkbox"
+                        formControlName="terms"
+                      />
+                      <label
+                        class="custom-control-label"
+                        for="customCheckRegister"
+                      >
+                        <span
+                          >I agree with the
+                          <a href="#!">Privacy Policy</a></span
+                        >
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
           <div>
             <button mat-button matStepperPrevious>Back</button>
             <button mat-button color="warn" (click)="stepper.reset()">
@@ -365,7 +431,9 @@
               mat-button
               color="success"
               (click)="
-                formone.ngSubmit.emit(); formtwo.ngSubmit.emit(); onSaveForms()
+                formone.ngSubmit.emit();
+                formtwo.ngSubmit.emit();
+                formtree.ngSubmit.emit()
               "
             >
               Save

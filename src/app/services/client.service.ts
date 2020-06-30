@@ -94,7 +94,7 @@ export class ClientService {
       .collection('clients')
       .doc(clientkey)
       .update({
-        fisrtname: client.firstname,
+        firstname: client.firstname,
         lastname: client.lastname,
         phone: client.phone,
         city: {
@@ -103,11 +103,16 @@ export class ClientService {
         },
         adresse: client.adresse,
         email: client.email,
-        created_at: client.created_at,
         updated_at: client.updated_at,
       });
   }
-
+  getClientsByCities(city) {
+    return this.db
+      .collection<Client>('clients', (ref) =>
+        ref.where('city.name', '==', city)
+      )
+      .valueChanges();
+  }
   singUpwithGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase
@@ -115,7 +120,6 @@ export class ClientService {
       .signInWithPopup(provider)
       .then(function (result) {
         console.log(result.user);
-
         return this.createClientwithGoogle(result.user);
       })
       .catch(function (error) {

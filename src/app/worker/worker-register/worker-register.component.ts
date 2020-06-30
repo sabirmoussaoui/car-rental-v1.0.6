@@ -163,8 +163,8 @@ export class WorkerRegisterComponent implements OnInit, AfterViewInit {
         }
       );
     } else {
-      console.log('not ok');
       this.spinner.hide();
+      this.openSnackBar('passwords do not match', 'invalid');
     }
   }
 

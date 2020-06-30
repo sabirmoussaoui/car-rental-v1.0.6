@@ -14,10 +14,7 @@
         <div class="card-header bg-secondary border-0">
           <div class="row align-items-center">
             <div class="col-8">
-              <h3 class="mb-0">My cars</h3>
-            </div>
-            <div class="col-4 text-right">
-              <a href="#!" class="btn btn-sm btn-primary">Settings</a>
+              <h3 class="mb-0">My requests</h3>
             </div>
           </div>
         </div>
@@ -28,7 +25,7 @@
                 <tr>
                   <th scope="col">Brands</th>
                   <th scope="col">Models</th>
-                  <th scope="col">Prices</th>
+                  <th scope="col">Price Total</th>
                   <th scope="col">Pick up</th>
                   <th scope="col">Drop off</th>
                   <th scope="col">Status</th>
@@ -61,7 +58,7 @@
                     }}</span>
                   </td>
                   <td>
-                    <span>{{ car_request.car.price }}</span>
+                    <span>{{ car_request.price_total }}</span>
                   </td>
                   <td>
                     <span>{{
@@ -121,22 +118,6 @@
                     >
                       <mat-icon>visibility</mat-icon>
                     </button>
-                    <button
-                      mat-mini-fab
-                      color="primary"
-                      aria-label="Edit"
-                      (click)="openDialog(car_request)"
-                    >
-                      <mat-icon>edit</mat-icon>
-                    </button>
-                    <!-- <button
-                      mat-mini-fab
-                      color="warn"
-                      aria-label="Delete"
-                      (click)="onDeleteCar(car.payload.doc)"
-                    >
-                      <mat-icon>delete</mat-icon>
-                    </button> -->
                   </td>
                   <td></td>
                 </tr>

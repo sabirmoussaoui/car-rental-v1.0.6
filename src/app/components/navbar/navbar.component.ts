@@ -113,6 +113,7 @@ export class NavbarComponent implements OnInit {
       this.client.clientKey = data.payload.id;
       this.fullname = this.client.firstname + ' ' + this.client.lastname;
       this.photoUrl = this.client.profil;
+      console.log(this.photoUrl);
       this.spinner.hide();
     });
   }

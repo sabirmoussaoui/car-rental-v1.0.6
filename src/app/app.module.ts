@@ -21,7 +21,6 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { BrowserModule } from '@angular/platform-browser';
-
 @NgModule({
   imports: [
     BrowserAnimationsModule,

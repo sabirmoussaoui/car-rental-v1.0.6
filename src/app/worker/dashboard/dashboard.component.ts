@@ -16,6 +16,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { CarRequestService } from 'src/app/services/car-requests.service';
 import { CarRequest } from 'src/app/models/CarRequest.model';
 import { Client } from 'src/app/models/Client.model';
+import { CityService } from 'src/app/services/city.service';
+import { ClientService } from 'src/app/services/client.service';
 interface CarVisitor {
   car: Car;
   percentage_visitor: number;
@@ -30,6 +32,7 @@ export class DashboardComponent implements OnInit {
   public salesChart;
   public clicked: boolean = true;
   public clicked1: boolean = false;
+  public bar_chart_client;
   worker: Worker;
   cars: Car[] = [];
   visitor_total: number = 0;
@@ -39,6 +42,7 @@ export class DashboardComponent implements OnInit {
   visitors: number[];
   profits: number = 0;
   nbClient: number = 0;
+  p: number = 1;
   public clients: Client[] = [];
 
   //stat
@@ -47,7 +51,9 @@ export class DashboardComponent implements OnInit {
     private workerService: WorkerService,
     private carService: CarService,
     private spinner: NgxSpinnerService,
-    private carRequestService: CarRequestService
+    private carRequestService: CarRequestService,
+    private cityService: CityService,
+    private clientService: ClientService
   ) {}
 
   ngOnInit() {
@@ -70,6 +76,33 @@ export class DashboardComponent implements OnInit {
         ],
       },
     });
+    this.bar_chart_client = new Chart(
+      document.getElementById('bar-chart-client'),
+      {
+        type: 'bar',
+        data: {
+          datasets: [
+            {
+              label: 'clients',
+              backgroundColor: [
+                '#3e95cd',
+                '#8e5ea2',
+                '#3cba9f',
+                '#e8c3b9',
+                '#c45850',
+              ],
+            },
+          ],
+        },
+        options: {
+          legend: { display: false },
+          title: {
+            display: true,
+            text: 'client by cities in 2020',
+          },
+        },
+      }
+    );
   }
   getProfits(workerKey) {
     this.carRequestService
@@ -129,6 +162,8 @@ export class DashboardComponent implements OnInit {
       this.getClients(this.worker.workerKey);
       this.getProfits(this.worker.workerKey);
       this.getVisitorByBrand(this.worker.workerKey);
+      this.getCarRequestByWorker(this.worker.workerKey);
+      this.getClientsByCity(this.worker.workerKey);
     });
   }
   getCars(workerKey) {
@@ -136,18 +171,44 @@ export class DashboardComponent implements OnInit {
       this.cars = cars;
       this.storageChart(this.cars);
       this.getPercentageVisitors(this.cars);
-      this.nbCar = this.cars.length;
+      var quantity: number = 0;
+      this.cars.forEach((car) => {
+        quantity += car.quantity;
+      });
+      this.nbCar = quantity;
       this.spinner.hide();
     });
   }
+  getClientsByCity(workerKey) {
+    var labels: Array<any> = [];
+    var data: Array<number> = [];
+    this.cityService.getCities().subscribe((cities) => {
+      cities.forEach((city) => {
+        this.carRequestService
+          .getClientsByCityOfWorker(workerKey, city.data().name)
+          .subscribe((clients) => {
+            labels.push(city.data().name);
+            data.push(clients.length);
+            this.bar_chart_client.data.datasets[0].data = data;
+            this.bar_chart_client.data.labels = labels;
+            this.bar_chart_client.update();
+          });
+      });
+    });
+  }
   getPercentageVisitors(cars: Car[]) {
+    var percentage_visitor: number;
     cars.forEach((car) => {
       this.visitor_total += car.visitor;
     });
     cars.forEach((car) => {
-      var percentage_visitor: number = Math.round(
-        (car.visitor * 100) / this.visitor_total
-      );
+      if (this.visitor_total != 0) {
+        percentage_visitor = Math.round(
+          (car.visitor * 100) / this.visitor_total
+        );
+      } else {
+        percentage_visitor = 0;
+      }
       this.car_visitors.push({
         car: car as Car,
         percentage_visitor: percentage_visitor,
@@ -177,6 +238,64 @@ export class DashboardComponent implements OnInit {
         ],
       },
     });
+  }
+  getCarRequestByWorker(workerKey) {
+    var data: Array<number> = [];
+    var accepted: number = 0;
+    var blocked: number = 0;
+    var in_progress: number = 0;
+    this.carRequestService
+      .getCarRequestByWorker(workerKey)
+      .subscribe((car_requests) => {
+        car_requests.forEach((e) => {
+          if (e.accepted === true && e.blocked === false) {
+            accepted += e.price_total;
+          } else if (e.blocked === true) {
+            blocked += e.price_total;
+          } else {
+            in_progress += e.price_total;
+          }
+        });
+        data.push(accepted);
+        data.push(in_progress);
+        data.push(blocked);
+        var bar_chart_horizontal = document.getElementById(
+          'bar-chart-horizontal'
+        );
+        new Chart(bar_chart_horizontal, {
+          type: 'horizontalBar',
+          data: {
+            labels: ['Cofirmed', 'In progress', 'blocked'],
+            datasets: [
+              {
+                label: 'Requests (dollars) $',
+                backgroundColor: ['#2dce89', '#fb6340', '#f5365c'],
+                data: data,
+              },
+            ],
+          },
+          options: {
+            legend: { display: false },
+            title: {
+              display: true,
+              text: 'Car Request Statuses (dollars)',
+            },
+            scales: {
+              xAxes: [
+                {
+                  ticks: {
+                    callback: function (value) {
+                      if (!(value % 10)) {
+                        return '$' + value;
+                      }
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        });
+      });
   }
   getVisitorByBrand(workerKey) {
     var labels: Array<any> = [];

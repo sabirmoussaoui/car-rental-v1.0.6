@@ -111,8 +111,8 @@ export class ClientProfileComponent implements OnInit {
     this.clientService.updateClient(clientupdated, this.clientkey);
   }
   onChangePassword() {
-    const newpassword = this.clientForm.get('newpassword').value;
-    const confirmpassword = this.clientForm.get('confirmpassword').value;
+    const newpassword = this.passwordForm.get('newpassword').value;
+    const confirmpassword = this.passwordForm.get('confirmpassword').value;
     if (newpassword === confirmpassword && newpassword != '') {
       // this.authService.passwordChangeUser(newpassword,this.user);
       this.user.updatePassword(newpassword).then(() => {

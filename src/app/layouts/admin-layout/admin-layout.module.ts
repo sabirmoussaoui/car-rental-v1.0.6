@@ -67,6 +67,7 @@ import { ColorService } from 'src/app/services/color.service';
     NgxPaginationModule,
     MatButtonModule,
     MatIconModule,
+    NgxPaginationModule,
   ],
   declarations: [
     DashboardComponent,

@@ -1,5 +1,5 @@
 <nav
-  class="navbar navbar-vertical navbar-expand-md navbar-light bg-white"
+  class="navbar navbar-vertical navbar-expand-md navbar-light bg-default"
   id="sidenav-main"
 >
   <div class="container-fluid">
@@ -14,15 +14,13 @@
     </button>
     <!-- Brand -->
     <a
-      class="navbar-brand pt-0"
+      class="navbar-brand"
       routerLinkActive="active"
-      [routerLink]="['/dashboard']"
+      [routerLink]="['/client/dashboard']"
     >
-      <img
-        src="./assets/img/brand/red.png"
-        class="navbar-brand-image"
-        alt="..."
-      />
+      <div class="icon icon-shape bg-white rounded-circle shadow">
+        <i class="fa fa-car text-danger" aria-hidden="true"></i>
+      </div>
     </a>
     <!-- User -->
     <ul class="nav align-items-center d-md-none">
@@ -146,6 +144,7 @@
             routerLinkActive="active"
             [routerLink]="[menuItem.path]"
             class="nav-link"
+            style="color: #ffffff;"
           >
             <i class="ni {{ menuItem.icon }}"></i>
             {{ menuItem.title }}

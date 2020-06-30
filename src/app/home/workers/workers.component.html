@@ -106,7 +106,10 @@
       class="col-xl-4 order-xl-2 mb-7"
     >
       <span class="badge badge-primary"> {{ worker.nbCars }} Cars </span>
-
+      <span style="float: right;">
+        <a (click)="showMaps(worker)" href="javascript:void(0)"
+          ><i class="ni ni-square-pin" aria-hidden="true"></i></a
+      ></span>
       <div class="card card-profile shadow">
         <div class="row justify-content-center">
           <div class="col-lg-3 order-lg-2">
@@ -122,20 +125,7 @@
           </div>
         </div>
         <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-          <div class="d-flex justify-content-between">
-            <a
-              href="javascript:void(0)"
-              (click)="showDetails(worker)"
-              class="btn btn-sm btn-info mr-4"
-              >Worker Details <i class="fa fa-eye" aria-hidden="true"></i
-            ></a>
-            <a
-              (click)="showMaps(worker)"
-              href="javascript:void(0)"
-              class="btn btn-sm btn-default float-right"
-              >Show on map <i class="ni ni-square-pin" aria-hidden="true"></i
-            ></a>
-          </div>
+          <div class="d-flex justify-content-between"></div>
         </div>
         <div class="card-body pt-0 pt-md-4">
           <div class="row">

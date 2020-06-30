@@ -1,4 +1,4 @@
-<div class="header bg-gradient-info pb-8 pt-5 pt-md-8">
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
   <div class="container-fluid">
     <div class="header-body">
       <!-- Card stats -->
@@ -136,7 +136,7 @@
                     data-toggle="tab"
                     (click)="clicked = true; clicked1 = false"
                   >
-                    <span class="d-none d-md-block">date</span>
+                    <span class="d-none d-md-block">by date</span>
                     <span class="d-md-none">M</span>
                   </a>
                 </li>
@@ -153,7 +153,7 @@
                     data-toggle="tab"
                     (click)="clicked = false; clicked1 = true"
                   >
-                    <span class="d-none d-md-block">brand</span>
+                    <span class="d-none d-md-block">by brand</span>
                     <span class="d-md-none">W</span>
                   </a>
                 </li>
@@ -214,7 +214,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let car_visitor of car_visitors">
+              <tr
+                *ngFor="
+                  let car_visitor of car_visitors
+                    | paginate: { itemsPerPage: 4, currentPage: p }
+                "
+              >
                 <td>
                   <div class="media align-items-center">
                     <a class="avatar rounded-circle mr-3">
@@ -282,6 +287,11 @@
               </tr>
             </tbody>
           </table>
+          <div class="row">
+            <pagination-controls
+              (pageChange)="p = $event"
+            ></pagination-controls>
+          </div>
         </div>
       </div>
     </div>
@@ -299,6 +309,44 @@
         <div class="card-body">
           <div class="chart">
             <canvas id="doughnutChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-xl-6 mb-5 mb-xl-0">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <div class="row align-items-center">
+            <div class="col">
+              <h3 class="mb-0">
+                <i class="fas fa-align-left"></i> Car Request Statuses
+              </h3>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="chart">
+            <canvas id="bar-chart-horizontal"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-6 mb-5 mb-xl-0">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <div class="row align-items-center">
+            <div class="col">
+              <h3 class="mb-0">
+                <i class="fa fa-users" aria-hidden="true"></i> Client By Cities
+              </h3>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="chart">
+            <canvas id="bar-chart-client"></canvas>
           </div>
         </div>
       </div>

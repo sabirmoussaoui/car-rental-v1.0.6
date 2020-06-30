@@ -37,6 +37,9 @@ import { WorkerProfileComponent } from 'src/app/worker/worker-profile/worker-pro
 import { MatTabsModule } from '@angular/material/tabs';
 import { MyRequestsComponent } from 'src/app/worker/my-requests/my-requests.component';
 import { ClientsComponent } from 'src/app/worker/clients/clients.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { CarRequestDetailDialogComponent } from 'src/app/worker/my-requests/car-request-detail-dialog/car-request-detail-dialog.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -53,6 +56,7 @@ import { ClientsComponent } from 'src/app/worker/clients/clients.component';
     WorkerProfileComponent,
     MyRequestsComponent,
     ClientsComponent,
+    CarRequestDetailDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -73,6 +77,8 @@ import { ClientsComponent } from 'src/app/worker/clients/clients.component';
     NgxSpinnerModule,
     MatSlideToggleModule,
     MatTabsModule,
+    NgxPaginationModule,
+    MatSnackBarModule,
   ],
   entryComponents: [
     OpenCarImageDialogComponent,

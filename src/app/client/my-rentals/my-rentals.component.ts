@@ -142,7 +142,7 @@ export class MyRentalsComponent implements OnInit {
     console.log(this.car_requests);
   }
 
-  // onDeleteCar(car) {
-  //   this.carService.deleteCar(car);
-  // }
+  onDeleteCarRequests(carRequestKey) {
+    this.carRequestService.deleteCarRequest(carRequestKey);
+  }
 }

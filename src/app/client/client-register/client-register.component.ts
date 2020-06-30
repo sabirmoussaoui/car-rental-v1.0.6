@@ -75,8 +75,8 @@ export class ClientRegisterComponent implements OnInit {
     } else {
       console.log('not ok');
     }
-    console.log(city);
-    return this.router.navigate(['/client/dashbord']);
+    // console.log(city);
+    // return this.router.navigate(['/client/dashboard']);
   }
   initForm() {
     this.clientForm = this.formBuilder.group({

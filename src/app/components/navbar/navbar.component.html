@@ -35,8 +35,12 @@
       <li class="nav-item" ngbDropdown placement="bottom-right">
         <a class="nav-link pr-0" role="button" ngbDropdownToggle>
           <div class="media align-items-center">
-            <span *ngIf="photoUrl" class="avatar avatar-sm rounded-circle">
-              <img alt="Image placeholder" [src]="photoUrl" />
+            <span class="avatar avatar-sm rounded-circle">
+              <img
+                [src]="
+                  photoUrl ? photoUrl : 'assets/img/avatar/avatar_profile.png'
+                "
+              />
             </span>
             <div class="media-body ml-2 d-none d-lg-block">
               <span *ngIf="fullname" class="mb-0 text-sm font-weight-bold">

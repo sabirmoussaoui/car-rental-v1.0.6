@@ -15,6 +15,7 @@ import { CarRequest } from 'src/app/models/CarRequest.model';
 import { element } from 'protractor';
 import { format } from 'path';
 import moment from 'moment';
+import { CarRequestDetailDialogComponent } from './car-request-detail-dialog/car-request-detail-dialog.component';
 interface NgbTime {
   hour: number;
   minute: number;
@@ -35,8 +36,7 @@ export class MyRequestsComponent implements OnInit {
     private carRequestService: CarRequestService,
     private dialog: MatDialog,
     private workerService: WorkerService,
-    private spinner: NgxSpinnerService,
-    private route: ActivatedRoute
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
@@ -55,11 +55,6 @@ export class MyRequestsComponent implements OnInit {
     });
   }
 
-  openDialog(car_request: CarRequest) {}
-  onUpdateCarRequest(carRequest: CarRequest) {
-    this.carRequestService.updateCarRequest(carRequest);
-  }
-
   showDetails(carRequest: CarRequest) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
@@ -69,13 +64,10 @@ export class MyRequestsComponent implements OnInit {
     dialogConfig.data = {
       carRequest: carRequest,
     };
-    const dialogRef = this.dialog.open(CarDetailDialogComponent, dialogConfig);
-  }
-  getdateFormat(date) {
-    // console.log(moment(date).format('YYYY-MM-DD hh:mm:ss'));
-    // var s = new Date(date).toLocaleDateString('en-US');
-    // console.log(s);
-    // return s;
+    const dialogRef = this.dialog.open(
+      CarRequestDetailDialogComponent,
+      dialogConfig
+    );
   }
   getCarRequests(workerKey) {
     this.carRequestService

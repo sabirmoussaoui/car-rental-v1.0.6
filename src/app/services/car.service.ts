@@ -187,6 +187,24 @@ export class CarService {
      `
     );
   }
+  getVisitorByBrandOfAdmin() {
+    return this.fireSQL.rxQuery(
+      `
+      SELECT carBrand ,SUM(visitor) AS visitors
+      FROM cars  
+      GROUP BY carBrandKey
+     `
+    );
+  }
+  getQuantityByBrand() {
+    return this.fireSQL.rxQuery(
+      `
+      SELECT carBrand ,SUM(quantity) AS quantity
+      FROM cars  
+      GROUP BY carBrandKey
+     `
+    );
+  }
   getAllCars() {
     return this.db.collection<Car>('cars').valueChanges();
   }

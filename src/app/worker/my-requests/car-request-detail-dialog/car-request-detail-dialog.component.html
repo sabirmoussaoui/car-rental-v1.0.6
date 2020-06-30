@@ -147,25 +147,29 @@
       Status : Sorry ! your request is not accepted
     </div>
   </mat-tab>
-  <mat-tab label="agency details">
+  <mat-tab label="client details">
+    <div class="alert alert-primary" role="alert">
+      <i class="fa fa-user" aria-hidden="true"></i> first name:
+      {{ carRequest.client.firstname }}
+    </div>
     <div class="alert alert-danger" role="alert">
-      <i class="fa fa-home" aria-hidden="true"></i> Agence :
-      {{ carRequest.car.worker.name }}
+      <i class="fa fa-user" aria-hidden="true"></i> last name:
+      {{ carRequest.client.lastname }}
     </div>
     <div class="alert alert-warning" role="alert">
       <i class="fa fa-phone" aria-hidden="true"></i> Phone :
-      {{ carRequest.car.worker.phone }}
-    </div>
-    <div class="alert alert-default" role="alert">
-      <i class="fas fa-city"></i> City {{ carRequest.car.worker.city.name }}
-    </div>
-    <div class="alert alert-success" role="alert">
-      <i class="fa fa-map" aria-hidden="true"></i> Sector :
-      {{ carRequest.car.worker.sector.name }}
+      {{ carRequest.client.phone }}
     </div>
     <div class="alert alert-info" role="alert">
+      <i class="ni ni-email-83"></i>Email :
+      {{ carRequest.client.phone }}
+    </div>
+    <div class="alert alert-default" role="alert">
+      <i class="fas fa-city"></i> City {{ carRequest.client.city.name }}
+    </div>
+    <div class="alert alert-success" role="alert">
       <i class="fas fa-map-marked-alt"></i> Adresse :
-      {{ carRequest.car.worker.adresse }}
+      {{ carRequest.client.adresse }}
     </div>
   </mat-tab>
   <mat-tab label="Important Information">
@@ -207,66 +211,7 @@
       </div>
     </div>
   </mat-tab>
-  <mat-tab label="Add Review">
-    <mat-card class="example-card">
-      <mat-card-header>
-        <div
-          mat-card-avatar
-          [ngStyle]="{
-            'background-image': 'url(' + carRequest.client.profil + ')'
-          }"
-          class="example-header-image"
-        ></div>
-        <mat-card-title>{{
-          carRequest.client.firstname + " " + carRequest.client.lastname
-        }}</mat-card-title>
-        <mat-card-subtitle>
-          <span class="badge badge-dot">
-            <i class="bg-success"></i> connect
-          </span>
-        </mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <ngb-rating [max]="5" [(rate)]="currentRate">
-          <ng-template let-fill="fill" let-index="index">
-            <span
-              class="star"
-              [class.filled]="fill === 100"
-              [class.bad]="index < 3"
-              >&hearts;</span
-            >
-          </ng-template>
-        </ngb-rating>
-        <form [formGroup]="reviewForm">
-          <div class="form-group">
-            <label>Write your review</label>
-            <textarea
-              formControlName="comment"
-              rows="4"
-              class="form-control form-control-alternative"
-              placeholder="What did you like or dislike ?"
-            ></textarea>
-          </div>
-        </form>
-      </mat-card-content>
-      <mat-card-actions>
-        <button class="btn btn-warning" (click)="onSaveReview()">
-          <i class="fa fa-paper-plane" aria-hidden="true"></i>
-          Send
-        </button>
-      </mat-card-actions>
-      <ngx-spinner
-        bdColor="rgba(51,51,51,0.8)"
-        size="medium"
-        color="#fff"
-        type="ball-scale-multiple"
-        [fullScreen]="false"
-      >
-        <p style="font-size: 20px; color: white;">Loading...</p>
-      </ngx-spinner>
-    </mat-card>
-  </mat-tab>
-  <mat-tab label="Customer Reviews">
+  <!-- <mat-tab label="Customer Reviews">
     <mat-card
       *ngFor="let review of reviews"
       class="example-card"
@@ -286,5 +231,5 @@
         <p style="font-size: 20px; color: white;">Loading...</p>
       </ngx-spinner>
     </mat-card>
-  </mat-tab>
+  </mat-tab> -->
 </mat-tab-group>

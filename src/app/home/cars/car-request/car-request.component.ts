@@ -17,6 +17,7 @@ import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { AuthClientDialogComponent } from './auth-client-dialog/auth-client-dialog.component';
 import * as firebase from 'firebase';
 import moment from 'moment';
+import { MatSnackBar } from '@angular/material/snack-bar';
 interface CitySelect {
   value: City;
   viewValue: string;
@@ -61,6 +62,7 @@ export class CarRequestComponent implements OnInit {
   hide = true;
   minDate: Date;
   maxDate: Date;
+  courrentdate: any;
   car_request: CarRequest = new CarRequest();
   client: Client = new Client();
   password: string;
@@ -73,6 +75,7 @@ export class CarRequestComponent implements OnInit {
   drop_off_moment;
   days: number = 1;
   priceTotal: number;
+  termFormGroup: FormGroup;
   constructor(
     private route: ActivatedRoute,
     private _formBuilder: FormBuilder,
@@ -84,13 +87,17 @@ export class CarRequestComponent implements OnInit {
     private router: Router,
     private clientService: ClientService,
     private carRequestService: CarRequestService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private _snackBar: MatSnackBar
   ) {
     const currentYear = new Date().getFullYear();
     const currentMounth = new Date().getMonth();
     const currentDay = new Date().getDay();
     this.minDate = new Date(currentYear, currentMounth, currentDay + 3);
     this.maxDate = new Date(currentYear + 1, currentMounth, currentDay);
+    this.courrentdate = moment(
+      new Date(currentYear, currentMounth, currentDay)
+    );
   }
   ngOnInit() {
     this.spn.show();
@@ -103,6 +110,7 @@ export class CarRequestComponent implements OnInit {
     });
     this.initDateForm();
     this.initClientForm();
+    this.initTermsForm();
     this.getCities();
     setTimeout(() => {
       this.addVisitor(this.car);
@@ -143,9 +151,20 @@ export class CarRequestComponent implements OnInit {
     this.days = this.drop_off_moment.diff(this.pick_up_moment, 'days');
     this.days = this.days <= 0 ? 1 : this.days;
     this.priceTotal = this.days * this.car.price;
+    if (this.pick_up_moment > this.drop_off_moment) {
+      this.openSnackBar('check the date please ! ', 'Invalid date');
+      console.log(this.courrentdate);
+      this.initDateForm();
+    }
+
     console.log(
       this.priceTotal + '----' + this.days + '----' + this.pick_up_moment
     );
+  }
+  initTermsForm() {
+    this.termFormGroup = this._formBuilder.group({
+      terms: ['', Validators.required],
+    });
   }
   onSaveDate() {
     this.car_request.pick_up = moment(
@@ -201,6 +220,7 @@ export class CarRequestComponent implements OnInit {
           (error) => {
             this.spn.hide();
             console.log(error);
+            this.openSnackBar(error.message, 'ok');
           }
         );
       }
@@ -236,6 +256,7 @@ export class CarRequestComponent implements OnInit {
         },
         (err) => {
           console.log(err);
+          this.openSnackBar(err.message, 'ok');
         }
       );
     }
@@ -255,6 +276,11 @@ export class CarRequestComponent implements OnInit {
       },
       (err) => {
         console.log('client not register');
+        if (err.code === 'auth/user-not-found') {
+          this.openSnackBar(err.message, 'error');
+        } else {
+          this.openSnackBar(err.message, 'error');
+        }
       }
     );
   }
@@ -274,9 +300,12 @@ export class CarRequestComponent implements OnInit {
     this.carRequestService.createCarRequest(this.car_request).then(
       (ref) => {
         console.log('car requets created with successfully');
-        this.router.navigate(['/client/dashboard']);
+        this.router.navigate(['home']);
       },
-      (err) => console.log(err)
+      (err) => {
+        console.log(err);
+        this.openSnackBar(err.message, 'error');
+      }
     );
   }
   getClient(clientKey) {
@@ -300,6 +329,14 @@ export class CarRequestComponent implements OnInit {
       (err) => {
         this.isAuth = false;
         console.log('client not exist');
+        if (err.code === 'auth/user-not-found') {
+          this.openSnackBar(
+            'There is no user record corresponding to this identifier',
+            'error'
+          );
+        } else {
+          this.openSnackBar(err.message, 'error');
+        }
       };
   }
 
@@ -310,6 +347,11 @@ export class CarRequestComponent implements OnInit {
         city.cityKey = doc.id;
         this.cities.push({ value: city, viewValue: city.name });
       });
+    });
+  }
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 8000,
     });
   }
 }

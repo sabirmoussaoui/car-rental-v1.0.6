@@ -20,11 +20,11 @@
             class="nav-link mb-sm-3 mb-md-0"
             id="tabs-text-1-tab"
             data-toggle="tab"
-            [routerLink]="['/admin/settings/Car-models']"
+            [routerLink]="['/admin/settings/cities']"
             role="tab"
             aria-controls="tabs-text-1"
             aria-selected="true"
-            >Car Models</a
+            >Cities</a
           >
         </li>
         <li class="nav-item">
@@ -97,7 +97,7 @@
           <div class="card-header border-0">
             <h3 class="mb-0">Add new car Model</h3>
             <form [formGroup]="carModelForm" (ngSubmit)="onSaveCarModel()">
-              <mat-form-field>
+              <mat-form-field appearance="outline">
                 <mat-label>Car Brands</mat-label>
                 <mat-select formControlName="carBrandKey">
                   <mat-option

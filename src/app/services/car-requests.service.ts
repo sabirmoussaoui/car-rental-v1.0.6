@@ -25,8 +25,8 @@ export class CarRequestService {
     });
   }
 
-  deleteCity(cityKey) {
-    return this.db.collection('cities').doc(cityKey).delete();
+  deleteCarRequest(carRequestKey) {
+    return this.db.collection('car_requests').doc(carRequestKey).delete();
   }
 
   getCarRequests(clientKey) {
@@ -36,7 +36,9 @@ export class CarRequestService {
       )
       .valueChanges();
   }
-
+  getAllCarRequests() {
+    return this.db.collection<CarRequest>('car_requests').valueChanges();
+  }
   getCarRequestByWorker(workerKey) {
     return this.db
       .collection<CarRequest>('car_requests', (ref) =>
@@ -52,11 +54,43 @@ export class CarRequestService {
    `
     );
   }
+  getCarRequestByDateOfClient(clientKey) {
+    return this.fireSQL.rxQuery(
+      `
+    SELECT created_at,SUM(price_total) AS price_total
+    FROM car_requests  WHERE accepted=true AND clientKey='${clientKey}' GROUP BY  created_at
+   `
+    );
+  }
+  getCarRequestByWorkerOfAdmin() {
+    return this.fireSQL.rxQuery(
+      `
+    SELECT   workerKey,car,SUM(price_total) AS price_total
+    FROM car_requests  WHERE accepted=true  GROUP BY  workerKey
+   `
+    );
+  }
+  getCarRequestByDateOfAdmin() {
+    return this.fireSQL.rxQuery(
+      `
+    SELECT created_at,SUM(price_total) AS price_total
+    FROM car_requests  WHERE accepted=true  GROUP BY  created_at
+   `
+    );
+  }
   getProfits(workerKey) {
     return this.fireSQL.rxQuery(
       `
       SELECT SUM(price_total) AS profits
       FROM car_requests  WHERE accepted=true AND workerKey='${workerKey}' 
+     `
+    );
+  }
+  getAllProfits() {
+    return this.fireSQL.rxQuery(
+      `
+      SELECT SUM(price_total) AS profits
+      FROM car_requests  WHERE accepted=true 
      `
     );
   }
@@ -70,10 +104,42 @@ export class CarRequestService {
    `
     );
   }
+  getCarRequestByBrandOfClient(clientKey) {
+    return this.fireSQL.rxQuery(
+      `
+    SELECT \`car.carBrand.name\` AS brand,SUM(price_total) AS price_total
+    FROM car_requests  WHERE accepted=true AND clientKey='${clientKey}' 
+    GROUP BY carBrandKey
+   `
+    );
+  }
+  getCarRequestByBrandOfAdmin() {
+    return this.fireSQL.rxQuery(
+      `
+    SELECT \`car.carBrand.name\` AS brand,SUM(price_total) AS price_total
+    FROM car_requests  WHERE accepted=true 
+    GROUP BY carBrandKey
+   `
+    );
+  }
+  getAllClients() {
+    return this.fireSQL.rxQuery(
+      `
+      SELECT client,SUM(price_total) as price  FROM car_requests  GROUP BY clientKey 
+      `
+    );
+  }
   getClientsByWorker(workerKey) {
     return this.fireSQL.rxQuery(
       `
-      SELECT client,SUM(price_total) as price  FROM car_requests where workerKey='${workerKey}' GROUP BY clientKey 
+      SELECT client,workerKey,SUM(price_total) as price  FROM car_requests WHERE workerKey='${workerKey}'  GROUP BY clientKey 
+      `
+    );
+  }
+  getClientsByCityOfWorker(workerKey, cityKey) {
+    return this.fireSQL.rxQuery(
+      `
+      SELECT client,workerKey,SUM(price_total) as price  FROM car_requests WHERE workerKey='${workerKey}' AND  clientCityKey ='${cityKey}'  GROUP BY clientKey 
       `
     );
   }

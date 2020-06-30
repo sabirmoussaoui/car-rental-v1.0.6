@@ -56,8 +56,8 @@ export class WorkerService {
       .valueChanges();
   }
 
-  updateWorker(workerKey, worker) {
-    return this.db
+  updateWorker(workerKey, worker: Worker) {
+    this.db
       .collection('workers')
       .doc(workerKey)
       .update({
@@ -72,22 +72,33 @@ export class WorkerService {
           name: worker.sector.name,
         },
         adresse: worker.adresse,
-        // email: worker.email,
         updated_at: new Date().toDateString(),
       });
+    return this.updateAllDocuments(worker);
   }
 
-  updateAllDocuments(workerKey, Worker) {
-    this.db
+  updateAllDocuments(worker: Worker) {
+    return this.db
       .collection('cars', (ref) =>
-        ref.where('worker.workerKey', '==', workerKey)
+        ref.where('worker.workerKey', '==', worker.workerKey)
       )
       .get()
       .subscribe(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           doc.ref.update({
             worker: {
-              //kteb les champs
+              name: worker.name,
+              phone: worker.phone,
+              website: worker.website,
+              city: {
+                name: worker.city.name,
+                cityKey: worker.sector.cityKey,
+              },
+              sector: {
+                name: worker.sector.name,
+              },
+              adresse: worker.adresse,
+              updated_at: new Date().toDateString(),
             },
           });
         });

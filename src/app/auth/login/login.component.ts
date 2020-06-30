@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import firebase from 'firebase';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private roleService: RoleService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -69,13 +71,27 @@ export class LoginComponent implements OnInit, OnDestroy {
       (error) => {
         this.spinner.hide();
         console.log(error);
+        if (error.code === 'auth/user-not-found') {
+          this.openSnackBar(error.message, 'error');
+        } else {
+          this.openSnackBar(error.message, 'error');
+        }
       }
     );
   }
   getCurrentuser(userKey) {
     this.roleService.getRole(userKey).subscribe((user) => {
       this.spinner.hide();
-      this.router.navigate(['/' + user.data().role + '/dashboard']);
+      if (user.data().role === 'worker') {
+        this.router.navigate(['/' + user.data().role + '/dashboard']);
+      } else {
+        this.router.navigate(['home']);
+      }
+    });
+  }
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 8000,
     });
   }
 }
